@@ -1,0 +1,11 @@
+{
+    "enable": true,
+	"script": "supv_core",
+    "version": "0.1b",
+    "changelog": [
+        "^8[Modules]^2:",
+        "\t^3- ^3Rework ^7système",
+        "\t^3- ^3Rework ^7all modules for new system"
+    ],
+	"link": "https://github.com/SUP2Ak/supv_core"
+}
