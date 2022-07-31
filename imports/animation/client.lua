@@ -1,5 +1,13 @@
-local animation = {}
-local props
+local animation, props = {}
+local HasAnimDictLoaded <const> = HasAnimDictLoaded
+local RequestAnimDict <const> = RequestAnimDict
+local ClearPedTasks <const> = ClearPedTasks
+local StopAnimTask <const> = StopAnimTask
+local RemoveAnimDict <const> = RemoveAnimDict
+local DoesEntityExist <const> = DoesEntityExist
+local IsEntityDead <const> = IsEntityDead
+local TaskStartScenarioInPlace <const> = TaskStartScenarioInPlace
+local TaskPlayAnim <const> = TaskPlayAnim
 
 local function load_anim(dict)
     while not HasAnimDictLoaded(dict) do

@@ -1,3 +1,31 @@
+local BeginTextCommandWidth <const> = BeginTextCommandWidth
+local AddTextComponentSubstringPlayerName <const> = AddTextComponentSubstringPlayerName
+local SetTextFont <const> = SetTextFont
+local SetTextScale <const> = SetTextScale
+local EndTextCommandGetWidth <const> = EndTextCommandGetWidth
+local SetTextColour <const> = SetTextColour
+local SetTextDropShadow <const> = SetTextDropShadow
+local SetTextOutline <const> = SetTextOutline
+local SetTextCentre <const> = SetTextCentre
+local SetTextRightJustify <const> = SetTextRightJustify
+local SetTextWrap <const> = SetTextWrap
+local BeginTextCommandLineCount <const> = BeginTextCommandLineCount
+local World3dToScreen2d <const> = World3dToScreen2d
+local EndTextCommandLineCount <const> = EndTextCommandLineCount
+local SetTextProportional <const> = SetTextProportional
+local SetTextEntry <const> = SetTextEntry
+local DrawRect <const> = DrawRect
+local AddTextComponentString <const> = AddTextComponentString
+local DrawSprite <const> = DrawSprite
+local DrawText <const> = DrawText
+local BeginTextCommandDisplayText <const> = BeginTextCommandDisplayText
+local EndTextCommandDisplayText <const> = EndTextCommandDisplayText
+local HasStreamedTextureDictLoaded <const> = HasStreamedTextureDictLoaded
+local RequestStreamedTextureDict <const> = RequestStreamedTextureDict
+local FreezeEntityPosition <const> = FreezeEntityPosition
+local IsControlJustPressed <const> = IsControlJustPressed
+
+
 local function StringToArray(str)
     local charCount = #str
     local strCount = math.ceil(charCount / 99)
@@ -70,7 +98,7 @@ local function GetLineCount(Text, X, Y, Font, Scale, Color, Alignment, DropShado
 
     BeginTextCommandLineCount("CELL_EMAIL_BCON")
     AddText(Text)
-    return GetTextScreenLineCount(X, Y)
+    return EndTextCommandLineCount(X, Y)
 end
 
 --- DrawText3D
@@ -223,8 +251,6 @@ local function ProgressBar(text, time, setting, data, action)
         progressbar.data.badgeleft = data.badgeleft or defaultProgressBar.badgeleft
         progressbar.data.badgecancel0 = data.cancelBadge0 or defaultProgressBar.cancelStatus0
         progressbar.data.badgecancel1 = data.cancelBadge1 or defaultProgressBar.cancelStatus1
-        print(json.encode(progressbar.data.badgecancel0),
-        json.encode(progressbar.data.badgecancel1))
         progressbar.action = {}
 
         if progressbar.data.progressType == 'sprite' then
@@ -544,22 +570,3 @@ return {
     rect = Rect,
     progressbar = ProgressBar
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
---[[__Utils for draw.text2d__]]--
-

@@ -1,5 +1,13 @@
-local Traffic, Npc, VehicleParked = Config.Traffic.amount.traffic, Config.Traffic.amount.npc, Config.Traffic.amount.parked
-local EnableBoats, EnableTrain, EnableGarbageTruck, EnablePolice = Config.Traffic.enable.boats, Config.Traffic.enable.trains, Config.Traffic.enable.garbageTruck, Config.Traffic.enable.polices
+local Traffic <const>, Npc <const>, VehicleParked <const> = Config.Traffic.amount.traffic, Config.Traffic.amount.npc, Config.Traffic.amount.parked
+local EnableBoats <const>, EnableTrain <const>, EnableGarbageTruck <const>, EnablePolice <const> = Config.Traffic.enable.boats, Config.Traffic.enable.trains, Config.Traffic.enable.garbageTruck, Config.Traffic.enable.polices
+
+
+local GetEntityModel <const> = GetEntityModel
+local RemoveAllPickupsOfType <const> = RemoveAllPickupsOfType
+local GetGamePool <const> = GetGamePool
+local DisplayRadar <const> = DisplayRadar
+local DisableControlAction <const> = DisableControlAction
+local IsControlPressed <const> = IsControlPressed
 
 local function ClearPickupsFromRewards()
     CreateThread(function()
@@ -110,7 +118,7 @@ end)
 
 if not Config.Traffic.enable.polices then
 
-    local coords = vector3(409.160736, -990.443726, 28.843187)
+    local coords <const> = vec3(409.160736, -990.443726, 28.843187)
 
     CreateThread(function()
         while true do
@@ -126,7 +134,7 @@ end
 
 if Config.PlayerOptions.showRadar.visible == 'vehicle' then
 
-    local vehicleBlacklisted, currentValue = Config.PlayerOptions.showRadar.blacklist, false
+    local vehicleBlacklisted <const>, currentValue = Config.PlayerOptions.showRadar.blacklist, false
 
     local function ShowRadar(bool)
         if currentValue == bool then
@@ -143,17 +151,17 @@ if Config.PlayerOptions.showRadar.visible == 'vehicle' then
         if next(vehicleBlacklisted) then
             while true do
                 Wait(1000)
-                if vehicleBlacklisted[GetEntityModel(oncache.player.currentVehicle)] then
+                if not vehicleBlacklisted[GetEntityModel(oncache.player.currentvehicle)] then
                     ShowRadar(true)
                 end
-                if oncache.player.currentVehicle == 0 then
+                if oncache.player.currentvehicle == 0 then
                     ShowRadar(false)
                 end
             end
         else
             while true do
                 Wait(1000)
-                if oncache.player.currentVehicle == 0  then
+                if oncache.player.currentvehicle == 0  then
                     ShowRadar(false)
                 else
                     ShowRadar(true)
@@ -165,11 +173,12 @@ end
 
 
 if not Config.Rewards.vehicle then
-    local listeVehicle = Config.Rewards.listVehicle
+    local listeVehicle <const> = Config.Rewards.listVehicle
+    local DisablePlayerVehicleRewards <const> = DisablePlayerVehicleRewards
 
     local function RemoveRewardsFromPoliceVehicle() -- for more secure
 
-        local time<const>, timer = 5000, 0
+        local time <const>, timer = 5000, 0
         CreateThread(function()
             timer = GetGameTimer()
             while true do
@@ -198,8 +207,11 @@ end
 
 if Config.PlayerOptions.hideHudComponent.enable then
     local intervale
-    local list = Config.PlayerOptions.hideHudComponent.list
-    local scopeList = Config.PlayerOptions.hideHudComponent.scopeList
+    local list <const> = Config.PlayerOptions.hideHudComponent.list
+    local scopeList <const> = Config.PlayerOptions.hideHudComponent.scopeList
+    local IsHudComponentActive <const> = IsHudComponentActive
+    local HideHudComponentThisFrame <const> = HideHudComponentThisFrame
+    local GetCurrentPedWeapon <const> = GetCurrentPedWeapon
     if #list > 0 then
         CreateThread(function()
             while true do
@@ -213,7 +225,7 @@ if Config.PlayerOptions.hideHudComponent.enable then
                     else
                         if IsPedArmed(oncache.player.pedid, 4) then intervale = false 
                             local _, hash = GetCurrentPedWeapon(oncache.player.pedid, true)
-                            if scopeList[hash] then
+                            if not scopeList[hash] then
                                 HideHudComponentThisFrame(14)
                             end
                         end
@@ -230,6 +242,7 @@ end
 
 
 if not Config.PlayerOptions.afkCam then
+    local InvalidateIdleCam <const>, InvalidateVehicleIdleCam <const> = InvalidateIdleCam, InvalidateVehicleIdleCam
     CreateThread(function()
         while true do
             Wait(2000)
@@ -261,22 +274,22 @@ end
 
 
 if Config.AudioRadio.enable or Config.AudioRadio.enable == 'full' then
-    local blacklist = Config.AudioRadio.blacklist
+    local blacklist, SetUserRadioControlEnabled <const>, SetVehRadioStation <const> = Config.AudioRadio.blacklist, SetUserRadioControlEnabled, SetVehRadioStation
     CreateThread(function()
         if Config.AudioRadio.enable == true then
             while true do
                 Wait(1000)
-                if blacklist[GetEntityModel(oncache.player.currentVehicle)] then
+                if blacklist[GetEntityModel(oncache.player.currentvehicle)] then
                     SetUserRadioControlEnabled(false)
-                    SetVehRadioStation(oncache.player.currentVehicle, "OFF")
+                    SetVehRadioStation(oncache.player.currentvehicle, "OFF")
                 end
             end
         elseif Config.AudioRadio.enable == 'full' then
             while true do
                 Wait(1000)
-                if oncache.player.currentVehicle then
+                if oncache.player.currentvehicle then
                     SetUserRadioControlEnabled(false)
-                    SetVehRadioStation(oncache.player.currentVehicle, "OFF")
+                    SetVehRadioStation(oncache.player.currentvehicle, "OFF")
                 end
             end
         else return false
@@ -285,6 +298,7 @@ if Config.AudioRadio.enable or Config.AudioRadio.enable == 'full' then
 end
 
 if Config.PauseMenu.enable then
+    local AddTextEntry <const> = AddTextEntry
     CreateThread(function()
         AddTextEntry('FE_THDR_GTAO', Config.PauseMenu.title)
         AddTextEntry('PM_SCR_MAP', Config.PauseMenu.map)
@@ -301,6 +315,7 @@ if Config.PauseMenu.enable then
 end
 
 if Config.PlayerOptions.unlimitedStamina then
+    local ResetPlayerStamina <const> = ResetPlayerStamina
     CreateThread(function()
         while true do
             Wait(2000)
@@ -311,7 +326,7 @@ end
 
 
 if Config.PlayerOptions.noRollingGunFight then
-    local intervale
+    local IsPlayerFreeAiming <const>, ClearPedTasksImmediately <const>, intervale = IsPlayerFreeAiming, ClearPedTasksImmediately
     CreateThread(function()
         while true do
             Wait(0)
@@ -329,7 +344,7 @@ if Config.PlayerOptions.noRollingGunFight then
 end
 
 if Config.PlayerOptions.noPunchRunning then
-    local intervale
+    local IsPedRunningMeleeTask <const>, ClearPedTasksImmediately <const>, intervale = IsPedRunningMeleeTask, ClearPedTasksImmediately
     CreateThread(function()
         while true do
             Wait(0)

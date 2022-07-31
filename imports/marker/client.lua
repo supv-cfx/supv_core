@@ -5,6 +5,8 @@ local default <const> = {
     m2 = supv.config.client.import.marker.m2
 }
 
+local DrawMarker <const> = DrawMarker
+
 local function Marker(double, inside, coords, params, params2)
 
     if double then
@@ -13,7 +15,7 @@ local function Marker(double, inside, coords, params, params2)
         
         if params2 then
             args.id = params2.id or default.m2.id
-            args.color = params2.color or default.m2.color
+            --args.color = params2.color or default.m2.color
             args.dir = params2.dir or default.m2.dir
             args.rot = params2.rot or default.m2.rot
             args.scale = params2.scale or default.m2.scale
@@ -28,7 +30,7 @@ local function Marker(double, inside, coords, params, params2)
             args.op = params2.op or default.m2.op
         else
             args.id = default.m2.id
-            args.color = default.m2.color
+            --args.color = default.m2.color
             args.dir = default.m2.dir
             args.rot = default.m2.rot
             args.scale = default.m2.scale
@@ -65,7 +67,7 @@ local function Marker(double, inside, coords, params, params2)
 
     if params then
         args.id = params.id or default.m1.id
-        args.color = params.color or default.m1.color
+        --args.color = params.color or default.m1.color
         args.dir = params.dir or default.m1.dir
         args.rot = params.rot or default.m1.rot
         args.scale = params.scale or default.m1.scale
@@ -80,7 +82,7 @@ local function Marker(double, inside, coords, params, params2)
         args.op = params.op or default.m1.op
     else
         args.id = default.m1.id
-        args.color = default.m1.color
+        --args.color = default.m1.color
         args.dir = default.m1.dir
         args.rot = default.m1.rot
         args.scale = default.m1.scale

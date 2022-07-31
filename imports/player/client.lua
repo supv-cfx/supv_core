@@ -1,3 +1,5 @@
+local GetEntityCoords <const> = GetEntityCoords
+local GetVehiclePedIsIn <const> = GetVehiclePedIsIn
 
 --- self:distance
 ---

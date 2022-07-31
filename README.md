@@ -1,17 +1,18 @@
-<h1><u><b>sublime_core v0.9a</b></u></h1>
+<h1><u><b>supv_core v0.2b</b></u></h1>
 
 :fr:
 
 <h3><u>Configuration :</u></h3>
 
-- Vous y trouverez toutes les configuration dans le fichier sublime_core/resources/config
-
+- Vous y trouverez toutes les configuration dans le fichier supv_core/resources/config
 
 <h3><u>Liste des exports :</u></h3>
 
 (La doc n'est pas complétement à jour car beaucoups d'ajout et pas le temps de compléter)
 
 https://sup2ak.gitbook.io/documentation/sublime-documentation/fivem-script/sublime_core/imports --> pas pour supv_core
+
+Si vous voulez utilisez les modules n'hésitez pas a me contacter sur mon discord en attendant que la documentation soi mise à jour
 
 <h2><u>Features :</u></h2>
 
@@ -25,12 +26,27 @@ https://sup2ak.gitbook.io/documentation/sublime-documentation/fivem-script/subli
 
 <h1>CHANGELOG - MEMORY</h1>
 
+<h2> supv_core </h2>
 
-
-
+[0.2b]
+- [Global] : (stock en mémoire la ref des native utilisable en boucle)
+- [Resources] : 
+    - Add gestion SyncData
+    - Add gestion PlayersConnected via SyncData
+    - Correction HideHud / Rewards Vehicle / Radar (option vehicle) / oncache.currentvehicle
+- [Modules] :
+    - Add controleActions.define() [client]
+    - Add promt [client] : loading() | instructions : .set() - .draw()
+    - Add json [client] : load() | [server] : load() / write()
+    - Update npc [client] : Add onNet (avec syncData module) / [server] Add server (avec syncData module)
+    - Update draw : remplacement de la native GetTextScreenLineCount par EndTextCommandLineCount
+    - Add syncData [client/server] .set() / .get()
 [0.1b] : beta et passage sur supv
 - [Modules] : Re structuration du système modulaire afin de charger uniquement les modules utiliser sur l'importation
     - Adaptation de tout les modules au nouveaux système
+    
+<h2> sublime_core </h2>
+
 [0.9a]
 - [Global] :
     - Optimisation du code

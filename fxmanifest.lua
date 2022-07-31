@@ -6,7 +6,7 @@ use_experimental_fxv2_oal 'yes'
 author 'SUP2Ak'
 
 
-version '0.1b' -- b for beta
+version '0.2b' -- b for beta
 
 description 'a core standalone to manage your server and got useful function to develop it too'
 
