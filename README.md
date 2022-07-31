@@ -41,7 +41,8 @@ Si vous voulez utilisez les modules n'hésitez pas a me contacter sur mon discor
     - Update npc [client] : Add onNet (avec syncData module) / [server] Add server (avec syncData module)
     - Update draw : remplacement de la native GetTextScreenLineCount par EndTextCommandLineCount
     - Add syncData [client/server] .set() / .get()
-[0.1b]
+    
+[0.1b] : beta et passage sur supv
 - [Modules] : Re structuration du système modulaire afin de charger uniquement les modules utiliser sur l'importation
     - Adaptation de tout les modules au nouveaux système
     
