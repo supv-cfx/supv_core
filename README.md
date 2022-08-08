@@ -4,7 +4,7 @@
 
 <h3><u>Configuration :</u></h3>
 
-- Vous y trouverez toutes les configuration dans le fichier sublime_core/resources/config
+- Vous y trouverez toutes les configuration dans le fichier supv_core/resources/config
 
 
 <h3><u>Liste des exports :</u></h3>
