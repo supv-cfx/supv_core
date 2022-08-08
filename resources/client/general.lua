@@ -13,7 +13,7 @@ local function ClearPickupsFromRewards()
     CreateThread(function()
         while true do
             Wait((6*10000)*30) -- every 30min
-            if Shared.DevMod then
+            if Config.DevMod then
                 print(json.encode(GetGamePool('CPickup')))
             end
             RemoveAllPickupsOfType(0xDF711959) -- carbine rifle
@@ -57,8 +57,8 @@ CreateThread(function()
     end
 
     if not Config.Rewards.npc then
-        for i = 1, #Shared.Pickups.Blacklisted do
-            ToggleUsePickupsForPlayer(oncache.player.playerid, Shared.Pickups.Blacklisted[i], false)
+        for i = 1, #Config.Pickups.Blacklisted do
+            ToggleUsePickupsForPlayer(oncache.player.playerid, Config.Pickups.Blacklisted[i], false)
         end
         if Config.Rewards.clearPickUpsRewards then
             ClearPickupsFromRewards()
@@ -76,7 +76,7 @@ CreateThread(function()
             for i = 1, #v.group1 do
                 for j = 1, #v.group2 do
                     SetRelationshipBetweenGroups(v.relation, v.group1[i], v.group2[j])
-                    if Shared.DevMod then
+                    if Config.DevMod then
                         print(v.relation, json.encode(v.group1[i]), json.encode(v.group2[j]))
                     end
                 end

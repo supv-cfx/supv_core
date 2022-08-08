@@ -1,6 +1,6 @@
 --[[ 
 AddEventHandler('gameEventTriggered', function (name, args)
-    if Shared.DevMod then
+    if Config.DevMod then
         print(("gameEventTriggered: %s / args: %s"):format(name, json.encode(args)))
     end
     if name == 'CEventNetworkEntityDamage' then
@@ -8,7 +8,7 @@ AddEventHandler('gameEventTriggered', function (name, args)
         if not Config.Rewards.npc then
             if args[6] == 1 then
 
-                if Shared.DevMod then
+                if Config.DevMod then
                     print(('Remove rewards from ped passed => ped died = %s | ped = %s'):format(args[6], args[1]))
                 end
 

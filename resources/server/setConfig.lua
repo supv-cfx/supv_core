@@ -1,8 +1,4 @@
-local c = {}
-c.server = Config
-c.shared = Shared
-
-local config <const> = c
+local config <const> = Config
 
 RegisterNetEvent('sublime_core:import:config', function(cb)
     return cb(config)

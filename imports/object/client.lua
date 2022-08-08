@@ -1,5 +1,5 @@
-local object = {}
-
+local object, call = {}, false
+local timer, time = 501, 500
 ---self:edit
 --- WORK IN PROGRESS
 ---@param
@@ -27,8 +27,16 @@ end
 ---@return table
 local function New(modelHash, setting)
 
-    local self = {}
     local id = #object + 1
+    
+    if (GetGameTimer() - time < timer) then
+        DeleteEntity(object[id-1])
+    end
+
+    time = GetGameTimer()
+
+    local self = {}
+    
 
     self.id = id
     self.model = modelHash
@@ -48,8 +56,10 @@ local function New(modelHash, setting)
             self.bone = setting.bone
             self.entity_coords = GetOffsetFromEntityInWorldCoords(self.entity, 0.0, 0.0, 0.0)
             self.object = CreateObject(self.model, self.entity_coords[1], self.entity_coords[2], self.entity_coords[3], true, true, true)
+            print('here')
         else
             self.object = CreateObject(self.model, self.coords[1], self.coords[2], self.coords[3], true, true, true)
+            print('here2')
         end
     end
     
@@ -72,9 +82,75 @@ local function New(modelHash, setting)
     print(self.id, self.object)
 
     object[self.id] = self.object
+    call = false
+    return self
+end
+
+local function Created(model, coords, cb)
+    CreateThread(function()
+        supv.stream.request(model)
+
+        local obj = CreateObject(model, coords.xyz, true, false, true)
+        if cb then
+            cb(obj)
+        end
+    end)
+end
+
+--- For tools
+local function editTools(self, data)
+    if not self.object then return end
+    DetachEntity(self.object, 1, 1)
+    if self.entity then
+        if data.coords then self.coords = data.coords end
+        if data.rot then self.rot = data.rot end
+        if data.bone then self.bone = data.bone end
+        AttachEntityToEntity(self.object, self.entity, GetPedBoneIndex(self.entity, self.bone), self.coords[1], self.coords[2], self.coords[3], self.rot[1], self.rot[2], self.rot[3], true, true, false, true, 1, true)
+        return
+    end
+    return
+end
+
+local function removeTools(self)
+    if not self.object then return end
+    if self.entity then
+        DetachEntity(self.object, 1, 1)
+    end
+    DeleteEntity(self.object)
+    return nil, collectgarbage()
+end
+
+local function tools(model, setting)
+    local self = {}
+    
+    CreateThread(function()
+
+        self.model = model
+        self.coords = setting.coords or {0.0, 0.0, 0.0}
+        self.rot = setting.rot or {0.0, 0.0, 0.0}
+
+        if setting then
+            if setting.entity then
+                self.entity = setting.entity
+                self.bone = setting.bone
+                self.entity_coords = GetOffsetFromEntityInWorldCoords(self.entity, 0.0, 0.0, 0.0)
+                self.object = CreateObject(self.model, self.entity_coords[1], self.entity_coords[2], self.entity_coords[3], false, false, true)
+            else
+                self.object = CreateObject(self.model, self.coords[1], self.coords[2], self.coords[3], false, false, true)
+            end
+        end
+
+        if self.entity then
+            AttachEntityToEntity(self.object, self.entity, GetPedBoneIndex(self.entity, self.bone), self.coords[1], self.coords[2], self.coords[3], self.rot[1], self.rot[2], self.rot[3], true, true, false, true, 1, true)
+        end        
+    end)
+    self.edit = editTools
+    self.remove = removeTools
     return self
 end
 
 return {
-    new = New
+    new = New,
+    create = Created,
+    tool = tools
 }

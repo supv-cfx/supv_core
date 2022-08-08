@@ -43,7 +43,7 @@ RegisterNetEvent('supv_core:server:insert:data', function(key, value)
 end)
 
 RegisterNetEvent('supv_core:server:remove:data', function(key, value)
-    if Shared.DevMod then
+    if Config.DevMod then
         print(syncData.remove(key,value), 'result')
     else
         syncData.remove(key,value)
@@ -56,7 +56,7 @@ RegisterNetEvent('supv_core:server:get:data', function(cb)
     cb(data)
 end)
 
-if Shared.DevMod then
+if Config.DevMod then
     RegisterCommand('syncData:server', function()
         print(json.encode(data, {indent=true}), 'data')
     end, false)

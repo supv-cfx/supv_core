@@ -108,11 +108,11 @@ end
 ---@param z float coords.z
 ---@param text string string
 ---@param data table {color_rect1 = {0,0,0,150}, color_rect2 = {255,0,0,100}, scale = {0.35,0.35}, police = 1}
-local function Text3D(x, y, z, text, data)
-    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+local function Text3D(coords, text, data)
+    local onScreen, _x, _y = World3dToScreen2d(coords.x, coords.y, coords.z)
     local color, scale, police = {}, data.scale or {0.25,0.25}, data.police or 0
     color.text = data.color_text or {255,255,255,255}
-    color.rect1 = data.color_rect1 or {0,0,0,150}
+    color.rect1 = data.color_rect1 or nil
     color.rect2 = data.color_rect2 or nil
 
     SetTextScale(scale[1], scale[2])
@@ -125,7 +125,9 @@ local function Text3D(x, y, z, text, data)
 
     DrawText(_x,_y)
     local factor = (string.len(text)) / 370
-    DrawRect(_x,_y+0.0125, 0.015+ factor, 0.03, color.rect1[1], color.rect1[2], color.rect1[3], color.rect1[4])
+    if color.rect1 then
+        DrawRect(_x,_y+0.0125, 0.015+ factor, 0.03, color.rect1[1], color.rect1[2], color.rect1[3], color.rect1[4])
+    end
     if color.rect2 then
         DrawRect(_x,_y+0.0300, 0.015+ factor, 0.005, color.rect2[1], color.rect2[2], color.rect2[3], color.rect2[4])
     end

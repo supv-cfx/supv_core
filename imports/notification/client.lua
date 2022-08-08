@@ -1,17 +1,64 @@
+--- SimpleNotification
+---
+---@param txt string
+---@param flash boolean
+---@param saveToBrief boolean
+---@param color number
 local function SimpleNotification(txt, flash, saveToBrief, color)
-	TriggerEvent('supv_core:client:notification:simple', txt, flash, saveToBrief, color)
+    SetNotificationTextEntry('STRING')
+	AddTextComponentString(txt)
+	if saveToBrief == nil then saveToBrief = true end
+	if color then ThefeedNextPostBackgroundColor(color) end
+	EndTextCommandThefeedPostTicker(flash or false, saveToBrief)
 end
 
+--- AdvancedNotifiaction
+---
+---@param title string
+---@param subtitle string
+---@param txt string
+---@param textureDict string
+---@param iconType string
+---@param flash boolean
+---@param saveToBrief boolean
+---@param color number
 local function AdvancedNotifiaction(title, subtitle, txt, textureDict, iconType, flash, saveToBrief, color)
-	TriggerEvent('supv_core:client:notification:advanced', title, subtitle, txt, textureDict, iconType, flash, saveToBrief, color)
+    BeginTextCommandThefeedPost("STRING")
+	if saveToBrief == nil then saveToBrief = true end
+	AddTextEntry('supv_core:AdvancedNotification', txt)
+	if color then ThefeedNextPostBackgroundColor(color) end
+	AddTextComponentSubstringPlayerName(txt)
+	EndTextCommandThefeedPostMessagetext(textureDict, textureDict, flash, iconType, title, subtitle)
+	EndTextCommandThefeedPostTicker(flash or false, saveToBrief)
 end
 
-local function HelpNotification(txt, thisFrame, beep, duration)
-	TriggerEvent('supv_core:client:notification:help', txt, thisFrame, beep, duration)
+---  HelpNotification
+---
+---@param txt string
+---@param thisFrame boolean
+---@param beep boolean
+---@param duration number
+local function HelpNotification(txt, thisFrame, beep, duration) --> [Client]
+	AddTextEntry('supv_core:HelpNotification', txt)
+	if thisFrame then
+		DisplayHelpTextThisFrame('supv_core:HelpNotification', false)
+	else
+		BeginTextCommandDisplayHelp('supv_core:HelpNotification')
+		if beep == nil then beep = true end
+		EndTextCommandDisplayHelp(0, false, beep, duration or -1)
+	end
 end
 
-local function FloatNotification(txt, coords)
-	TriggerEvent('supv_core:client:notification:float', txt, coords)
+--- FloatNotification
+---
+---@param txt string
+---@param coords vector3
+local function FloatNotification(txt, coords) --> [Client]
+	AddTextEntry('supv_core:FloatingHelpNotification', txt)
+	SetFloatingHelpTextWorldPosition(1, coords)
+	SetFloatingHelpTextStyle(1, 1, 2, -1, 3, 0)
+	BeginTextCommandDisplayHelp('supv_core:FloatingHelpNotification')
+	EndTextCommandDisplayHelp(2, false, false, -1)
 end
 
 return {

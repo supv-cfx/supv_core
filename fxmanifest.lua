@@ -6,28 +6,29 @@ use_experimental_fxv2_oal 'yes'
 author 'SUP2Ak'
 
 
-version '0.2b' -- b for beta
+version '0.3b' -- b for beta
 
 description 'a core standalone to manage your server and got useful function to develop it too'
 
-shared_scripts {'resources/config/shared.lua', 'resources/config/translation.lua', 'resources/config/pickups.lua'}
-server_script 'resources/config/server.lua'
-client_script 'resources/config/client.lua'
+shared_script '_g.lua'
 
 shared_scripts {
-    'resources/shared/*.lua', 'import.lua'
+    'resources/config/shared/*.lua',
+    'resources/shared/*.lua',
 }
 
 server_scripts {
+    'resources/config/server/*.lua',
     'resources/server/*.lua',
 }
 
 client_scripts {
-    'resources/config/client.lua',
+    'resources/config/client/*.lua',
     'resources/client/*.lua',
 }
 
 files {
+    'import.lua',
     'imports/**/shared.lua',
     'imports/**/client.lua',
 }

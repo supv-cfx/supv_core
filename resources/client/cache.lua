@@ -1,39 +1,40 @@
 oncache.player = {}
 oncache.player.coords = nil
 oncache.player.screen = {}
-
 CreateThread(function()
-    local step, needUpdate = 0
-
-    while step == 0 do
-        oncache.player.pedid = PlayerPedId();
-        oncache.player.playerid = PlayerId();
-        oncache.player.serverid = GetPlayerServerId(PlayerId());
-        oncache.player.currentvehicle = GetVehiclePedIsIn(PlayerPedId(), false);
-        oncache.player.screen.x, oncache.player.screen.y = GetActiveScreenResolution();
-        oncache.player.coords = GetEntityCoords(PlayerPedId(), false);
-        if (oncache.player.coords) and (oncache.player.screen.x and oncache.player.screen.y)  then
-            step += 1
-        end
-        Wait(50)
+    while not NetworkIsPlayerActive(PlayerId()) do
+        Wait(0)
     end
- 
+
+    local GetEntityCoords <const>  = GetEntityCoords
+    local PlayerPedId <const>  = PlayerPedId
+    local GetVehiclePedIsIn <const>  = GetVehiclePedIsIn
+    local PlayerId <const> = PlayerId
+    local GetPlayerServerId <const> = GetPlayerServerId
+    local GetActiveScreenResolution <const> = GetActiveScreenResolution
+
+    oncache.player.pedid = PlayerPedId()
+    oncache.player.playerid = PlayerId()
+    oncache.player.serverid = GetPlayerServerId(PlayerId())
+    oncache.player.currentvehicle = GetVehiclePedIsIn(PlayerPedId(), false)
+    oncache.player.screen.x, oncache.player.screen.y = GetActiveScreenResolution()
+    oncache.player.coords = GetEntityCoords(PlayerPedId(), false)
+
+    local coords, distance, needUpdate
+    
+    coords = GetEntityCoords(PlayerPedId())
     while true do
-
-        if (step == 1) then
-            TriggerEvent('supv_core:refresh:cache', oncache.player)
-            step += 1
-        end
-
+        
         needUpdate = false
-
-        if #(oncache.player.coords - GetEntityCoords(oncache.player.pedid, false)) > 1.5 then
-            oncache.player.coords = GetEntityCoords(oncache.player.pedid, false)
+        distance = #(coords - GetEntityCoords(PlayerPedId()))
+        if distance > 0.75 then
+            oncache.player.coords = GetEntityCoords(PlayerPedId())
+            coords = oncache.player.coords
             needUpdate = true
         end
     
-        if (oncache.player.currentvehicle ~= GetVehiclePedIsIn(oncache.player.pedid, false)) then
-            oncache.player.currentvehicle = GetVehiclePedIsIn(oncache.player.pedid, false)
+        if (oncache.player.currentvehicle ~= GetVehiclePedIsIn(PlayerPedId(), false)) then
+            oncache.player.currentvehicle = GetVehiclePedIsIn(PlayerPedId(), false)
             needUpdate = true
         end
 
@@ -43,11 +44,10 @@ CreateThread(function()
 
         Wait(300)
         if not needUpdate then
-            Wait(500)
+            Wait(600)
         end
     end
 end)
-
 
 
 -- garde de côté pour l'utilisation de statebag un jour mais bon ca consomme légèrement plus que le system de cache
@@ -88,4 +88,4 @@ CreateThread(function()
 end)
 ]]
 
-_ENV.oncache = oncache
+--_ENV.oncache = oncache

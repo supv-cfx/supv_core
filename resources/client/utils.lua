@@ -25,7 +25,7 @@ end
 local function AdvancedNotifiaction(title, subtitle, txt, textureDict, iconType, flash, saveToBrief, color)
     BeginTextCommandThefeedPost("STRING")
 	if saveToBrief == nil then saveToBrief = true end
-	AddTextEntry('[F]:AdvancedNotification', txt)
+	AddTextEntry('supv_core:AdvancedNotification', txt)
 	if color then ThefeedNextPostBackgroundColor(color) end
 	AddTextComponentSubstringPlayerName(txt)
 	EndTextCommandThefeedPostMessagetext(textureDict, textureDict, flash, iconType, title, subtitle)
@@ -39,7 +39,7 @@ end
 ---@param beep boolean
 ---@param duration number
 local function HelpNotification(txt, thisFrame, beep, duration) --> [Client]
-	AddTextEntry('[F]:HelpNotification', txt)
+	AddTextEntry('supv_core:HelpNotification', txt)
 	if thisFrame then
 		DisplayHelpTextThisFrame('supv_core:HelpNotification', false)
 	else
@@ -67,12 +67,4 @@ end)
 
 RegisterNetEvent('supv_core:client:notification:advanced', function(title, subtitle, txt, textureDict, iconType, flash, saveToBrief, color)
     AdvancedNotifiaction(title, subtitle, txt, textureDict, iconType, flash, saveToBrief, color)
-end)
-
-RegisterNetEvent('supv_core:client:notification:help', function(txt, thisFrame, beep, duration)
-    HelpNotification(txt, thisFrame, beep, duration)
-end)
-
-RegisterNetEvent('supv_core:client:notification:float', function(txt, coords)
-    FloatNotification(txt, coords)
 end)

@@ -1,18 +1,17 @@
-<h1><u><b>supv_core v0.2b</b></u></h1>
+<h1 align="center"><u><b>supv_core v0.3b</b></u></h1>
 
 :fr:
 
 <h3><u>Configuration :</u></h3>
 
-- Vous y trouverez toutes les configuration dans le fichier supv_core/resources/config
+- Vous y trouverez toutes les configuration dans le fichier sublime_core/resources/config
+
 
 <h3><u>Liste des exports :</u></h3>
 
 (La doc n'est pas complétement à jour car beaucoups d'ajout et pas le temps de compléter)
 
-https://sup2ak.gitbook.io/documentation/sublime-documentation/fivem-script/sublime_core/imports --> pas pour supv_core
-
-Si vous voulez utilisez les modules n'hésitez pas a me contacter sur mon discord en attendant que la documentation soi mise à jour
+https://sup2ak.gitbook.io/documentation/supv-documentation/fivem-script/supv_core --> non mise à jour
 
 <h2><u>Features :</u></h2>
 
@@ -27,6 +26,20 @@ Si vous voulez utilisez les modules n'hésitez pas a me contacter sur mon discor
 <h1>CHANGELOG - MEMORY</h1>
 
 <h2> supv_core </h2>
+
+[0.3b]
+- [Global] : (init des variables global, changement sur les notification, beaucoups d'ajout et de modification sur les modules et le système de cache)
+- [Resources] :
+    - Update cache management [client]
+    - Organisation fichier config [client/config/server]
+    - Voir en détails le commit sur tout les autres petits changement
+- [Modules] : 
+    - Add vehicle (get/set properties | spawn & spawnLocal)
+    - Add stream (request)
+    - Add entity (voir le commit, beaucoups de fonction disponible)
+    - Edit object (tool & create)
+    - Edit draw (draw.text3d)
+    - Voir commit pour plus de détails car beaucoups de changement...
 
 [0.2b]
 - [Global] : (stock en mémoire la ref des native utilisable en boucle)
@@ -122,4 +135,4 @@ Si vous voulez utilisez les modules n'hésitez pas a me contacter sur mon discor
     - Init string (string.starts),
     - Init marker (marker.new, markerObj:hidden, markerObj:remove, markerObj:visible),
 - [Resources] :
-    - Add RadioAudio controler,
+    - Add RadioAudio controler

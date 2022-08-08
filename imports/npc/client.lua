@@ -47,10 +47,10 @@ local function Sync(hash, coords, data, weapon)
     self.data = {}
 
     if data then
-        self.data.blockevent = data.blockevent or default.client.data.blockevent
-        self.data.freeze = data.freeze or default.client.data.freeze
-        self.data.godmode = data.godmode or default.client.data.godmode
-        self.data.variation = data.varation or default.client.data.varation
+        self.data.blockevent = data.blockevent --or default.client.data.blockevent
+        self.data.freeze = data.freeze --or default.client.data.freeze
+        self.data.godmode = data.godmode --or default.client.data.godmode
+        self.data.variation = data.varation --or default.client.data.varation
     else
         self.data.blockevent = default.client.data.blockevent
         self.data.freeze = default.client.data.freeze
