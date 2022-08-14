@@ -1,91 +1,53 @@
-oncache.player = {}
-oncache.player.coords = nil
-oncache.player.screen = {}
-CreateThread(function()
-    while not NetworkIsPlayerActive(PlayerId()) do
-        Wait(0)
+oncache.playerid = PlayerId()
+oncache.serverid = GetPlayerServerId(PlayerId())
+oncache.screen = {GetActiveScreenResolution()}
+
+function oncache:set(k, v)
+    if self[k] ~= v then
+        self[k] = v
+        TriggerEvent(('supv_core:set:cache:%s'):format(k), v)
+        return true
     end
+end
 
-    local GetEntityCoords <const>  = GetEntityCoords
-    local PlayerPedId <const>  = PlayerPedId
-    local GetVehiclePedIsIn <const>  = GetVehiclePedIsIn
-    local PlayerId <const> = PlayerId
-    local GetPlayerServerId <const> = GetPlayerServerId
-    local GetActiveScreenResolution <const> = GetActiveScreenResolution
+local GetEntityCoords <const>  = GetEntityCoords
+local PlayerPedId <const>  = PlayerPedId
+--local GetVehiclePedIsUsing <const>  = GetVehiclePedIsUsing -- fuck perf
+local GetVehiclePedIsIn <const> = GetVehiclePedIsIn
 
-    oncache.player.pedid = PlayerPedId()
-    oncache.player.playerid = PlayerId()
-    oncache.player.serverid = GetPlayerServerId(PlayerId())
-    oncache.player.currentvehicle = GetVehiclePedIsIn(PlayerPedId(), false)
-    oncache.player.screen.x, oncache.player.screen.y = GetActiveScreenResolution()
-    oncache.player.coords = GetEntityCoords(PlayerPedId(), false)
-
-    local coords, distance, needUpdate
-    
-    coords = GetEntityCoords(PlayerPedId())
+CreateThread(function()
+    local ped, currentVeh, distance, coords
+    oncache.coords = GetEntityCoords(PlayerPedId())
     while true do
+        ped = PlayerPedId()
+        currentVeh = GetVehiclePedIsIn(ped)
+        coords = GetEntityCoords(ped)
+
+        distance = #(coords - oncache.coords)
         
-        needUpdate = false
-        distance = #(coords - GetEntityCoords(PlayerPedId()))
-        if distance > 0.75 then
-            oncache.player.coords = GetEntityCoords(PlayerPedId())
-            coords = oncache.player.coords
-            needUpdate = true
-        end
-    
-        if (oncache.player.currentvehicle ~= GetVehiclePedIsIn(PlayerPedId(), false)) then
-            oncache.player.currentvehicle = GetVehiclePedIsIn(PlayerPedId(), false)
-            needUpdate = true
+        if  distance > 0.80 then
+            oncache:set('coords', coords)
         end
 
-        if needUpdate then
-            TriggerEvent('supv_core:refresh:cache', oncache.player)
+        --print(currentVeh)
+
+        if currentVeh > 0 then
+            oncache:set('currentvehicle', currentVeh)
+        else
+            oncache:set('currentvehicle', false)
         end
 
-        Wait(300)
-        if not needUpdate then
-            Wait(600)
-        end
+        Wait(1000)
     end
 end)
 
+_ENV.oncache = oncache
 
--- garde de côté pour l'utilisation de statebag un jour mais bon ca consomme légèrement plus que le system de cache
---[[
-CreateThread(function()
-    local loaded = false
-    while true do
-        screenX, screenY = GetActiveScreenResolution()
-        if not loaded then
-            loaded = true
-            Cache.player.pedId = PlayerPedId()
-            Cache.player.id = PlayerId()
-            Cache.player.serverId = GetPlayerServerId(PlayerId())
-            --LocalPlayer.state:set('playerPedId', PlayerPedId(), true)
-            --LocalPlayer.state:set('playerId', PlayerId(), true)
-            --LocalPlayer.state:set('serverId', GetPlayerServerId(PlayerId()), true)
-        end
-        if not next(Cache.player.screen) or (Cache.player.screen.x ~= screenX and Cache.player.screen.y ~= screenY ) then
-            Cache.player.screen.x, Cache.player.screen.y = GetActiveScreenResolution()
-            --LocalPlayer.state:set('resolution', GetActiveScreenResolution(), true)
-            needUpdate = true
-        end
-        if not Cache.player.coords or #(GetEntityCoords(PlayerPedId()) - Cache.player.coords) > 3.0 then
-            Cache.player.coords = GetEntityCoords(PlayerPedId())
-            --LocalPlayer.state:set('coords', GetEntityCoords(PlayerPedId()), true)
-            needUpdate = true
-        end
-        if not Cache.player.currentVehicle or (GetVehiclePedIsIn(PlayerPedId(), false) ~= Cache.player.currentVehicle) then
-            Cache.player.currentVehicle = GetVehiclePedIsIn(PlayerPedId(), false)
-            --LocalPlayer.state:set('currentVehicle', GetVehiclePedIsIn(PlayerPedId(), false), true)
-            needUpdate = true
-        end
-        if needUpdate then
-            TriggerEvent('supv_core:refresh:cache', Cache.player)
-        end
-        Wait(500)
-    end
-end)
-]]
 
---_ENV.oncache = oncache
+--Player:set('playerid', PlayerId(), true)
+--Player:set('pedid', PlayerPedId(), true)
+--Player:set('serverid', GetPlayerServerId(PlayerId()), true)
+--Player:set('screen', {GetActiveScreenResolution()}, true)
+--Player:set('coords', GetEntityCoords(PlayerPedId()), true)
+--Player:set('currentvehicle', GetVehiclePedIsIn(PlayerPedId(), false), true)
+

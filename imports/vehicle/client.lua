@@ -528,7 +528,7 @@ function SpawnVehicle(vehicle, coords, cb)
 end
 
 function SpawnLocalVehicle(vehicle, coords, cb)
-    local vehicleCreated, id
+    local vehicleCreated
 
     CreateThread(function()
 

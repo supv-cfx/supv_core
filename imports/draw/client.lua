@@ -47,7 +47,7 @@ local function MeasureStringWidth(str, font, scale)
     AddTextComponentSubstringPlayerName(str)
     SetTextFont(font or 0)
     SetTextScale(1.0, scale or 0)
-    return EndTextCommandGetWidth(true) * supv.oncache.screen.x
+    return EndTextCommandGetWidth(true) * supv.oncache.screen[1]
 end
 
 local function AddText(str)
@@ -65,7 +65,7 @@ local function AddText(str)
 end
 
 local function GetLineCount(Text, X, Y, Font, Scale, Color, Alignment, DropShadow, Outline, WordWrap)
-    local Text, X, Y = tostring(Text), (tonumber(X) or 0) / supv.oncache.screen.x, (tonumber(Y) or 0) / supv.oncache.screen.y
+    local Text, X, Y = tostring(Text), (tonumber(X) or 0) / supv.oncache.screen[1], (tonumber(Y) or 0) / supv.oncache.screen[2]
     SetTextFont(Font or 0)
     SetTextScale(1.0, Scale or 0)
     SetTextColour(tonumber(Color[1]) or 255, tonumber(Color[2]) or 255, tonumber(Color[3]) or 255, tonumber(Color[4]) or 255)
@@ -84,11 +84,11 @@ local function GetLineCount(Text, X, Y, Font, Scale, Color, Alignment, DropShado
     end
     if tonumber(WordWrap) and tonumber(WordWrap) ~= 0 then
         if Alignment == 1 or Alignment == "Center" or Alignment == "Centre" then
-            SetTextWrap(X - ((WordWrap / supv.oncache.screen.x) / 2), X + ((WordWrap / supv.oncache.screen.y) / 2))
+            SetTextWrap(X - ((WordWrap / supv.oncache.screen[1]) / 2), X + ((WordWrap / supv.oncache.screen[2]) / 2))
         elseif Alignment == 2 or Alignment == "Right" then
             SetTextWrap(0, X)
         else
-            SetTextWrap(X, X + (WordWrap / supv.oncache.screen.x))
+            SetTextWrap(X, X + (WordWrap / supv.oncache.screen[1]))
         end
     else
         if Alignment == 2 or Alignment == "Right" then
@@ -126,10 +126,10 @@ local function Text3D(coords, text, data)
     DrawText(_x,_y)
     local factor = (string.len(text)) / 370
     if color.rect1 then
-        DrawRect(_x,_y+0.0125, 0.015+ factor, 0.03, color.rect1[1], color.rect1[2], color.rect1[3], color.rect1[4])
+        DrawRect(_x,_y+0.0125, 0.015+ factor + (scale[1]/4), 0.03, color.rect1[1], color.rect1[2], color.rect1[3], color.rect1[4])
     end
     if color.rect2 then
-        DrawRect(_x,_y+0.0300, 0.015+ factor, 0.005, color.rect2[1], color.rect2[2], color.rect2[3], color.rect2[4])
+        DrawRect(_x,_y+0.0300, 0.015+ factor + (scale[1]/4), 0.005, color.rect2[1], color.rect2[2], color.rect2[3], color.rect2[4])
     end
 end
 
@@ -144,7 +144,7 @@ end
 ---@param color table {int, int, int, int}
 ---@param heading float 0.0
 local function Sprite(TextureDictionary, TextureName, x, y, width, heigth, color, heading)--drawSprite(TextureDictionary, TextureName, x, y, w, h, heading, color)
-    local screenX, screenY = supv.oncache.screen.x, supv.oncache.screen.y 
+    local screenX, screenY = supv.oncache.screen[1], supv.oncache.screen[2] 
     local x, y = (tonumber(x or 0) / tonumber(screenX)), (tonumber(y or 0) / tonumber(screenY))
     local w, h = (tonumber(width or 0) / tonumber(screenX)), (tonumber(heigth or 0) / tonumber(screenY))
 
@@ -163,7 +163,7 @@ end
 ---@param h number
 ---@param color table
 local function Rect(x, y, w, h, color)
-    local x, y, w, h = (tonumber(x) or 0) / supv.oncache.screen.x, (tonumber(y) or 0) / supv.oncache.screen.y, (tonumber(w) or 0) / supv.oncache.screen.x, (tonumber(h) or 0) / supv.oncache.screen.y
+    local x, y, w, h = (tonumber(x) or 0) / supv.oncache.screen[1], (tonumber(y) or 0) / supv.oncache.screen[2], (tonumber(w) or 0) / supv.oncache.screen[1], (tonumber(h) or 0) / supv.oncache.screen[2]
     DrawRect(x + w * 0.5, y + h * 0.5, w, h, color[1] or 255, color[2] or 255, color[3] or 255, color[4] or 100)
 end
 
@@ -180,7 +180,7 @@ end
 ---@param Outline boolean true or false or nil 
 ---@param WordWrap nil|number int or nil
 local function Text2D(Text, X, Y, Font, Scale, Color, Alignment, DropShadow, Outline, WordWrap)
-    local Text, X, Y = tostring(Text), (tonumber(X) or 0) / supv.oncache.screen.x, (tonumber(Y) or 0) / supv.oncache.screen.y
+    local Text, X, Y = tostring(Text), (tonumber(X) or 0) / supv.oncache.screen[1], (tonumber(Y) or 0) / supv.oncache.screen[2]
     SetTextFont(Font or 0)
     SetTextScale(1.0, Scale or 0)
     SetTextColour(tonumber(Color[1]) or 255, tonumber(Color[2]) or 255, tonumber(Color[3]) or 255, tonumber(Color[4]) or 255)
@@ -199,11 +199,11 @@ local function Text2D(Text, X, Y, Font, Scale, Color, Alignment, DropShadow, Out
     end
     if tonumber(WordWrap) and tonumber(WordWrap) ~= 0 then
         if Alignment == 1 or Alignment == "Center" or Alignment == "Centre" then
-            SetTextWrap(X - ((WordWrap / supv.oncache.screen.x) / 2), X + ((WordWrap / supv.oncache.screen.y) / 2))
+            SetTextWrap(X - ((WordWrap / supv.oncache.screen[1]) / 2), X + ((WordWrap / supv.oncache.screen[2]) / 2))
         elseif Alignment == 2 or Alignment == "Right" then
             SetTextWrap(0, X)
         else
-            SetTextWrap(X, X + (WordWrap / supv.oncache.screen.x))
+            SetTextWrap(X, X + (WordWrap / supv.oncache.screen[1]))
         end
     else
         if Alignment == 2 or Alignment == "Right" then
@@ -240,7 +240,7 @@ local function ProgressBar(text, time, setting, data, action)
         progressbar.setting.timeCancel = setting.timeCancel or 0
         progressbar.setting.animation = setting.animation or defaultProgressBar.animation
         progressbar.setting.prop = setting.prop or defaultProgressBar.prop
-        progressbar.data.x = data.x or  (supv.oncache.screen.x * 0.35)
+        progressbar.data.x = data.x or  (supv.oncache.screen[1] * 0.35)
         progressbar.data.y = data.y or  defaultProgressBar.y
         progressbar.data.w = data.w or  defaultProgressBar.w
         progressbar.data.h = data.h or  defaultProgressBar.h
@@ -280,7 +280,7 @@ local function ProgressBar(text, time, setting, data, action)
                     
                 if (progressbar.data.progressAnim == 'simple') then
                     local _y = progressbar.data.y
-                    local _ymax = supv.oncache.screen.y + 100
+                    local _ymax = supv.oncache.screen[2] + 100
                     while _y < _ymax do
                         Wait(0)
 
@@ -495,7 +495,7 @@ local function ProgressBar(text, time, setting, data, action)
             
         CreateThread(function()
             if progressbar.data.progressAnim == 'simple' then
-                local _y = supv.oncache.screen.y + 100
+                local _y = supv.oncache.screen[2] + 100
                 while _y > progressbar.data.y do
                     Wait(0)
                     if progressbar.data.progressType == 'sprite' then

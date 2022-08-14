@@ -1,13 +1,20 @@
 local Traffic <const>, Npc <const>, VehicleParked <const> = Config.Traffic.amount.traffic, Config.Traffic.amount.npc, Config.Traffic.amount.parked
 local EnableBoats <const>, EnableTrain <const>, EnableGarbageTruck <const>, EnablePolice <const> = Config.Traffic.enable.boats, Config.Traffic.enable.trains, Config.Traffic.enable.garbageTruck, Config.Traffic.enable.polices
 
-
 local GetEntityModel <const> = GetEntityModel
 local RemoveAllPickupsOfType <const> = RemoveAllPickupsOfType
 local GetGamePool <const> = GetGamePool
 local DisplayRadar <const> = DisplayRadar
 local DisableControlAction <const> = DisableControlAction
 local IsControlPressed <const> = IsControlPressed
+local SetRadarBigmapEnabled <const> = SetRadarBigmapEnabled
+local RequestScaleformMovie <const> = RequestScaleformMovie
+local BeginScaleformMovieMethod <const> = BeginScaleformMovieMethod
+local ScaleformMovieMethodAddParamInt <const> = ScaleformMovieMethodAddParamInt
+local EndScaleformMovieMethod <const> = EndScaleformMovieMethod
+local GetEntityCoords <const> = GetEntityCoords
+local PlayerPedId <const> = PlayerPedId
+local IsPedArmed <const> = IsPedArmed
 
 local function ClearPickupsFromRewards()
     CreateThread(function()
@@ -16,16 +23,16 @@ local function ClearPickupsFromRewards()
             if Config.DevMod then
                 print(json.encode(GetGamePool('CPickup')))
             end
-            RemoveAllPickupsOfType(0xDF711959) -- carbine rifle
+            RemoveAllPickupsOfType(0xA9355DCD) -- shotgun
+            RemoveAllPickupsOfType(0xDF711959) -- carbine-rifle
             RemoveAllPickupsOfType(0xF9AFB48F) -- pistol
-            RemoveAllPickupsOfType(0xA9355DCD) -- pumpshotgun
         end
     end)
 end
 
 CreateThread(function()
 
-    while next(oncache.player) == nil do Wait(50) end
+    while not next(oncache) do Wait(50) end
 
     SetRandomBoats(EnableBoats)
     SetRandomTrains(EnableTrain)
@@ -34,7 +41,7 @@ CreateThread(function()
     SetCreateRandomCops(EnablePolice)
     SetCreateRandomCopsNotOnScenarios(EnablePolice)
     SetCreateRandomCopsOnScenarios(EnablePolice)
-    SetDispatchCopsForPlayer(oncache.player.playerid, EnablePolice)
+    SetDispatchCopsForPlayer(oncache.playerid, EnablePolice)
 
     SetPedPopulationBudget(Npc) -- 0 = none / 3 = normal (max is 3)
     SetVehiclePopulationBudget(Traffic) -- https://docs.fivem.net/natives/?_0xCB9E1EB3BE2AF4E9 no more info but is like SetPedPopulationBudget I think...
@@ -53,12 +60,12 @@ CreateThread(function()
     end
 
     if not Config.Rewards.vehicle then
-        DisablePlayerVehicleRewards(oncache.player.playerid)
+        DisablePlayerVehicleRewards(oncache.playerid)
     end
 
     if not Config.Rewards.npc then
         for i = 1, #Config.Pickups.Blacklisted do
-            ToggleUsePickupsForPlayer(oncache.player.playerid, Config.Pickups.Blacklisted[i], false)
+            ToggleUsePickupsForPlayer(oncache.playerid, Config.Pickups.Blacklisted[i], false)
         end
         if Config.Rewards.clearPickUpsRewards then
             ClearPickupsFromRewards()
@@ -89,16 +96,16 @@ CreateThread(function()
         for i = 1, #list do
             assert(type(list[i].flagId) == 'number', ("[Error] : In Config.PlayerOptions.flag.list flagId: %s, isn't a number"):format(list[i].flagId))
             assert(type(list[i].value) == 'boolean', ("[Error] : In Config.PlayerOptions.flag.list value %s, isn't a boolean"):format(list[i].value))
-            SetPedConfigFlag(oncache.player.pedid, list[i].flagId, list[i].value)
+            SetPedConfigFlag(PlayerPedId(), list[i].flagId, list[i].value)
         end
     end
 
     if not Config.PlayerOptions.canRagdoll then
-        SetPedCanRagdoll(oncache.player.pedid, false) 
+        SetPedCanRagdoll(PlayerPedId(), false) 
     end
 
     if Config.PlayerOptions.gotDamagedOnlyByPlayers then
-        SetEntityOnlyDamagedByPlayer(oncache.player.pedid, true)
+        SetEntityOnlyDamagedByPlayer(PlayerPedId(), true)
     end
 
     if not Config.PlayerOptions.showRadar.visible then
@@ -108,9 +115,9 @@ CreateThread(function()
     end
 
     if Config.PlayerOptions.canDoDriveBy == false then
-        SetPlayerCanDoDriveBy(oncache.player.playerid, false)
+        SetPlayerCanDoDriveBy(oncache.playerid, false)
     elseif Config.PlayerOptions.canDoDriveBy == true then
-        SetPlayerCanDoDriveBy(oncache.player.playerid, true)
+        SetPlayerCanDoDriveBy(oncache.playerid, true)
     end
 
 end)
@@ -123,7 +130,7 @@ if not Config.Traffic.enable.polices then
     CreateThread(function()
         while true do
             Wait(2500)
-            if #(oncache.player.coords - coords) < 100 then
+            if #(GetEntityCoords(PlayerPedId()) - coords) < 100 then
                 ClearAreaOfCops(coords.x, coords.y, coords.z, 100.0)
                 Wait(10000)
             end
@@ -137,9 +144,7 @@ if Config.PlayerOptions.showRadar.visible == 'vehicle' then
     local vehicleBlacklisted <const>, currentValue = Config.PlayerOptions.showRadar.blacklist, false
 
     local function ShowRadar(bool)
-        if currentValue == bool then
-            return
-        else
+        if currentValue ~= bool then
             currentValue = bool
             DisplayRadar(bool)
             return currentValue
@@ -151,19 +156,25 @@ if Config.PlayerOptions.showRadar.visible == 'vehicle' then
         if next(vehicleBlacklisted) then
             while true do
                 Wait(1000)
-                if not vehicleBlacklisted[GetEntityModel(oncache.player.currentvehicle)] then
+                if not vehicleBlacklisted[GetEntityModel(oncache.currentvehicle)] then
+                    if Config.PlayerOptions.showRadarArmourHealth then
+                        SetRadarBigmapEnabled(false, false)
+                    end
                     ShowRadar(true)
                 end
-                if oncache.player.currentvehicle == 0 then
+                if oncache.currentvehicle == 0 then
                     ShowRadar(false)
                 end
             end
         else
             while true do
                 Wait(1000)
-                if oncache.player.currentvehicle == 0  then
+                if oncache.currentvehicle == 0  then
                     ShowRadar(false)
                 else
+                    if Config.PlayerOptions.showRadarArmourHealth then
+                        SetRadarBigmapEnabled(false, false)
+                    end
                     ShowRadar(true)
                 end
             end
@@ -184,7 +195,7 @@ if not Config.Rewards.vehicle then
             while true do
                 Wait(1)
     
-                DisablePlayerVehicleRewards(oncache.player.playerid)
+                DisablePlayerVehicleRewards(oncache.playerid)
                 if (GetGameTimer() - time > timer) then
                     return false
                 end
@@ -197,7 +208,7 @@ if not Config.Rewards.vehicle then
         while true do
             Wait(500)
 
-            if listeVehicle[GetEntityModel(GetVehiclePedIsTryingToEnter(oncache.player.pedid))] then
+            if listeVehicle[GetEntityModel(GetVehiclePedIsTryingToEnter(PlayerPedId()))] then
                 RemoveRewardsFromPoliceVehicle()
                 Wait(2500)
             end
@@ -223,8 +234,8 @@ if Config.PlayerOptions.hideHudComponent.enable then
                             HideHudComponentThisFrame(list[i])
                         end
                     else
-                        if IsPedArmed(oncache.player.pedid, 4) then intervale = false 
-                            local _, hash = GetCurrentPedWeapon(oncache.player.pedid, true)
+                        if IsPedArmed(PlayerPedId(), 4) then intervale = false 
+                            local _, hash = GetCurrentPedWeapon(PlayerPedId(), true)
                             if not scopeList[hash] then
                                 HideHudComponentThisFrame(14)
                             end
@@ -259,7 +270,7 @@ if not Config.PlayerOptions.CrossHit then
         while true do
             Wait(0)
             intervale = true
-            if IsPedArmed(oncache.player.pedid, 4) then intervale = false
+            if IsPedArmed(PlayerPedId(), 4) then intervale = false
                 DisableControlAction(1, 140, true)
                 DisableControlAction(1, 141, true)
                 DisableControlAction(1, 142, true)
@@ -279,17 +290,17 @@ if Config.AudioRadio.enable or Config.AudioRadio.enable == 'full' then
         if Config.AudioRadio.enable == true then
             while true do
                 Wait(1000)
-                if blacklist[GetEntityModel(oncache.player.currentvehicle)] then
+                if blacklist[GetEntityModel(oncache.currentvehicle)] then
                     SetUserRadioControlEnabled(false)
-                    SetVehRadioStation(oncache.player.currentvehicle, "OFF")
+                    SetVehRadioStation(oncache.currentvehicle, "OFF")
                 end
             end
         elseif Config.AudioRadio.enable == 'full' then
             while true do
                 Wait(1000)
-                if oncache.player.currentvehicle then
+                if oncache.currentvehicle then
                     SetUserRadioControlEnabled(false)
-                    SetVehRadioStation(oncache.player.currentvehicle, "OFF")
+                    SetVehRadioStation(oncache.currentvehicle, "OFF")
                 end
             end
         else return false
@@ -319,7 +330,7 @@ if Config.PlayerOptions.unlimitedStamina then
     CreateThread(function()
         while true do
             Wait(2000)
-            ResetPlayerStamina(oncache.player.playerid)
+            ResetPlayerStamina(oncache.playerid)
         end
     end)
 end
@@ -332,8 +343,8 @@ if Config.PlayerOptions.noRollingGunFight then
             Wait(0)
             intervale = true
 
-            if IsPlayerFreeAiming(oncache.player.playerid) and IsControlPressed(0, 22) then intervale = false
-                ClearPedTasksImmediately(oncache.player.pedid)
+            if IsPlayerFreeAiming(oncache.playerid) and IsControlPressed(0, 22) then intervale = false
+                ClearPedTasksImmediately(PlayerPedId())
             end   
 
             if intervale then
@@ -349,8 +360,8 @@ if Config.PlayerOptions.noPunchRunning then
         while true do
             Wait(0)
             intervale = true
-            if IsPedRunningMeleeTask(oncache.player.pedid) then intervale = false
-                ClearPedTasksImmediately(oncache.player.pedid)
+            if IsPedRunningMeleeTask(PlayerPedId()) then intervale = false
+                ClearPedTasksImmediately(PlayerPedId())
             end
 
             if intervale then
@@ -358,4 +369,33 @@ if Config.PlayerOptions.noPunchRunning then
             end
         end
     end)
+end
+
+if not Config.PlayerOptions.showRadarArmourHealth then
+    local size = 1
+    CreateThread(function()
+        local minimap = RequestScaleformMovie("minimap")
+        Wait(1000)
+        SetRadarBigmapEnabled(true, false)       
+        while size < 1000 do
+            Wait(0)
+            BeginScaleformMovieMethod(minimap, "SETUP_HEALTH_ARMOUR")
+            ScaleformMovieMethodAddParamInt(3)
+            EndScaleformMovieMethod()
+            SetRadarBigmapEnabled(false, false)
+            size += 1
+        end
+    end)
+else
+    --local size = 1
+    --CreateThread(function()
+    --    while size < 500 do
+    --        Wait(0)
+    --        SetRadarBigmapEnabled(true, false)
+    --        SetRadarBigmapEnabled(false, false)
+    --        DisplayRadar(true)
+    --        size += 1
+    --    end
+    --    if not Config.PlayerOptions.showRadar then DisplayRadar(false) end
+    --end)
 end

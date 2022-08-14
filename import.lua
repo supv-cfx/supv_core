@@ -37,19 +37,25 @@ local function call_module(self, index)
     return module
 end
 
-supv = setmetatable({name = supv_core, service = service, oncache = {}, config = {client = {}, server = {}}},{ __index = call_module, __call = call_module })
+supv = setmetatable({name = supv_core, service = service, config = {client = {}, server = {}}},{ __index = call_module, __call = call_module })
 
 if service == 'client' then
-    local PlayerPedId <const>, PlayerId <const>, GetPlayerServerId <const> = PlayerPedId, PlayerId, GetPlayerServerId
-    RegisterNetEvent('supv_core:refresh:cache', function(cache)
-        for k,v in pairs(cache)do
-            supv.oncache[k] = v
-        end
+    local PlayerPedId <const>, PlayerId <const>, GetPlayerServerId <const>, GetActiveScreenResolution <const> = PlayerPedId, PlayerId, GetPlayerServerId, GetActiveScreenResolution
+    CreateThread(function()
         supv.oncache.pedid = PlayerPedId()
         supv.oncache.playerid = PlayerId()
         supv.oncache.serverid = GetPlayerServerId(PlayerId())
-        return supv.oncache
+        supv.oncache.screen = {GetActiveScreenResolution()}
     end)
+    supv.oncache = setmetatable({}, 
+    { 
+        __index = function(self, k)
+            RegisterNetEvent(('supv_core:set:cache:%s'):format(k), function(v)
+                self[k] = v
+                return true
+            end)    
+        end
+    })
     TriggerEvent('supv_core:insert:config-client', function(cfg)
         for k,v in pairs(cfg) do
             supv.config.client[k] = v
