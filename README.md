@@ -1,4 +1,4 @@
-<h1 align="center"><u><b>supv_core v0.3b</b></u></h1>
+<h1 align="center"><u><b>supv_core v0.5b</b></u></h1>
 
 :fr:
 

@@ -24,16 +24,16 @@ Config.AudioFlag = { -- https://docs.fivem.net/natives/?_0xB9EFD5C25018725A
 Config.Relationship = { -- https://docs.fivem.net/natives/?_0xBF25EB89375A37AD
     enable = false, -- turn on true to activate script
     list = {
-        {relation = 1, group1 = {`CIVMALE`, `CIVFEMALE`, `GANG_1`, `GANG_2`, `GANG_9`, `GANG_10`, `AMBIENT_GANG_LOST`, `AMBIENT_GANG_MEXICAN`, `AMBIENT_GANG_FAMILY`, `AMBIENT_GANG_BALLAS`, `AMBIENT_GANG_MARABUNTE`, `AMBIENT_GANG_CULT`, `AMBIENT_GANG_SALVA`, `AMBIENT_GANG_WEICHENG`, `AMBIENT_GANG_HILLBILLY`, `DEALER`,`COP`, `PRIVATE_SECURITY`, `SECURITY_GUARD`, `ARMY`, `MEDIC`, `FIREMAN`, `HATES_PLAYER`, `NO_RELATIONSHIP`, `SPECIAL`, `MISSION2`, `MISSION3`, `MISSION4`, `MISSION5`, `MISSION6`, `MISSION7`, `MISSION8`}, group2 = {`PLAYER`}} -- in this example all ped are neutral with player you can make table in group1 and group2 if you want set a lot type of relationship between ped and player or ped and ped
+        {relation = 1, group1 = {`CIVMALE`, `CIVFEMALE`, `GANG_1`, `GANG_2`, `GANG_9`, `GANG_10`, `AMBIENT_GANG_LOST`, `AMBIENT_GANG_MEXICAN`, `AMBIENT_GANG_FAMILY`, `AMBIENT_GANG_BALLAS`, `AMBIENT_GANG_MARABUNTE`, `AMBIENT_GANG_CULT`, `AMBIENT_GANG_SALVA`, `AMBIENT_GANG_WEICHENG`, `AMBIENT_GANG_HILLBILLY`, `DEALER`,`COP`, `PRIVATE_SECURITY`, `SECURITY_GUARD`, `ARMY`, `MEDIC`, `FIREMAN`, `HATES_PLAYER`, `NO_RELATIONSHIP`, `SPECIAL`, `MISSION2`, `MISSION3`, `MISSION4`, `DOMESTIC_ANIMAL`, `GUARD_DOG`,`MISSION5`, `MISSION6`, `MISSION7`, `MISSION8`}, group2 = {`PLAYER`}} -- in this example all ped are neutral with player you can make table in group1 and group2 if you want set a lot type of relationship between ped and player or ped and ped
     }
 }
 --[[__Manage a lot of options for any player are loaded__]]--
 Config.PlayerOptions = { 
     flag = { -- https://docs.fivem.net/natives/?_0x9CFBE10D
-        enable = false, -- true active script
+        enable = true, -- true active script
         list = {
             {value = false, flagId = 35}, -- for player don't auto put helmet when he is on bike
-            --{value = true, flagId = 429}, -- disable auto start engin when player entered in vehicle 
+            {value = false, flagId = 429}, -- disable auto start engin when player entered in vehicle (great if you got supv_carkey)
         }
     },
     hideHudComponent = { -- https://docs.fivem.net/natives/?_0x6806C51AD12B83B8

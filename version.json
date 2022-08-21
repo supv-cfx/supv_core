@@ -1,7 +1,7 @@
 {
     "enable": true,
 	"script": "supv_core",
-    "version": "0.4b",
+    "version": "0.5b",
     "changelog": [
         "^8[Resources]^2:",
         "\t^3- ^3WATCH ^7CHANGLOG readme on github",

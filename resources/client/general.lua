@@ -125,15 +125,15 @@ end)
 
 if not Config.Traffic.enable.polices then
 
-    local coords <const> = vec3(409.160736, -990.443726, 28.843187)
+    local coords <const>, sleep = vec3(409.160736, -990.443726, 28.843187), 0
 
     CreateThread(function()
         while true do
-            Wait(2500)
-            if #(GetEntityCoords(PlayerPedId()) - coords) < 100 then
-                ClearAreaOfCops(coords.x, coords.y, coords.z, 100.0)
-                Wait(10000)
+            sleep = 2500
+            if #(GetEntityCoords(PlayerPedId()) - coords) < 50 then sleep = 750
+                ClearAreaOfCops(coords.x, coords.y, coords.z, 50.0)
             end
+            Wait(sleep)
         end
     end)
 end
@@ -169,7 +169,7 @@ if Config.PlayerOptions.showRadar.visible == 'vehicle' then
         else
             while true do
                 Wait(1000)
-                if oncache.currentvehicle == 0  then
+                if oncache.currentvehicle == 0 then
                     ShowRadar(false)
                 else
                     if Config.PlayerOptions.showRadarArmourHealth then
@@ -386,16 +386,4 @@ if not Config.PlayerOptions.showRadarArmourHealth then
             size += 1
         end
     end)
-else
-    --local size = 1
-    --CreateThread(function()
-    --    while size < 500 do
-    --        Wait(0)
-    --        SetRadarBigmapEnabled(true, false)
-    --        SetRadarBigmapEnabled(false, false)
-    --        DisplayRadar(true)
-    --        size += 1
-    --    end
-    --    if not Config.PlayerOptions.showRadar then DisplayRadar(false) end
-    --end)
 end

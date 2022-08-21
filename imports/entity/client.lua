@@ -69,7 +69,7 @@ end
 ---@param filter table
 ---@return table
 local function GetPeds(filter)
-    local peds, player, pool, filtered = {}, supv.oncache.pedid or PlayerPedId(), GetAllPedsAndPlayers(), nil
+    local peds, player, pool, filtered = {}, PlayerPedId(), GetAllPedsAndPlayers(), nil
     if filter then
         filtered = {}
         for i = 1, #pool do

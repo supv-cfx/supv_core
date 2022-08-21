@@ -275,7 +275,7 @@ local function ProgressBar(text, time, setting, data, action)
                 end
 
                 if progressbar.setting.freeze then
-                    FreezeEntityPosition(supv.oncache.pedid, false)
+                    FreezeEntityPosition(PlayerPedId(), false)
                 end
                     
                 if (progressbar.data.progressAnim == 'simple') then
@@ -365,7 +365,7 @@ local function ProgressBar(text, time, setting, data, action)
             local inTimeToCancel, stateCancel
             CreateThread(function()
                 if progressbar.setting.freeze then
-                    FreezeEntityPosition(supv.oncache.pedid, true)
+                    FreezeEntityPosition(PlayerPedId(), true)
                 end
                 inTimeToCancel = progressbar.setting.canCancel
                 while true do

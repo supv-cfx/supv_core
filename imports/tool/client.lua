@@ -143,7 +143,7 @@ local function RayCastCamera(distance)
 		y = cameraCoord.y + direction.y * distance, 
 		z = cameraCoord.z + direction.z * distance 
 	}
-	local _, b, c, _, e = GetShapeTestResult(StartShapeTestRay(cameraCoord.x, cameraCoord.y, cameraCoord.z, destination.x, destination.y, destination.z, -1, supv.oncache.pedid, 0))
+	local _, b, c, _, e = GetShapeTestResult(StartShapeTestRay(cameraCoord.x, cameraCoord.y, cameraCoord.z, destination.x, destination.y, destination.z, -1, PlayerPedId(), 0))
 	return b, c, e
 end
 

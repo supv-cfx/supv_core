@@ -2,6 +2,7 @@ local AddTextEntry <const> = AddTextEntry
 local DisplayOnscreenKeyboard <const> = DisplayOnscreenKeyboard
 local UpdateOnscreenKeyboard <const> = UpdateOnscreenKeyboard
 local GetOnscreenKeyboardResult <const> = GetOnscreenKeyboardResult
+local math <const> = math
 
 --- keyboard.input
 ---
@@ -10,10 +11,11 @@ local GetOnscreenKeyboardResult <const> = GetOnscreenKeyboardResult
 ---@param maxLength integer
 ---@return string
 local function KI(textEntry, inputText, maxLength)
-    AddTextEntry('FMMC_KEY_TIP1', textEntry)
-    DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP1", "", inputText, "", "", "", maxLength)
+    local id_string = ('%s_%s'):format(textEntry, math.random(1,99999))
+    AddTextEntry(id_string, textEntry)
+    DisplayOnscreenKeyboard(1, id_string, "", inputText, "", "", "", maxLength)
     while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
-        Wait(1.0)
+        Wait(0)
     end
     if UpdateOnscreenKeyboard() ~= 2 then
         local result = GetOnscreenKeyboardResult()

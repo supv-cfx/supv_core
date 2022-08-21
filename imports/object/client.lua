@@ -56,10 +56,10 @@ local function New(modelHash, setting)
             self.bone = setting.bone
             self.entity_coords = GetOffsetFromEntityInWorldCoords(self.entity, 0.0, 0.0, 0.0)
             self.object = CreateObject(self.model, self.entity_coords[1], self.entity_coords[2], self.entity_coords[3], true, true, true)
-            print('here')
+            --print('here')
         else
             self.object = CreateObject(self.model, self.coords[1], self.coords[2], self.coords[3], true, true, true)
-            print('here2')
+            --print('here2')
         end
     end
     
@@ -79,7 +79,7 @@ local function New(modelHash, setting)
     self.edit = Edit
     self.remove = Destroy
 
-    print(self.id, self.object)
+    --print(self.id, self.object)
 
     object[self.id] = self.object
     call = false

@@ -63,7 +63,7 @@ local function Strict(anim, prop)
 
     self.strict = true
 
-    self.player = anim.player or supv.oncache.pedid
+    self.player = anim.player or PlayerPedId()
     self.dict = anim.dict
     self.name = anim.name
     self.flags = anim.flags or 1

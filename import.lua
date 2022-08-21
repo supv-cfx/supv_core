@@ -14,10 +14,16 @@ if not GetResourceState(supv_core):find('start') then
 end
 
 local function load_module(self, index)
+    local func, err 
     local dir <const> = ('imports/%s'):format(index)
     local chunk = LoadResourceFile(supv_core, ('%s/%s.lua'):format(dir, service))
-    --print(index) -- décommente pour voir les modules appelées
-    local func, err = load(chunk, ('@@%s/%s/%s'):format(supv_core, index, service))
+    local shared = LoadResourceFile(supv_core, ('%s/shared.lua'):format(dir))
+
+    if shared then
+        func, err = load(shared, ('@@%s/%s/%s'):format(supv_core, index, 'shared'))
+    else
+        func, err = load(chunk, ('@@%s/%s/%s'):format(supv_core, index, service))
+    end
     
     if err then error(("Erreur pendant le chargement du module\n- Provenant de : %s\n- Modules : %s\n- Service : %s\n - Erreur : %s"):format(dir, index, service, err), 3) end
 
@@ -37,25 +43,19 @@ local function call_module(self, index)
     return module
 end
 
-supv = setmetatable({name = supv_core, service = service, config = {client = {}, server = {}}},{ __index = call_module, __call = call_module })
+supv = setmetatable({name = supv_core, service = service, oncache = {}, config = {client = {}, server = {}}},{ __index = call_module, __call = call_module })
 
 if service == 'client' then
     local PlayerPedId <const>, PlayerId <const>, GetPlayerServerId <const>, GetActiveScreenResolution <const> = PlayerPedId, PlayerId, GetPlayerServerId, GetActiveScreenResolution
-    CreateThread(function()
+    CreateThread(function() -- I keep that for all script & only screen need that
         supv.oncache.pedid = PlayerPedId()
         supv.oncache.playerid = PlayerId()
         supv.oncache.serverid = GetPlayerServerId(PlayerId())
         supv.oncache.screen = {GetActiveScreenResolution()}
     end)
-    supv.oncache = setmetatable({}, 
-    { 
-        __index = function(self, k)
-            RegisterNetEvent(('supv_core:set:cache:%s'):format(k), function(v)
-                self[k] = v
-                return true
-            end)    
-        end
-    })
+    AddEventHandler('supv_core:set:cache:currentvehicle', function(vehicle)
+        supv.oncache.currentvehicle = vehicle
+    end)
     TriggerEvent('supv_core:insert:config-client', function(cfg)
         for k,v in pairs(cfg) do
             supv.config.client[k] = v
