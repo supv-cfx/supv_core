@@ -355,18 +355,19 @@ if Config.PlayerOptions.noRollingGunFight then
 end
 
 if Config.PlayerOptions.noPunchRunning then
-    local IsPedRunningMeleeTask <const>, ClearPedTasksImmediately <const>, intervale = IsPedRunningMeleeTask, ClearPedTasksImmediately
+    local IsPedRunningMeleeTask <const>, ClearPedTasksImmediately <const>, GetPlayerStamina <const>, sleep = IsPedRunningMeleeTask, ClearPedTasksImmediately, GetPlayerStamina, 0
     CreateThread(function()
         while true do
             Wait(0)
-            intervale = true
-            if IsPedRunningMeleeTask(PlayerPedId()) then intervale = false
-                ClearPedTasksImmediately(PlayerPedId())
+            if GetPlayerStamina(oncache.playerid) < 100.0 then
+                sleep = 100
+                if IsPedRunningMeleeTask(PlayerPedId()) then sleep = 0
+                    ClearPedTasksImmediately(PlayerPedId())
+                    ResetPlayerStamina(oncache.playerid)
+                end
             end
 
-            if intervale then
-                Wait(500)
-            end
+            Wait(sleep)
         end
     end)
 end
