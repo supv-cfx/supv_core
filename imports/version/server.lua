@@ -5,8 +5,27 @@ local function findPattern(text, pattern, start)
     return string.sub(text, string.find(text, pattern, start)) 
 end
 
-local function Check(url, checker, error, types, link, timer)
+local function Check(url, checker, error, types, link, lang, timer)
     if #url < 10 and not version and not types then return end
+
+    local message <const> = {
+        ['fr'] = {
+            needUpate = "^3Veuillez mettre à jour la ressource %s\n^3votre version : ^1%s ^7->^3 nouvelle version : ^2%s\n^3liens : ^4%s",
+            error = "^1Impossible de vérifier la version du script"
+        },
+    
+        ['en'] = {
+            needUpate = "^3Update this resource %s\n^3your version : ^1%s ^7->^4 new version : ^2%s\n^3link : ^4%s",
+            error = "^1Impossible to check version of script"
+        }
+    }
+
+    local tr
+
+    if lang and not message[lang] then tr = 'en' elseif lang and message[lang] then tr = lang end
+
+    local Checker = checker or message[tr].needUpate or message['en'].needUpate
+    local Error = error or message[tr].error or message['en'].error
 
     CreateThread(function()
         Wait(timer or 3000)
@@ -30,11 +49,11 @@ local function Check(url, checker, error, types, link, timer)
                 if _gv.version == version then return end
                 if _gv.version ~= version then
                     print('^9---------------------------------------------------------')
-                    print(checker:format(_gv.script, version, _gv.version, _gv.link))
+                    print(Checker:format(_gv.script, version, _gv.version, _gv.link))
                     print('^9---------------------------------------------------------')
                 end
             else
-                print(error)
+                print(Error)
             end
         end)
     end)

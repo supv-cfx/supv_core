@@ -101,11 +101,22 @@ local function New(modelHash, setting)
     return self
 end
 
-local function Created(model, coords, cb, mission)
+local function Created(model, coords, cb, mission) -- networked
     CreateThread(function()
         supv.stream.request(model)
 
-        local obj = CreateObjectNoOffset(model, coords.xyz, true, mission or false, true)
+        local obj = CreateObject(model, coords.xyz, true, mission or false, true)
+        if cb then
+            cb(obj)
+        end
+    end)
+end
+
+local function CreatedLocal(model, coords, cb, mission) -- not networked
+    CreateThread(function()
+        supv.stream.request(model)
+
+        local obj = CreateObject(model, coords.xyz, false, mission or false, true)
         if cb then
             cb(obj)
         end
@@ -115,4 +126,5 @@ end
 return {
     new = New,
     create = Created,
+    createLocal = CreatedLocal
 }
