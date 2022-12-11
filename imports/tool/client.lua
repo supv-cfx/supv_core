@@ -180,6 +180,9 @@ end
 -- Mehtode Object Tool
 
 local BoneList = {
+    [0] = {
+        {label = "root",  index = 0 }
+    },
     [1] = {
         {label = "SKEL_L_Hand", index =	18905},
         {label = "SKEL_ROOT", index =	0},
@@ -323,6 +326,9 @@ local BoneList = {
         {label = "seat_r",  index = "seat_r" }, 
     },
     [3] = {
+        {label = "root",  index = 0 }
+    },
+    [4] = {
         {label = "root",  index = 0 }
     }
 }
@@ -482,6 +488,7 @@ local function SelectedAttach(self, target, data)
     if data.bone then self._bone = data.bone end
     if IsEntityAttached(self.entity) then DetachEntity(self.entity, 1, 1) end
     if IsEntityAttached(target) then DetachEntity(target, 1, 1) end
+    print(self.entity_type)
     if self.entity_type == 1 then
         if not self._bone then self._bone = BoneList[1][1].index end
         AttachEntityToEntity(target, self.entity, GetPedBoneIndex(self.entity, self._bone), self._coords[1], self._coords[2], self._coords[3], self._rot[1], self._rot[2], self._rot[3], true, true, false, true, 1, true)
@@ -492,6 +499,7 @@ local function SelectedAttach(self, target, data)
         AttachEntityToEntity(target, self.entity, GetEntityBoneIndexByName(self.entity, self._bone), self._coords[1], self._coords[2], self._coords[3], self._rot[1], self._rot[2], self._rot[3], true, true, false, true, 1, true)
         self.native = ("AttachEntityToEntity(%s:entity, %s:entity, GetEntityBoneIndexByName(%s:entity, %s), %s, %s, %s, %s, %s, %s, true, true, false, true, 1, true)"):format(GetEntityArchetypeName(target), GetEntityArchetypeName(self.entity), GetEntityArchetypeName(self.entity), self._bone, self._coords[1], self._coords[2], self._coords[3], self._rot[1], self._rot[2], self._rot[3])
     else
+        self._bone = 0
         AttachEntityToEntity(target, self.entity, 0, self._coords[1], self._coords[2], self._coords[3], self._rot[1], self._rot[2], self._rot[3], true, true, false, true, 1, true)
         self.native = ("AttachEntityToEntity(%s:entity, %s:entity, 0, %s, %s, %s, %s, %s, %s, true, true, false, true, 1, true)"):format(GetEntityArchetypeName(target), GetEntityArchetypeName(self.entity), self._coords[1], self._coords[2], self._coords[3], self._rot[1], self._rot[2], self._rot[3])
     end
@@ -532,6 +540,8 @@ local function SelectEntity(entity)
     self.vec4 = vec4(self.coords.x, self.coords.y, self.coords.z, self.heading) ---@return vector4
     self.firstCoord = self.coords
     self.firstHeading = self.heading
+
+    print(self.entity_type, 'type')
 
     self.boneList = BoneList[self.entity_type] ---@return table
     

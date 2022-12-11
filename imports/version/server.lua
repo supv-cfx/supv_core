@@ -1,8 +1,8 @@
 local GetCurrentResourceName <const>, PerformHttpRequest <const>, GetResourceMetadata <const>, print <const> = GetCurrentResourceName, PerformHttpRequest, GetResourceMetadata, print
 local version <const> = GetResourceMetadata(GetCurrentResourceName(), 'version', 0)
 
-local function findPattern(text, pattern, start)
-    return string.sub(text, string.find(text, pattern, start)) 
+local function findPattern(text, pattern, start, END)
+    return string.sub(text, string.find(text, pattern, start), END) 
 end
 
 local function Check(url, checker, error, types, link, lang, timer)
@@ -38,7 +38,9 @@ local function Check(url, checker, error, types, link, lang, timer)
                 elseif types == 'lua' then
                     local chuck = res
                     if not _gv.version then
-                        local str = findPattern(chuck, "version '...'", 1)
+                        --print('ici')
+                        local str = findPattern(chuck, "version '", 1, 0)
+                        print(str)
                         local v = string.gsub(findPattern(str, "'...'", 1), "'", '')
                         _gv.version = string.gsub(v, ',', '.')
                     end
