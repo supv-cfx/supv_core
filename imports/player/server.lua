@@ -69,6 +69,14 @@ local function GetPlayerIdentifier(self, key)
     if self[key] then return self[key] end
 end
 
+local function UpdateCoords(self)
+    self.lastCoords = self:getVec3()
+end
+
+local function GetLastCoords(self)
+    return self.lastCoords
+end
+
 --- player.getFromId
 ---
 ---@param source number
@@ -86,9 +94,11 @@ local function GetPlayerFromId(source)
     self.getVec4 = Vector4
     self.distance = GetDistanceBetweenCoords
     self.getPedInVehicle = GetVehicle
+    self.updateCoords = UpdateCoords
 
     self.license = self:getIdentifier('license')
     self.steamid = self:getIdentifier('steamid')
+    self.lastCoords = self:getVec3()
 
     self.dist = 0
 

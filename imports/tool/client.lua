@@ -169,7 +169,7 @@ local function Show(cb)
         DrawLine(position.x, position.y, position.z, coords.x, coords.y, coords.z, color.r, color.g, color.b, color.a)
         Draw3dText(vec3(entityCoord.x, entityCoord.y, entityCoord.z), ("model : %s | name : %s\nPress [~c~E~s~] to ~g~validate~s~ ~p~entity~s~"):format(GetEntityModel(entity),GetEntityArchetypeName(entity)), 2)
         if IsControlJustReleased(0, 38) then
-            cb(entity, GetEntityModel(entity), GetEntityArchetypeName(entity))
+            cb(entity, GetEntityModel(entity), GetEntityArchetypeName(entity), GetEntityCoords(entity))
         end
     elseif coords.x ~= 0.0 and coords.y ~= 0.0 then
         DrawLine(position.x, position.y, position.z, coords.x, coords.y, coords.z, color.r, color.g, color.b, color.a)

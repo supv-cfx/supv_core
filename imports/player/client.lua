@@ -34,6 +34,10 @@ local function getCurrentVehicle(self)
     return false
 end
 
+local function getIsDead(self)
+    return IsPedDeadOrDying(self.pedid, 1) or false
+end
+
 --- player.get
 ---
 ---@param target nil|source
@@ -47,6 +51,7 @@ local function getPlayer(target)
     self.currentvehicle = GetVehiclePedIsIn(self.pedid)
     self.coords = GetEntityCoords(self.pedid)
     self.dist = nil
+    self.isDead = getIsDead
     self.distance = getDistanceCoords
     self.getCoords = getCoords
     self.currentVehicle = getCurrentVehicle
