@@ -159,7 +159,7 @@ local PlayerPedId <const> = PlayerPedId
 
 -- function Laser
 
-local function Show(cb)
+local function Show(cb, types, text)
     local color = {r = 255, g = 0, b = 0, a = 200}
     local position = GetEntityCoords(PlayerPedId())
     local hit, coords, entity = RayCastCamera(1000.0)
@@ -167,7 +167,11 @@ local function Show(cb)
         local entityCoord = GetEntityCoords(entity)
         DrawEntityBoundingBox(entity, color)
         DrawLine(position.x, position.y, position.z, coords.x, coords.y, coords.z, color.r, color.g, color.b, color.a)
-        Draw3dText(vec3(entityCoord.x, entityCoord.y, entityCoord.z), ("model : %s | name : %s\nPress [~c~E~s~] to ~g~validate~s~ ~p~entity~s~"):format(GetEntityModel(entity),GetEntityArchetypeName(entity)), 2)
+        if types == 'default' then 
+            Draw3dText(vec3(entityCoord.x, entityCoord.y, entityCoord.z), ("model : %s | name : %s\nPress [~c~E~s~] to ~g~validate~s~ ~p~entity~s~"):format(GetEntityModel(entity),GetEntityArchetypeName(entity)), 2)
+        elseif types == 'perso' then
+            Draw3dText(vec3(entityCoord.x, entityCoord.y, entityCoord.z), text, 2)
+        end
         if IsControlJustReleased(0, 38) then
             cb(entity, GetEntityModel(entity), GetEntityArchetypeName(entity), GetEntityCoords(entity))
         end
