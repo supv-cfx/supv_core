@@ -31,7 +31,24 @@ local function getCurrentVehicle(self)
     if self.currentvehicle > 0 then
         return self.currentvehicle
     end
+    self.seat = nil
     return false
+end
+
+local function getSeat(self)
+    if self.currentvehicle then
+        if self.seat and self.pedid == GetPedInVehicleSeat(self.currentvehicle, self.seat) then return self.seat end
+        local model = GetEntityModel(self.currentvehicle)
+        if model then
+            for i = -1, GetVehicleModelNumberOfSeats(model), 1 do
+                if GetPedInVehicleSeat(self.currentvehicle, i) == self.pedid then
+                    self.seat = i
+                    break
+                end
+            end
+            return self.seat
+        end
+    end
 end
 
 local function getIsDead(self)
@@ -51,10 +68,12 @@ local function getPlayer(target)
     self.currentvehicle = GetVehiclePedIsIn(self.pedid)
     self.coords = GetEntityCoords(self.pedid)
     self.dist = nil
+    self.seat = nil
     self.isDead = getIsDead
     self.distance = getDistanceCoords
     self.getCoords = getCoords
     self.currentVehicle = getCurrentVehicle
+    self.getSeat = getSeat
     return self
 end
 

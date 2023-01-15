@@ -55,8 +55,8 @@ local function New(modelHash, setting)
 
     self.id = id
     self.model = modelHash
-    self.coords = setting.coords or {x = 0.0, y = 0.0, z = 0.0}
-    self.rot = setting.rot or {x = 0.0, y = 0.0, z = 0.0}
+    self.coords = setting.coords or vec3(0.0,0.0,0.0) --{x = 0.0, y = 0.0, z = 0.0}
+    self.rot = setting.rot or vec3(0.0,0.0,0.0) --{x = 0.0, y = 0.0, z = 0.0}
 
     RequestModel(modelHash)
 
@@ -70,10 +70,10 @@ local function New(modelHash, setting)
             self.entity = setting.entity
             self.bone = setting.bone
             self.entity_coords = GetOffsetFromEntityInWorldCoords(self.entity, 0.0, 0.0, 0.0)
-            self.object = CreateObject(self.model, self.entity_coords[1], self.entity_coords[2], self.entity_coords[3], true, true, true)
+            self.object = CreateObject(self.model, self.entity_coords.x, self.entity_coords.y, self.entity_coords.z, true, true, true)
             --print('here')
         else
-            self.object = CreateObject(self.model, self.coords[1], self.coords[2], self.coords[3], true, true, true)
+            self.object = CreateObject(self.model, self.coords.x, self.coords.y, self.coords.z, true, true, true)
             --print('here2')
         end
     end
@@ -87,7 +87,7 @@ local function New(modelHash, setting)
     self.toObj = NetToObj(self.netId)
 
     if self.entity then
-        AttachEntityToEntity(self.object, self.entity, GetPedBoneIndex(self.entity, self.bone), self.coords[1], self.coords[2], self.coords[3], self.rot[1], self.rot[2], self.rot[3], true, true, false, true, 1, true)
+        AttachEntityToEntity(self.object, self.entity, GetPedBoneIndex(self.entity, self.bone), self.coords.x, self.coords.y, self.coords.z, self.rot.x, self.rot.y, self.rot.z, true, true, false, true, 1, true)
     end
 
     -- func ref

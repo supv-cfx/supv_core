@@ -1,3 +1,5 @@
+local string <const> = string
+
 --- string.starts
 ---
 ---@param str string

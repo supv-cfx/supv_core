@@ -10,10 +10,10 @@ local math <const> = math
 ---@param inputText string
 ---@param maxLength integer
 ---@return string
-local function KI(textEntry, inputText, maxLength)
-    local id_string = ('%s_%s'):format(textEntry, math.random(1,99999))
+local function KI(textEntry, inputText, maxLength, key)
+    local id_string = ('%s_%s'):format(textEntry, math.random(1,99))
     AddTextEntry(id_string, textEntry)
-    DisplayOnscreenKeyboard(1, id_string, "", inputText, "", "", "", maxLength)
+    DisplayOnscreenKeyboard(1, id_string, key or "" , inputText, "", "", "", maxLength)
     while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
         Wait(0)
     end

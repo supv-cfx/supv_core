@@ -1,3 +1,5 @@
+local HasModelLoaded <const>, type <const>, GetHashKey <const>, IsModelInCdimage <const>, RequestModel <const> = HasModelLoaded, type, GetHashKey, IsModelInCdimage, RequestModel
+
 local function Request(model)
     model = (type(model) == 'number' and model or GetHashKey(model))
 

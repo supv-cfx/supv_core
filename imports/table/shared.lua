@@ -1,4 +1,5 @@
 local type <const>, pairs <const>, getmetatable <const>, setmetatable <const> = type, pairs, getmetatable, setmetatable
+
 local function Clone(table)
 	if type(table) ~= 'table' then return end
 	local metatable, target = getmetatable(table), {}
@@ -16,6 +17,14 @@ local function Clone(table)
 	return target
 end
 
+local function Contains(t, value)
+	for _, v in pairs(t)do
+		if v == value then return true end
+	end
+	return false
+end
+
 return {
-    clone = Clone
+    clone = Clone,
+	contains = Contains
 }

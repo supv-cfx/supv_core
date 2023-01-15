@@ -20,12 +20,36 @@ local function Delete(self)
     return nil, collectgarbage()
 end
 
+local function Edit(self, data)
+    if not data.sprite and not data.label and not data.color then return end
+    if DoesBlipExist(self.blip) then RemoveBlip(self.blip) end
+
+    self.coords = data.coords
+    self.sprite = data.sprite
+    self.label = data.label
+    self.color = data.color
+    self.scale = data?.scale or 1.0
+    self.range = data?.range or true
+    self.group = data?.group or nil
+
+    self.blip = AddBlipForCoord(self.coords)
+    SetBlipSprite(self.blip, self.sprite)
+    SetBlipColour(self.blip, self.color)
+    SetBlipScale(self.blip, self.scale)
+    SetBlipAsShortRange(self.blip, self.range)
+    BeginTextCommandSetBlipName('STRING')
+    AddTextComponentSubstringPlayerName(self.label)
+    EndTextCommandSetBlipName(self.blip)
+
+    return self
+end
+
 local function Create(coords, data)
     if not data.sprite and not data.label and not data.color then return end
 
     local self, multiple = {}, false
 
-    if type(coords) == 'table' then
+    if type(coords) == 'table' and #coords > 1 then
         for i = 1, #coords do
             self[i] = {}
             self[i].coords = coords[i]
@@ -36,6 +60,7 @@ local function Create(coords, data)
             self[i].range = data?.range or true
             self[i].group = data?.group or nil
             self[i].remove = Delete
+            self[i].edit = Edit
         end
         multiple = true
     elseif type(coords) == 'vector3' then
@@ -47,6 +72,7 @@ local function Create(coords, data)
         self.range = data?.range or true
         self.group = data?.group or nil
         self.remove = Delete
+        self.edit = Edit
     else return end
 
     CreateThread(function()
