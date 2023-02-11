@@ -27,7 +27,7 @@ local function Writejson(resourceName, filePath, data, dataLength)
     local resource <const> = resourceName or GetCurrentResourceName()
     local lenght <const> = dataLength or -1
     local filename <const> = filePath
-    local writeFile <const> = SaveResourceFile(resource, ("%s.json"):format(filename), json.encode(data), lenght)
+    local writeFile <const> = SaveResourceFile(resource, ("%s.json"):format(filename), json.encode(data, {indent = true}), lenght)
     if not writeFile then
         error(('[ERROR] : Le fichier (%s) dans la ressource => %s, n\'a pas pu être sauvegardé'):format(filename, resource), 2)
     end
