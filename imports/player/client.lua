@@ -27,8 +27,8 @@ end
 ---@param target nil|boolean
 ---@return entity|false
 local function getCurrentVehicle(self)
-    self.currentvehicle = GetVehiclePedIsIn(PlayerPedId(), false)
-    if self.currentvehicle > 0 then
+    self.currentvehicle = GetVehiclePedIsIn(PlayerPedId(), false) > 0 and GetVehiclePedIsIn(PlayerPedId(), false) or false
+    if self.currentvehicle then
         return self.currentvehicle
     end
     self.seat = nil
@@ -36,6 +36,7 @@ local function getCurrentVehicle(self)
 end
 
 local function getSeat(self)
+    if not self.pedid or self.pedid ~= PlayerPedId() then self.pedid = PlayerPedId() end -- évite la perte du pedid au premier chargement, sera corrigé mieux que cela dans la release de supv_core (hors beta)
     if self.currentvehicle then
         if self.seat and self.pedid == GetPedInVehicleSeat(self.currentvehicle, self.seat) then return self.seat end
         local model = GetEntityModel(self.currentvehicle)
@@ -65,7 +66,7 @@ local function getPlayer(target)
     self.playerid = PlayerId()
     self.serverid = GetPlayerServerId(self.playerid)
     self.screen = GetActiveScreenResolution()
-    self.currentvehicle = GetVehiclePedIsIn(self.pedid)
+    self.currentvehicle = GetVehiclePedIsIn(self.pedid) > 0 and GetVehiclePedIsIn(self.pedid) or false
     self.coords = GetEntityCoords(self.pedid)
     self.dist = nil
     self.seat = nil

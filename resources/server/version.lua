@@ -1,3 +1,4 @@
+
 local tr <const>, cfg <const> = Config.SelectedLanguage, Config
 local message <const> = cfg.Translate[tr].version
 
