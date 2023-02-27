@@ -100,7 +100,7 @@ local function GetPlayerFromId(source)
     self.steamid = self:getIdentifier('steamid')
     self.lastCoords = self:getVec3()
 
-    self.dist = 0
+    self.dist = nil
 
     return self
 end

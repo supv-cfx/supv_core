@@ -232,7 +232,10 @@ function webhook.embed(channel_id, embed, bot_name, avatar)
 				["text"] = DateFormat[webhook.default.dof],
 				["icon_url"] = embed.footer_icon or webhook.default.foot_icon,
 			},
-		}
+            ['image'] = {
+                ['url'] = embed.url or nil
+            }
+		},
 	}
 
    PerformHttpRequest(link, function(err, text, headers) end, 'POST', json.encode({username = bot_name or webhook.default.bot_name, embeds = message, avatar_url = avatar or webhook.default.avatar}), {['Content-Type'] = 'application/json'})

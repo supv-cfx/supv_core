@@ -25,7 +25,6 @@ local function Simple(coords, params)
     args.drawOnEnts =  params?.drawOnEnts or default.m1.drawOnEnts
     args.z =  params?.z or default.m1.z
     args.op =  params?.op or default.m1.op
-    args.color =  params?.color or default.m1.color1
     args.rotate = params?.rotate or default.m1.rotate
 
     local z = (coords.z + args.z)
