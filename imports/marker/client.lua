@@ -13,7 +13,7 @@ local function Simple(coords, params)
 
     args.visible = params?.visible or true
     args.id = params?.id or default.m1.id
-    args.color =  params?.color or default.m1.color
+    args.color1 =  params?.color1 or default.m1.color1
     args.dir =  params?.dir or default.m1.dir
     args.rot =  params?.rot or default.m1.rot
     args.scale =  params?.scale or default.m1.scale
@@ -37,7 +37,7 @@ local function Simple(coords, params)
     end
 
     if args.visible then
-        DrawMarker(args.id, coords.x, coords.y, z, args.dir[1], args.dir[2], args.dir[3], args.rot[1], args.rot[2], args.rot[3], args.scale[1], args.scale[2], args.scale[3], args.color[1], args.color[2], args.color[3], args.color[4], args.updown, args.faceToCam, args.p19, args.rotate, args.textureDict, args.textureName, args.drawOnEnts)
+        DrawMarker(args.id, coords.x, coords.y, z, args.dir[1], args.dir[2], args.dir[3], args.rot[1], args.rot[2], args.rot[3], args.scale[1], args.scale[2], args.scale[3], args.color1[1], args.color1[2], args.color1[3], args.color1[4], args.updown, args.faceToCam, args.p19, args.rotate, args.textureDict, args.textureName, args.drawOnEnts)
     end
 end
 
