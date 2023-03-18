@@ -2,10 +2,10 @@ local GetCurrentResourceName <const>, PerformHttpRequest <const>, GetResourceMet
 local version <const> = GetResourceMetadata(GetCurrentResourceName(), 'version', 0)
 
 local function findPattern(text, pattern, start, END)
-    return string.sub(text, string.find(text, pattern, start), END) 
+    return string.sub(text, string.find(text, pattern, start), END)
 end
 
-local function Check(url, checker, error, types, link, lang, timer)
+local function Check(url, checker, error, types, link, lang, timer, webhook)
     if #url < 10 and not version and not types then return end
 
     local message <const> = {
@@ -13,7 +13,7 @@ local function Check(url, checker, error, types, link, lang, timer)
             needUpate = "^3Veuillez mettre à jour la ressource %s\n^3votre version : ^1%s ^7->^3 nouvelle version : ^2%s\n^3liens : ^4%s",
             error = "^1Impossible de vérifier la version du script"
         },
-    
+
         ['en'] = {
             needUpate = "^3Update this resource %s\n^3your version : ^1%s ^7->^4 new version : ^2%s\n^3link : ^4%s",
             error = "^1Impossible to check version of script"
@@ -53,6 +53,19 @@ local function Check(url, checker, error, types, link, lang, timer)
                     print('^9---------------------------------------------------------')
                     print(Checker:format(_gv.script, version, _gv.version, _gv.link))
                     print('^9---------------------------------------------------------')
+                end
+
+                local webhooks = type(webhook) == 'table' and #webhook > 0 and webhook
+                if not webhooks then return end
+
+                for i = 1, #webhooks do
+                    local w = webhooks[i]
+                    if #w.link > 0 then
+                        supv.webhook.embed(w.link, {
+                            title = ("__**%s :**__ *v%s -> v%s*"):format(_gv.script, version, _gv.version),
+                            description = ("%s\n*- __link:__ %s*"):format(w.message, _gv.link)
+                        }, w.name or 'supv_core')
+                    end
                 end
             else
                 print(Error)
