@@ -50,7 +50,7 @@ local function Check(url, checker, error, types, link, lang, timer, webhook)
                 if _gv.version == version then return end
                 if _gv.version ~= version then
                     if _gv.msg then
-                        Checker = Checker.."\n^3changelog : ^7%s\n"
+                        Checker = Checker.."\n^3changelog : \n^7%s"
                     end
                     print('^9---------------------------------------------------------')
                     print(Checker:format(_gv.script, version, _gv.version, _gv.link, _gv.msg))
