@@ -3,7 +3,7 @@ game 'gta5'
 lua54 'yes'
 
 author 'SUP2Ak'
-version '0.7.5.2'
+version '0.7.6'
 link 'https://github.com/SUP2Ak/supv_core'
 
 description 'a core standalone to manage your server and got useful function to develop it too'

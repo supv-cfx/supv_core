@@ -38,7 +38,6 @@ local function Check(url, checker, error, types, link, lang, timer, webhook)
                 elseif types == 'lua' then
                     local chuck = res
                     if not _gv.version then
-                        --print('ici')
                         local str = findPattern(chuck, "version '", 1, 0)
                         print(str)
                         local v = string.gsub(findPattern(str, "'...'", 1), "'", '')
@@ -50,21 +49,27 @@ local function Check(url, checker, error, types, link, lang, timer, webhook)
 
                 if _gv.version == version then return end
                 if _gv.version ~= version then
+                    if _gv.msg then
+                        Checker = Checker.."\n^3changelog : ^7%s\n"
+                    end
                     print('^9---------------------------------------------------------')
-                    print(Checker:format(_gv.script, version, _gv.version, _gv.link))
+                    print(Checker:format(_gv.script, version, _gv.version, _gv.link, _gv.msg))
                     print('^9---------------------------------------------------------')
-                end
 
-                local webhooks = type(webhook) == 'table' and #webhook > 0 and webhook
-                if not webhooks then return end
-
-                for i = 1, #webhooks do
-                    local w = webhooks[i]
-                    if #w.link > 0 then
-                        supv.webhook.embed(w.link, {
-                            title = ("__**%s :**__ *v%s -> v%s*"):format(_gv.script, version, _gv.version),
-                            description = ("%s\n*- __link:__ %s*"):format(w.message, _gv.link)
-                        }, w.name or 'supv_core')
+                    local webhooks = type(webhook) == 'table' and #webhook > 0 and webhook
+                    if not webhooks then return end
+    
+                    for i = 1, #webhooks do
+                        local w = webhooks[i]
+                        if #w.link > 0 then
+                            if _gv.msg then
+                                _gv.msg = "```md\n".._gv.msg.."\n```"
+                            end
+                            supv.webhook.embed(w.link, {
+                                title = ("__**%s :**__ *v%s -> v%s*"):format(_gv.script, version, _gv.version),
+                                description = ("%s\n*- __link:__ %s*"):format(_gv.msg or '', _gv.link)
+                            }, w.name or 'supv_core')
+                        end
                     end
                 end
             else
