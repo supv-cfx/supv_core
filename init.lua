@@ -38,7 +38,8 @@ supv = setmetatable({
     service = service, 
     name = GetCurrentResourceName(),
     game = GetGameName(),
-    env = GetCurrentResourceName()
+    env = GetCurrentResourceName(),
+    lang = GetConvar('supv:locale', 'fr')
 }, {
     __index = call_module, 
     __call = call_module, 
