@@ -44,3 +44,5 @@ supv = setmetatable({
     rawset(self, name, func)
     exports(name, func)
 end})
+
+require = supv.require.load
