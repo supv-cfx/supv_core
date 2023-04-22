@@ -17,15 +17,26 @@ local function FirstToUpper(str)
 end
 
 --- supv.string.random
----@param length number
----@param s? boolean
+---@param length? number-70
+---@param data? table
 ---@return string
-local function RandomString(length, s)
-    local l = length or 70
-    local upperCase, lowerCase, numbers, symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz", "0123456789"
-    if s then symbols = "!@#$%&()*+-,./:;<=>?^[]{}" else symbols = nil end
-    local characterSet = symbols and upperCase..lowerCase..numbers..symbols or upperCase..lowerCase..numbers
-    local output = ""
+local function RandomString(length, data)
+    local output, l, default, characterSet = "", length or 70, {
+        upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        lowerCase = "abcdefghijklmnopqrstuvwxyz",
+        numbers = "0123456789",
+        symbols = "!@#$%&()*+-,./:;<=>?^[]{}"
+    }, ''
+
+    if next(data) then
+        for k in pairs(data) do
+            characterSet = characterSet..default[k]
+        end
+    else
+        for _,v in pairs(default) do
+            characterSet = characterSet..v
+        end
+    end
 
     for i = 1, l do
         local random = math.random(#characterSet)
