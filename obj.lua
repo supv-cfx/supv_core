@@ -93,7 +93,6 @@ end
 
 if GetResourceState('ox_lib') ~= 'missing' then
     if lib then return end
-    require = supv.require.load
 end
 
 require = supv.require.load
