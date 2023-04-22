@@ -52,3 +52,8 @@ CreateThread(function()
         Wait(750)
     end
 end)
+
+
+function supv.getCache(key)
+    return cache[key] or cache
+end
