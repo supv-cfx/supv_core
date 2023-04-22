@@ -1,33 +1,38 @@
 fx_version 'cerulean'
-game 'gta5'
+games {'gta5', 'rdr3'}
+
 lua54 'yes'
+use_experimental_fxv2_oal 'yes'
 
-author 'SUP2Ak'
-version '0.7.6'
+version '1.0'
+
+author 'SUP2Ak#3755'
 link 'https://github.com/SUP2Ak/supv_core'
-
-description 'a core standalone to manage your server and got useful function to develop it too'
-
-shared_script '_g.lua'
-
-shared_scripts {
-    'import.lua',
-    'resources/config/shared/*.lua',
-    'resources/shared/*.lua',
+github 'https://github.com/SUP2Ak'
+descriptions {
+    fr 'Un core utils pour developper des scripts sur FiveM & RedM',
+    en 'A core utility for developing scripts on FiveM & RedM'
 }
 
-server_scripts {
-    'resources/config/server/*.lua',
-    'resources/server/*.lua',
-}
-
-client_scripts {
-    'resources/config/client/*.lua',
-    'resources/client/*.lua',
+how_to_use {
+    fr "Dans votre ressource, mettez ceci : shared_script '@supv_core/obj.lua' ",
+    en "In your resource, add this : shared_script '@supv_core/obj.lua' "
 }
 
 files {
-    'import.lua',
-    'imports/**/shared.lua',
+    'obj.lua',
     'imports/**/client.lua',
+    'imports/**/shared.lua'
+}
+
+shared_scripts {
+    'init.lua'
+}
+
+client_scripts {
+    'client/cache.lua'
+}
+
+server_script {
+
 }

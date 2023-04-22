@@ -1,6 +1,8 @@
 local supv_core <const> = 'supv_core'
 local IsDuplicityVersion <const> = IsDuplicityVersion
 local LoadResourceFile <const> = LoadResourceFile
+local GetResourceState <const> = GetResourceState
+local GetGameName <const> = GetGameName
 
 local service <const> = (IsDuplicityVersion() and 'server') or (not IsDuplicityVersion() and 'client')
 
@@ -43,30 +45,50 @@ local function call_module(self, index)
     return module
 end
 
-supv = setmetatable({name = supv_core, service = service, oncache = {}, config = {client = {}, server = {}}},{ __index = call_module, __call = call_module })
+supv = setmetatable({
+    name = supv_core, 
+    service = service,
+    game = GetGameName(),
+    cache = {},
+    config = {}
+},
+{ 
+    __index = call_module, 
+    __call = call_module 
+})
 
-if service == 'client' then
-    local PlayerPedId <const>, PlayerId <const>, GetPlayerServerId <const>, GetActiveScreenResolution <const> = PlayerPedId, PlayerId, GetPlayerServerId, GetActiveScreenResolution
-    CreateThread(function() -- I keep that for all script & only screen need that
-        supv.oncache.pedid = PlayerPedId()
-        supv.oncache.playerid = PlayerId()
-        supv.oncache.serverid = GetPlayerServerId(PlayerId())
-        supv.oncache.screen = {GetActiveScreenResolution()}
-    end)
-    AddEventHandler('supv_core:set:cache:currentvehicle', function(vehicle)
-        supv.oncache.currentvehicle = vehicle
-    end)
-    TriggerEvent('supv_core:insert:config-client', function(cfg)
-        for k,v in pairs(cfg) do
-            supv.config.client[k] = v
+if supv.service == 'client' then
+    setmetatable(supv.cache, {
+        __index = function(self, key)
+            AddEventHandler(('supv_core:cache:%s'):format(key), function(value)
+                self[key] = value
+            end)
+
+            return rawset(self, key, exports[supv_core]:getCache(key) or false)
         end
-       return supv.config.client   
-    end)
-elseif service == 'server' then
-    TriggerEvent('supv_core:insert:config-server', function(cfg)
-        for k,v in pairs(cfg) do
-            supv.config.server[k] = v
-        end 
-        return supv.config.server   
-    end)
+    })
+
+    setmetatable(supv.config, {
+        __index = function(self, key)
+            local value = rawget(self, key)
+            if not value then
+                value = exports[supv_core]:getConfig(key)
+                rawset(self, key, value)
+            end
+            return value
+        end
+    })
+elseif supv.service == 'server' then
+    setmetatable(supv.config, {
+        __index = function(self, key)
+            local value = rawget(self, key)
+            if not value then
+                value = exports[supv_core]:getConfig(key)
+                rawset(self, key, value)
+            end
+            return value
+        end
+    })
 end
+
+require = supv.require.load
