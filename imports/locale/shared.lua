@@ -17,7 +17,7 @@ end
 
 local function Initialize()
     local lang = GetConvar('supv:locale', 'fr')
-    local env = supv.json.load(('locales/%s.json'):format(lang))
+    local env = supv.json.load(('locales/%s'):format(lang))
     if not env then
        return warn(("Impossible de chargé locales/%s.json dans l'environnement : %s"):format(lang, supv.env))
     end
