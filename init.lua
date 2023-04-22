@@ -2,6 +2,7 @@ local supv_core <const> = 'supv_core'
 local LoadResourceFile <const>, IsDuplicityVersion <const> = LoadResourceFile, IsDuplicityVersion
 local service <const> = (IsDuplicityVersion() and 'server') or 'client'
 local GetGameName <const> = GetGameName
+local GetCurrentResourceName <const> = GetCurrentResourceName
 
 local function load_module(self, index)
     local dir <const> = ("imports/%s"):format(index)
@@ -37,6 +38,7 @@ supv = setmetatable({
     service = service, 
     name = GetCurrentResourceName(),
     game = GetGameName(),
+    env = GetCurrentResourceName()
 }, {
     __index = call_module, 
     __call = call_module, 
@@ -46,3 +48,5 @@ supv = setmetatable({
 end})
 
 require = supv.require.load
+
+supv.locale.init()

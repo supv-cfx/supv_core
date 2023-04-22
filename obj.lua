@@ -3,6 +3,7 @@ local IsDuplicityVersion <const> = IsDuplicityVersion
 local LoadResourceFile <const> = LoadResourceFile
 local GetResourceState <const> = GetResourceState
 local GetGameName <const> = GetGameName
+local GetCurrentResourceName <const> = GetCurrentResourceName
 local export = exports[supv_core]
 
 local service <const> = (IsDuplicityVersion() and 'server') or (not IsDuplicityVersion() and 'client')
@@ -55,6 +56,7 @@ supv = setmetatable({
     name = supv_core, 
     service = service,
     game = GetGameName(),
+    env = GetCurrentResourceName(),
     cache = {},
     config = {}
 },
