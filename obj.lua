@@ -3,9 +3,9 @@ local IsDuplicityVersion <const> = IsDuplicityVersion
 local LoadResourceFile <const> = LoadResourceFile
 local GetResourceState <const> = GetResourceState
 local GetGameName <const> = GetGameName
+local export = exports[supv_core]
 
 local service <const> = (IsDuplicityVersion() and 'server') or (not IsDuplicityVersion() and 'client')
-
 
 if not _VERSION:find('5.4') then
     error("^1 Vous devez activer Lua 5.4 dans la resources où vous utilisez l'import, (lua54 'yes') dans votre fxmanifest!^0", 2)
@@ -34,12 +34,18 @@ local function load_module(self, index)
     return self[index]
 end
 
-local function call_module(self, index)
+local function call_module(self, index, ...)
     local module = rawget(self, index)
     if not module then
         module = load_module(self, index)
         if not module then
-            error(("Erreur en appelant le module\n- Modules : %s\n- Service : %s"):format(index, service), 3)
+            print(index, ...)
+            local method = export[index](nil, ...)
+            if not method then
+                error(("Erreur en appelant le module (import/export)\n- Modules : %s\n- Service : %s"):format(index, service), 3)
+            end
+            self[index] = method
+            return method
         end
     end
     return module
@@ -64,7 +70,7 @@ if supv.service == 'client' then
                 self[key] = value
             end)
 
-            return rawset(self, key, exports[supv_core]:getCache(key) or false)
+            return rawset(self, key, export:getCache(key) or false)
         end
     })
 
@@ -72,7 +78,7 @@ if supv.service == 'client' then
         __index = function(self, key)
             local value = rawget(self, key)
             if not value then
-                value = exports[supv_core]:getConfig(key)
+                value = export:getConfig(key)
                 rawset(self, key, value)
             end
             return value
@@ -83,7 +89,7 @@ elseif supv.service == 'server' then
         __index = function(self, key)
             local value = rawget(self, key)
             if not value then
-                value = exports[supv_core]:getConfig(key)
+                value = export:getConfig(key)
                 rawset(self, key, value)
             end
             return value
