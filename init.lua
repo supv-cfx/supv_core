@@ -51,3 +51,7 @@ end})
 require = supv.require.load
 
 supv.locale.init()
+
+if supv.service == 'server' then
+    supv.version.check('github', nil, 500)
+end
