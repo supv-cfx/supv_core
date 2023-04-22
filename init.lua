@@ -36,7 +36,7 @@ end
 supv = setmetatable({
     service = service, 
     name = GetCurrentResourceName(),
-    game = GetGameName()
+    game = GetGameName(),
 }, {
     __index = call_module, 
     __call = call_module, 

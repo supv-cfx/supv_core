@@ -1,9 +1,10 @@
-local cache = _ENV.cache
+local cache = {}
 
 function cache:set(key, value)
     if not self[key] or self[key] ~= value then
         self[key] = value
         TriggerEvent(('supv_core:cache:%s'):format(key), value)
+        return true
     end
 end
 
@@ -55,5 +56,5 @@ end)
 
 
 function supv.getCache(key)
-    return cache[key] or cache
+    return cache[key]
 end
