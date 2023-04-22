@@ -14,13 +14,19 @@ descriptions {
     en 'A core utility for developing scripts on FiveM & RedM'
 }
 
+how_to_use {
+    fr "Dans votre ressource, mettez ceci : shared_script '@supv_core/obj.lua' ",
+    en "In your resource, add this : shared_script '@supv_core/obj.lua' "
+}
+
 files {
+    'obj.lua',
     'imports/**/client.lua',
     'imports/**/shared.lua'
 }
 
 shared_scripts {
-
+    'init.lua'
 }
 
 client_scripts {
