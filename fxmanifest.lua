@@ -24,6 +24,7 @@ how_to_use {
 
 files {
     'obj.lua',
+    'client/config/*.lua',
     'imports/**/client.lua',
     'imports/**/shared.lua'
 }
@@ -34,11 +35,9 @@ shared_scripts {
 }
 
 client_scripts {
-    'client/config/*.lua',
     'client/cache.lua'
 }
 
 server_script {
-    'server/config/*.lua',
     'server/*.lua'
 }
