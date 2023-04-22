@@ -1,6 +1,6 @@
 {
     "script": "supv_core",
-    "version": "1.0",
+    "version": "0.7.6",
     "link": "https://github.com/SUP2Ak/supv_core",
-    "msg": ""
+    "msg": "# Module\n\t- feat(version/server.lua): webhook + changelog\n\t- fix(from resource part): setting resource config\n# Resource\n\t- fix(server/setConfig.lua): old event name"
 }
