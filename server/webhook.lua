@@ -15,12 +15,12 @@ local function embed(url, embeds, data)
 
     local _embed = {
         {
-			["color"] = embeds.color or cfg.default.color,
+			["color"] = data.color or cfg.default.color,
 			["title"] = embeds.title or '',
 			["description"] = embeds.description or '',
 			["footer"] = {
 				["text"] = data.date_format and date[data.date_format] or cfg.default.date_format and date[cfg.default.date_format],
-				["icon_url"] = embeds.footer_icon or cfg.default.foot_icon,
+				["icon_url"] = data.footer_icon or cfg.default.foot_icon,
 			},
             ['image'] = {
                 ['url'] = embeds.image or nil
