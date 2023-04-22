@@ -16,10 +16,9 @@ function translate(str, ...)
 end
 
 local function Initialize()
-    local lang = GetConvar('supv:locale', 'fr')
-    local env = supv.json.load(('locales/%s'):format(lang))
+    local env = supv.json.load(('locales/%s'):format(supv.lang))
     if not env then
-       return warn(("Impossible de chargé locales/%s.json dans l'environnement : %s"):format(lang, supv.env))
+       return warn(("Impossible de chargé locales/%s.json dans l'environnement : %s"):format(supv.lang, supv.env))
     end
 
     for k,v in pairs(env) do
