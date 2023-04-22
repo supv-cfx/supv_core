@@ -1,5 +1,5 @@
 local config <const> = Config
 
-RegisterNetEvent('sublime_core:import:config', function(cb)
+RegisterNetEvent('supv_core:insert:config-server', function(cb)
     return cb(config)
 end)
