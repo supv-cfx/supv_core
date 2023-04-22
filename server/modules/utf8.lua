@@ -1,8 +1,3 @@
-local webhook = {}
-webhook.channel = Config.Webhook.channel
-webhook.default = Config.Webhook.default
-
--------------------------------------------------------------------------------------------------------------------
 local char, byte, pairs, floor = string.char, string.byte, pairs, math.floor
 local table_insert, table_concat = table.insert, table.concat
 local unpack = table.unpack or unpack
