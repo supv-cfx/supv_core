@@ -29,7 +29,8 @@ files {
 }
 
 shared_scripts {
-    'init.lua'
+    'init.lua',
+    'shared/*.lua'
 }
 
 client_scripts {
