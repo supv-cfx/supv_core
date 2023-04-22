@@ -97,6 +97,8 @@ elseif supv.service == 'server' then
             return value
         end
     })
+
+    supv.version.check('github', nil, 500)
 end
 
 if GetResourceState('ox_lib') ~= 'missing' then
