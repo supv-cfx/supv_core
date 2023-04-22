@@ -23,7 +23,7 @@ CreateThread(function()
         cache:set('ped', PlayerPedId())
 
         if cache.game == 'redm' then
-            cache:set('mount', GetMount(cache.ped) and IsPedOnMount(cache.ped) or false)
+            cache:set('mount', IsPedOnMount(cache.ped) == true and GetMount(cache.ped) or false)
         end
 
         local hasWeapon, weaponHash = GetCurrentPedWeapon(cache.ped, true)
