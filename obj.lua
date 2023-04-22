@@ -48,7 +48,9 @@ end
 supv = setmetatable({
     name = supv_core, 
     service = service,
-    game = GetGameName()
+    game = GetGameName(),
+    cache = {},
+    config = {}
 },
 { 
     __index = call_module, 
@@ -63,6 +65,28 @@ if supv.service == 'client' then
             end)
 
             return rawset(self, key, exports[supv_core]:getCache(key) or false)
+        end
+    })
+
+    setmetatable(supv.config, {
+        __index = function(self, key)
+            local value = rawget(self, key)
+            if not value then
+                value = exports[supv_core]:getConfig(key)
+                rawset(self, key, value)
+            end
+            return value
+        end
+    })
+elseif supv.service == 'server' then
+    setmetatable(supv.config, {
+        __index = function(self, key)
+            local value = rawget(self, key)
+            if not value then
+                value = exports[supv_core]:getConfig(key)
+                rawset(self, key, value)
+            end
+            return value
         end
     })
 end
