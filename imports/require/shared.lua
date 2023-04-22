@@ -16,6 +16,7 @@ local function load_module(path)
 end
 
 local function call_module(path)
+    path = path:gsub('%.', '/')
     local module = load_module(path)
     if not module then
         return error("Le module n'a pas charger : "..path)
