@@ -14,6 +14,8 @@ local IsPedOnMount <const> = IsPedOnMount
 
 -- fivem & redm
 local PlayerPedId <const> = PlayerPedId
+local PlayerId <const> = PlayerId
+local GetPlayerServerId <const> = GetPlayerServerId 
 local GetVehiclePedIsIn <const> = GetVehiclePedIsIn
 local GetPedInVehicleSeat <const> = GetPedInVehicleSeat
 local GetVehicleMaxNumberOfPassengers <const> = GetVehicleMaxNumberOfPassengers
@@ -22,6 +24,8 @@ local GetCurrentPedWeapon <const> = GetCurrentPedWeapon
 CreateThread(function()
     while true do
         cache:set('ped', PlayerPedId())
+        cache:set('playerid', PlayerId())
+        cache:set('serverid', GetPlayerServerId(cache.playerid))
 
         if cache.game == 'redm' then
             cache:set('mount', IsPedOnMount(cache.ped) == true and GetMount(cache.ped) or false)
