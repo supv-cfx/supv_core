@@ -25,8 +25,9 @@ how_to_use {
 files {
     'obj.lua',
     'client/config/*.lua',
+    'locales/*.json',
     'imports/**/client.lua',
-    'imports/**/shared.lua'
+    'imports/**/shared.lua',
 }
 
 shared_scripts {
