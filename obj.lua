@@ -59,7 +59,10 @@ supv = setmetatable({
     env = GetCurrentResourceName(),
     lang = GetConvar('supv:locale', 'fr'),
     cache = {},
-    config = {}
+    config = {},
+    updateCache = function(key, cb)
+        AddEventHandler(('supv_core:cache:%s'):format(key), cb)
+    end
 },
 { 
     __index = call_module, 
