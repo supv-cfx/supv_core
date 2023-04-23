@@ -2,6 +2,32 @@
 local DrawMarker <const> = DrawMarker
 local default <const> = supv.config.marker
 
+---@class DataProps
+---@field visible? boolean-true
+---@field id? integer
+---@field color1? table
+---@field color2? table
+---@field dir? vector3
+---@field rot? vector3
+---@field scale? vector3
+---@field updown? boolean
+---@field faceToCam? boolean
+---@field p19? integer
+---@field textureDict? string
+---@field textureName? string
+---@field drawOnEnts? boolean
+---@field z? number
+---@field op? integer
+---@field rotate? boolean
+
+---@class OptionProps
+---@field double? boolean
+---@field insible? boolean
+
+--- supv.marker.draw
+---@param coords vec3
+---@param data? DataProps
+---@param options? OptionProps
 local function Marker(coords, data, options)
     local p1, p2 = {}, options?.double and {} or default.double
     p1.visible = data[1]?.visible or true
