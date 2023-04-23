@@ -32,7 +32,10 @@ local function Checker(url, webhook, timer, isBeta)
     
                     if current ~= minimum then
                         if current < minimum then
-                            return print(message.need_update:format(supv.env, version, lastVersion, resp.html_url))
+                            print('^9---------------------------------------------------------')
+                            print(message.need_update:format(supv.env, version, lastVersion, resp.html_url))
+                            print('^9---------------------------------------------------------')
+                            return
                         else break end
                     end
                 end
