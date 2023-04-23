@@ -5,8 +5,8 @@ function supv.getTranslation(...)
         local array = table.type(...) == 'array'
         local t = {}
         if array then
-            for i = 1, #... do
-                local a = ...[i]
+            for i = 1, #(...) do
+                local a = (...)[i]
                 t[a] = translate(a)
             end
             return t
