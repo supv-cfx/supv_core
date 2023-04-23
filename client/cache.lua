@@ -20,14 +20,24 @@ local GetVehiclePedIsIn <const> = GetVehiclePedIsIn
 local GetPedInVehicleSeat <const> = GetPedInVehicleSeat
 local GetVehicleMaxNumberOfPassengers <const> = GetVehicleMaxNumberOfPassengers
 local GetCurrentPedWeapon <const> = GetCurrentPedWeapon
+local GetActiveScreenResolution <const> = GetActiveScreenResolution
+
+local size = 100
 
 CreateThread(function()
     while true do
         cache:set('ped', PlayerPedId())
-        cache:set('playerid', PlayerId())
-        cache:set('serverid', GetPlayerServerId(cache.playerid))
 
-        if cache.game == 'redm' then
+        if size > 100 then
+            local screen_x, screen_y = GetActiveScreenResolution()
+            cache:set('playerid', PlayerId())
+            cache:set('serverid', GetPlayerServerId(cache.playerid))
+            cache:set('screen_x', screen_x)
+            cache:set('screen_y', screen_y)
+            size = 0
+        end
+
+        if supv.game == 'redm' then
             cache:set('mount', IsPedOnMount(cache.ped) == true and GetMount(cache.ped) or false)
         end
 
@@ -53,7 +63,7 @@ CreateThread(function()
 			cache:set('seat', false)
 		end
 
-
+        size += 1
         Wait(750)
     end
 end)
