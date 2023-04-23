@@ -1,3 +1,17 @@
+<h1 align="center"><u><b>supv_core v0.7.6b</b></u></h1>
+
+:fr:
+
+**Tout ce qu'il y a en dessous de ce message est pour la version v0.3b**
+
+**Cette branch est une archive**
+
+:uk:
+
+**All under this message is v0.3b**
+
+**This branch is archived**
+
 <h1 align="center"><u><b>supv_core v0.3b</b></u></h1>
 
 :fr:
