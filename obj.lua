@@ -74,9 +74,11 @@ if supv.service == 'client' then
         __index = function(self, key)
             AddEventHandler(('supv_core:cache:%s'):format(key), function(value)
                 self[key] = value
+                return self[key]
             end)
 
-            return rawset(self, key, export:getCache(key) or false)
+            rawset(self, key, export:getCache(key) or false)
+            return self[key]
         end
     })
 
