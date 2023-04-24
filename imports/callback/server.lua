@@ -17,9 +17,8 @@ local function TriggerClientCallback(name, source, cb, ...)
     TriggerClientEvent(nameEvent:format(name), source, supv.name, k, ...)
 
     local p = not cb and promise.new() or nil
-    local event = events[k]
 
-    function event(resp, ...)
+    events[k] = function(resp, ...)
         resp = {resp, ...}
         events[k] = nil
 

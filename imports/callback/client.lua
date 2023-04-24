@@ -33,9 +33,8 @@ local function TriggerServerCallback(name, timer, cb, ...)
     TriggerServerEvent(nameEvent:format(name), supv.name, k, ...)
 
     local p = not cb and promise.new() or nil
-    local event = events[k]
 
-    function event(resp, ...)
+    events[k] = function (resp, ...)
         resp = {resp, ...}
         events[k] = nil
 
