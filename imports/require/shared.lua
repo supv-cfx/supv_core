@@ -1,3 +1,75 @@
+-- replace overwrite require function by ox_lib function... to load module from zones (glm)
+if lib then return lib.require end
+local loaded = {}
+
+package = {
+    loaded = setmetatable({}, {
+        __index = loaded,
+        __newindex = function()
+            
+        end,
+        __metatable = false,
+    }),
+    path = './?.lua;'
+}
+
+local _require = require
+
+---Loads the given module inside the current resource, returning any values returned by the file or `true` when `nil`.
+---@param modname string
+---@return unknown?
+local function Load(modname)
+    if type(modname) ~= 'string' then return end
+
+    local module = loaded[modname]
+
+    if not module then
+        if module == false then
+            error(("^1circular-dependency occurred when loading module '%s'^0"):format(modname), 2)
+        end
+
+        local success, result = pcall(_require, modname)
+
+        if success then
+            loaded[modname] = result
+            return result
+        end
+
+        local modpath = modname:gsub('%.', '/')
+
+        for path in package.path:gmatch('[^;]+') do
+            local scriptPath = path:gsub('?', modpath):gsub('%.+%/+', '')
+            local resourceFile = LoadResourceFile(supv.env, scriptPath)
+
+            if resourceFile then
+                loaded[modname] = false
+                scriptPath = ('@@%s/%s'):format(supv.env, scriptPath)
+
+                local chunk, err = load(resourceFile, scriptPath)
+
+                if err or not chunk then
+                    loaded[modname] = nil
+                    return error(err or ("unable to load module '%s'"):format(modname), 3)
+                end
+
+                module = chunk(modname) or true
+                loaded[modname] = module
+
+                return module
+            end
+        end
+
+        return error(("module '%s' not found"):format(modname), 2)
+    end
+
+    return module
+end
+
+return {
+    load = Load
+}
+--[[
+    old method
 local moduleLoaded = {}
 
 local function load_module(path)
@@ -27,3 +99,4 @@ end
 return {
     load = call_module
 }
+--]]
