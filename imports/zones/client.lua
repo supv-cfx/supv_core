@@ -340,7 +340,7 @@ local function Poly(data)
 end
 
 ---@return CZone
-local function Box()
+local function Box(data)
     data.id = #Zones + 1
     data.coords = convertToVector(data.coords)
     data.size = data.size and convertToVector(data.size) / 2 or vec3(2)
@@ -365,7 +365,7 @@ local function Box()
 end
 
 ---@return CZone
-local function Sphere()
+local function Sphere(data)
     data.id = #Zones + 1
     data.coords = convertToVector(data.coords)
     data.radius = (data.radius or 2) + 0.0
