@@ -103,8 +103,59 @@ elseif supv.service == 'server' then
     })
 end
 
-if GetResourceState('ox_lib') ~= 'missing' then
-    if lib then return end
+if lib then return end
+
+-- credit: ox_lib <https://github.com/overextended/ox_lib/blob/master/init.lua>
+local intervals = {}
+--- Dream of a world where this PR gets accepted.
+---@param callback function | number
+---@param interval? number
+---@param ... any
+function SetInterval(callback, interval, ...)
+	interval = interval or 0
+
+    if type(interval) ~= 'number' then
+        return error(('Interval must be a number. Received %s'):format(json.encode(interval --[[@as unknown]])))
+    end
+
+	local cbType = type(callback)
+
+	if cbType == 'number' and intervals[callback] then
+		intervals[callback] = interval or 0
+		return
+	end
+
+    if cbType ~= 'function' then
+        return error(('Callback must be a function. Received %s'):format(cbType))
+    end
+
+	local args, id = { ... }
+
+	Citizen.CreateThreadNow(function(ref)
+		id = ref
+		intervals[id] = interval or 0
+		repeat
+			interval = intervals[id]
+			Wait(interval)
+			callback(table.unpack(args))
+		until interval < 0
+		intervals[id] = nil
+	end)
+
+	return id
+end
+
+---@param id number
+function ClearInterval(id)
+    if type(id) ~= 'number' then
+        return error(('Interval id must be a number. Received %s'):format(json.encode(id --[[@as unknown]])))
+	end
+
+    if not intervals[id] then
+        return error(('No interval exists with id %s'):format(id))
+	end
+
+	intervals[id] = -1
 end
 
 require = supv.require.load
