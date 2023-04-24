@@ -73,7 +73,18 @@ local function New(model, coords, data)
     return Await(p)
 end
 
+---@deprecated Use new method instead
+---@param model string|number
+---@param coords vec4
+---@param cb? function
+---@param network? boolean-true
+local function Create(model, coords, cb, network)
+    model = type(model) == 'number' and model or joaat(model)
+    local ped = CreatePed(_, model, coords.x, coords.y, coords.z, coords.w or coords.h or 0.0, network or true, false)
+    if cb then cb(ped) end
+end
+
 return {
     new = New,
-
+    create = Create ---@deprecated Use new method instead
 }
