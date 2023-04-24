@@ -22,7 +22,7 @@ local GetVehicleMaxNumberOfPassengers <const> = GetVehicleMaxNumberOfPassengers
 local GetCurrentPedWeapon <const> = GetCurrentPedWeapon
 local GetActiveScreenResolution <const> = GetActiveScreenResolution
 
-local size = 100
+local size = 99
 
 CreateThread(function()
     while true do
