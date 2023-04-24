@@ -1,0 +1,1 @@
+local CreatePed <const> = CreatePed
