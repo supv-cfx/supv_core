@@ -1,11 +1,12 @@
 local p, Await <const> = nil, Citizen.Await
 
-RegisterNUICallback('returnConvert', function(data, cb)
+RegisterNUICallback('supv:convert:return', function(data, cb)
     if p then p:resolve(data) end
     p = nil
     cb({})
 end)
 
+---@todo implement & re write with react
 function supv.convertUnixTime(unix_time, format_date)
 
     if type(unix_time) ~= 'number' then return end
@@ -17,7 +18,7 @@ function supv.convertUnixTime(unix_time, format_date)
     })
 
     SendNUIMessage({
-        action = 'convertUnix',
+        action = 'supv:convert:unix',
         data = {
             unix = unix_time,
             format_date = format_date or 'DD/MM/YYYY'
