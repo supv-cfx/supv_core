@@ -22,12 +22,16 @@ how_to_use {
 }
 --]]
 
+ui_page 'web/build/index.html'
+
 files {
     'obj.lua',
     'client/config/*.lua',
     'locales/*.json',
     'imports/**/client.lua',
     'imports/**/shared.lua',
+    'web/build/index.html',
+    'web/build/**/*'
 }
 
 shared_scripts {
@@ -36,7 +40,7 @@ shared_scripts {
 }
 
 client_scripts {
-    'client/cache.lua'
+    'client/*.lua'
 }
 
 server_script {
