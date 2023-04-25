@@ -1,4 +1,4 @@
--- replace overwrite require function by ox_lib function... to load module from zones (glm)
+-- credit: ox_lib <https://github.com/overextended/ox_lib/blob/master/imports/require/shared.lua>
 if lib then return lib.require end
 local loaded = {}
 
@@ -68,8 +68,9 @@ end
 return {
     load = Load
 }
---[[
-    old method
+
+--[[ old method, not working with zones module because need require (glm) to calculate vector
+    
 local moduleLoaded = {}
 
 local function load_module(path)
