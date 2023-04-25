@@ -2,7 +2,7 @@ local GetActivePlayers <const>, GetGamePool <const>, GetEntityCoords <const>, Ge
 
 --- supv.closest.object - Get closest object
 ---@param coords vec3
----@param maxDistance? number
+---@param maxDistance? number-2
 ---@return number|nil, vec3|nil
 local function GetClosestObject(coords, maxDistance)
     local objects = GetGamePool('CObject')
@@ -27,7 +27,7 @@ end
 
 --- supv.closest.player - Get closest player
 ---@param coords vec3
----@param maxDistance? number
+---@param maxDistance? number-2
 ---@param included? boolean
 ---@return number|nil, number|nil, vec3|nil
 local function GetClosestPlayer(coords, maxDistance, included)
@@ -57,7 +57,7 @@ end
 
 --- supv.closest.vehicle - Get closest vehicle
 ---@param coords vec3
----@param maxDistance? number
+---@param maxDistance? number-2
 ---@param inside? boolean
 ---@return number|nil, vec3|nil
 local function GetClosestVehicle(coords, maxDistance, inside)
@@ -85,7 +85,7 @@ end
 
 --- supv.closest.ped - Get closest ped
 ---@param coords vec3
----@param maxDistance? number
+---@param maxDistance? number-2
 ---@return number|nil, vec3|nil
 local function GetClosestPed(coords, maxDistance)
     local peds = GetGamePool('CPed')
