@@ -1,6 +1,6 @@
 -- credit: ox_lib <https://github.com/overextended/ox_lib/tree/master/imports/callback>
 local events, nameEvent = {}, ('__supv_cb:%s')
-local RegisterNetEvent <const>, TriggerClientEvent <const>, pcall <const>, Await <const>, unpack <const> = RegisterNetEvent, TriggerClientEvent, pcall, Citizen.Await, table.unpack
+local RegisterNetEvent <const>, TriggerClientEvent <const>, pcall <const>, unpack <const> = RegisterNetEvent, TriggerClientEvent, pcall, table.unpack
 
 RegisterNetEvent(nameEvent:format(supv.name), function(name, ...)
     local cb = events[name]
@@ -30,7 +30,7 @@ local function TriggerClientCallback(name, source, cb, ...)
     end
 
     if p then
-        return unpack(Await(p))
+        return unpack(supv.await(p))
     end
 end
 

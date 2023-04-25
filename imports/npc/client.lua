@@ -10,7 +10,6 @@ local FreezeEntityPosition <const> = FreezeEntityPosition
 local SetPedComponentVariation <const> = SetPedComponentVariation
 local SetPedDefaultComponentVariation <const> = SetPedDefaultComponentVariation
 local GiveWeaponToPed <const> = GiveWeaponToPed
-local Await <const> = Citizen.Await
 
 ---@class NpcWeaponsProps
 ---@field model string|number
@@ -70,7 +69,7 @@ local function New(model, coords, data)
         end
     end)
 
-    return Await(p)
+    return supv.await(p)
 end
 
 ---@deprecated Use new method instead

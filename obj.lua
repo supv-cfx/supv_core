@@ -60,6 +60,7 @@ supv = setmetatable({
     lang = GetConvar('supv:locale', 'fr'),
     cache = {},
     config = {},
+    await = Ctizen.Await,
     updateCache = function(key, cb)
         AddEventHandler(('supv_core:cache:%s'):format(key), cb)
     end

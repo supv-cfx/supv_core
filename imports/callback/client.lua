@@ -1,6 +1,6 @@
 -- credit: ox_lib <https://github.com/overextended/ox_lib/tree/master/imports/callback>
 local events, timers, nameEvent = {}, {}, ('__supv_cb:%s')
-local RegisterNetEvent <const>, TriggerServerEvent <const>, pcall <const>, Await <const>, unpack <const> = RegisterNetEvent, TriggerServerEvent, pcall, Citizen.Await, table.unpack
+local RegisterNetEvent <const>, TriggerServerEvent <const>, pcall <const>, unpack <const> = RegisterNetEvent, TriggerServerEvent, pcall, table.unpack
 
 RegisterNetEvent(nameEvent:format(supv.name), function(name, ...)
     local cb = events[name]
@@ -46,7 +46,7 @@ local function TriggerServerCallback(name, timer, cb, ...)
     end
 
     if p then
-        return unpack(Await(p))
+        return unpack(supv.await(p))
     end
 end
 

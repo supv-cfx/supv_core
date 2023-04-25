@@ -1,4 +1,4 @@
-local p, Await <const> = nil, Citizen.Await
+local p = nil
 
 RegisterNUICallback('supv:convert:return', function(data, cb)
     if p then p:resolve(data) end
@@ -26,5 +26,5 @@ function supv.convertUnixTime(unix_time, format_date)
     })
 
     p = promise.new()
-    return Await(p)
+    return supv.await(p)
 end
