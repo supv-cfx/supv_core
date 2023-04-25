@@ -1,6 +1,9 @@
 local stock = {}
 local DisableControlAction <const> = DisableControlAction
 
+
+---@todo need finish this module
+
 --- oop
 
 local function Add(self, keys)
