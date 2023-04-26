@@ -1,4 +1,4 @@
-local cache = {}
+local cache = _ENV.supv.cache
 
 function cache:set(key, value)
     if not self[key] or self[key] ~= value then
