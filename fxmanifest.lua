@@ -27,6 +27,7 @@ ui_page 'web/build/index.html'
 files {
     'obj.lua',
     'client/config/*.lua',
+    'client/modules/*.lua',
     'locales/*.json',
     'imports/**/client.lua',
     'imports/**/shared.lua',
@@ -40,7 +41,8 @@ shared_scripts {
 }
 
 client_scripts {
-    'client/*.lua'
+    'client/*.lua',
+    'client/nui/*.lua'
 }
 
 server_script {
