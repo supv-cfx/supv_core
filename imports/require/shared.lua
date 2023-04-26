@@ -66,7 +66,8 @@ local function Load(modname)
 end
 
 return {
-    load = Load
+    load = Load,
+    get = loaded
 }
 
 --[[ old method, not working with zones module because need require (glm) to calculate vector
