@@ -1,0 +1,43 @@
+local RegisterNetEvent <const>, AddEventHandler <const>, TriggerClientEvent <const>, TriggerEvent <const> = RegisterNetEvent, AddEventHandler, TriggerClientEvent, TriggerEvent
+
+--- supv.eventRegister @ RegisterNetEvent
+---@param name string
+---@param cb? function
+function supv.eventRegister(name, cb)
+    if type(name) ~= 'string' then return end
+    if cb and type(cb) ~= 'function' then return end
+    name = ("__%s__:%s:%s"):format('supv', supv.service,name)
+    
+    RegisterNetEvent(name, cb)
+end
+
+--- supv.eventHandler @ AddEventHandler
+---@param name string
+---@param cb function
+function supv.eventHandler(name, cb)
+    if type(name) ~= 'string' then return end
+    if cb and type(cb) ~= 'function' then return end
+    name = ("__%s__:%s:%s"):format('supv', supv.service,name)
+    
+    AddEventHandler(name, cb)
+end
+
+--- supv.trigger @ TriggerEvent
+---@param name string
+---@param ... any
+function supv.trigger(name, ...)
+    if type(name) ~= 'string' then return end
+    name = ("__%s__:%s:%s"):format('supv', supv.service, name)
+    
+    TriggerEvent(name, ...)
+end
+
+--- supv.triggerClient @ TriggerClientEvent
+---@param name string
+---@param ... any
+function supv.triggerClient(name, ...)
+    if type(name) ~= 'string' then return end
+    name = ("__%s__:%s:%s"):format('supv', 'client', name)
+    
+    TriggerClientEvent(name, ...)
+end
