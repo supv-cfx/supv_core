@@ -41,10 +41,12 @@ shared_scripts {
 }
 
 client_scripts {
+    'package/dist/client/client.js',
     'client/*.lua',
     'client/nui/*.lua'
 }
 
 server_script {
-    'server/*.lua'
+    'package/dist/server/server.js',
+    'server/*.lua',
 }
