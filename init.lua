@@ -39,7 +39,7 @@ supv = setmetatable({
     name = GetCurrentResourceName(),
     game = GetGameName(),
     env = GetCurrentResourceName(),
-    await = Ctizen.Await,
+    await = Citizen.Await,
     lang = GetConvar('supv:locale', 'fr')
 }, {
     __index = call_module, 

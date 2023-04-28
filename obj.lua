@@ -6,7 +6,7 @@ local GetGameName <const> = GetGameName
 local GetCurrentResourceName <const> = GetCurrentResourceName
 local export = exports[supv_core]
 
-local service <const> = (IsDuplicityVersion() and 'server') or (not IsDuplicityVersion() and 'client')
+local service <const> = (IsDuplicityVersion() and 'server') or 'client'
 
 if not _VERSION:find('5.4') then
     error("^1 Vous devez activer Lua 5.4 dans la resources où vous utilisez l'import, (lua54 'yes') dans votre fxmanifest!^0", 2)
@@ -19,20 +19,22 @@ end
 local function load_module(self, index)
     local func, err 
     local dir <const> = ('imports/%s'):format(index)
-    local chunk = LoadResourceFile(supv_core, ('%s/%s.lua'):format(dir, service))
-    local shared = LoadResourceFile(supv_core, ('%s/shared.lua'):format(dir))
+    local chunk <const> = LoadResourceFile(supv_core, ('%s/%s.lua'):format(dir, service))
+    local shared <const> = LoadResourceFile(supv_core, ('%s/shared.lua'):format(dir))
 
-    if shared then
-        func, err = load(shared, ('@@%s/%s/%s'):format(supv_core, index, 'shared'))
-    else
-        func, err = load(chunk, ('@@%s/%s/%s'):format(supv_core, index, service))
+    if chunk or shared then
+        if shared then
+            func, err = load(shared, ('@@%s/%s/%s'):format(supv_core, index, 'shared'))
+        else
+            func, err = load(chunk, ('@@%s/%s/%s'):format(supv_core, index, service))
+        end
+        
+        if err then error(("Erreur pendant le chargement du module\n- Provenant de : %s\n- Modules : %s\n- Service : %s\n - Erreur : %s"):format(dir, index, service, err), 3) end
+
+        local result = func()
+        rawset(self, index, result)
+        return self[index]
     end
-    
-    if err then error(("Erreur pendant le chargement du module\n- Provenant de : %s\n- Modules : %s\n- Service : %s\n - Erreur : %s"):format(dir, index, service, err), 3) end
-
-    local result = func()
-    rawset(self, index, result)
-    return self[index]
 end
 
 local function call_module(self, index, ...)
