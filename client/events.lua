@@ -1,4 +1,8 @@
-local RegisterNetEvent <const>, AddEventHandler <const>, TriggerServerEvent <const>, TriggerEvent <const> = RegisterNetEvent, AddEventHandler, TriggerServerEvent, TriggerEvent
+local RegisterNetEvent <const>, AddEventHandler <const>, TriggerServerEvent <const>, TriggerEvent <const>, token = RegisterNetEvent, AddEventHandler, TriggerServerEvent, TriggerEvent
+
+Citizen.CreateThreadNow(function()
+    token = supv.callback.sync('event')
+end)
 
 --- supv.eventHandler @ RegisterNetEvent
 ---@param name string
@@ -6,7 +10,12 @@ local RegisterNetEvent <const>, AddEventHandler <const>, TriggerServerEvent <con
 function supv.eventRegister(name, cb)
     if type(name) ~= 'string' then return end
     if cb and type(cb) ~= 'function' then return end
-    name = ("__%s__:%s:%s"):format('supv', supv.service,name)
+
+    while not token do
+        Wait(500)
+    end
+
+    name = ("__%s__:%s:%s:%s"):format('supv', token, supv.service,name)
     
     RegisterNetEvent(name, cb)
 end
@@ -17,7 +26,12 @@ end
 function supv.eventHandler(name, cb)
     if type(name) ~= 'string' then return end
     if cb and type(cb) ~= 'function' then return end
-    name = ("__%s__:%s:%s"):format('supv', supv.service,name)
+
+    while not token do
+        Wait(500)
+    end
+
+    name = ("__%s__:%s:%s:%s"):format('supv', token, supv.service,name)
     
     AddEventHandler(name, cb)
 end
@@ -27,7 +41,12 @@ end
 ---@param ... any
 function supv.trigger(name, ...)
     if type(name) ~= 'string' then return end
-    name = ("__%s__:%s:%s"):format('supv', supv.service, name)
+
+    while not token do
+        Wait(500)
+    end
+
+    name = ("__%s__:%s:%s:%s"):format('supv', token, supv.service, name)
     
     TriggerEvent(name, ...)
 end
@@ -37,7 +56,12 @@ end
 ---@param ... any
 function supv.triggerServer(name, ...)
     if type(name) ~= 'string' then return end
-    name = ("__%s__:%s:%s"):format('supv', 'server', name)
+
+    while not token do
+        Wait(500)
+    end
+
+    name = ("__%s__:%s:%s:%s"):format('supv', token, 'server', name)
     
     TriggerServerEvent(name, ...)
 end

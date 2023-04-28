@@ -1,13 +1,20 @@
 local RegisterNetEvent <const>, AddEventHandler <const>, TriggerClientEvent <const>, TriggerEvent <const> = RegisterNetEvent, AddEventHandler, TriggerClientEvent, TriggerEvent
 
+local token <const> = require 'server.modules.tokenizer'
+
 --- supv.eventRegister @ RegisterNetEvent
 ---@param name string
 ---@param cb? function
 function supv.eventRegister(name, cb)
     if type(name) ~= 'string' then return end
     if cb and type(cb) ~= 'function' then return end
-    name = ("__%s__:%s:%s"):format('supv', supv.service,name)
-    
+
+    while not token do
+        Wait(500)
+    end
+
+    name = ("__%s__:%s:%s:%s"):format('supv', token, supv.service,name)
+
     RegisterNetEvent(name, cb)
 end
 
@@ -17,7 +24,12 @@ end
 function supv.eventHandler(name, cb)
     if type(name) ~= 'string' then return end
     if cb and type(cb) ~= 'function' then return end
-    name = ("__%s__:%s:%s"):format('supv', supv.service,name)
+
+    while not token do
+        Wait(500)
+    end
+
+    name = ("__%s__:%s:%s:%s"):format('supv', token, supv.service,name)
     
     AddEventHandler(name, cb)
 end
@@ -27,7 +39,12 @@ end
 ---@param ... any
 function supv.trigger(name, ...)
     if type(name) ~= 'string' then return end
-    name = ("__%s__:%s:%s"):format('supv', supv.service, name)
+
+    while not token do
+        Wait(500)
+    end
+
+    name = ("__%s__:%s:%s:%s"):format('supv', token, supv.service, name)
     
     TriggerEvent(name, ...)
 end
@@ -37,7 +54,16 @@ end
 ---@param ... any
 function supv.triggerClient(name, ...)
     if type(name) ~= 'string' then return end
-    name = ("__%s__:%s:%s"):format('supv', 'client', name)
+
+    while not token do
+        Wait(500)
+    end
+
+    name = ("__%s__:%s:%s:%s"):format('supv', token, 'client', name)
     
     TriggerClientEvent(name, ...)
 end
+
+supv.callback.register('event', function(source)
+    return token
+end)
