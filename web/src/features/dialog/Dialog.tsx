@@ -48,7 +48,7 @@ const AnimatedButton = (iconAwesome: any, text: string, closed: Function, args: 
     );
 }
 
-const DialogComponent = () => {
+const DialogComponent: React.FC = () => {
     const [state, setState] = useState<DialogProps>({title: '', subtitle: '', description: ''});
     const [opened, { toggle, close }] = useDisclosure(false);
 

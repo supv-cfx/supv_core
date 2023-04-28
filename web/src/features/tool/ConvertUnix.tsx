@@ -3,7 +3,7 @@ import { fetchNui } from '../../utils/fetchNui';
 import { useNuiEvent } from '../../hooks/useNuiEvent';
 import type { ConvertUnix } from '../../typings/tool/ConvertUnix';
 
-const ConvertUnixTime = () => {
+const ConvertUnixTime: React.FC = () => {
   useNuiEvent('supv:convert:unix', (data: ConvertUnix) => {
     const unixTime: number = moment.duration(data.unix_time, 'milliseconds').as('seconds');
     const date: any|string = moment.unix(unixTime).format(data.format_date);
@@ -11,9 +11,7 @@ const ConvertUnixTime = () => {
   });
 
   return (
-    <div>
-      <p>Convert Unix Time</p>
-    </div>
+    <></>
   );
 };
 
