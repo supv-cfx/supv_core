@@ -19,6 +19,9 @@ local function SendReactMessage(visible, value, options)
         })
         
         ---@todo reset focus options when visible is false and focus active = true
+        if not visible and IsNuiFocused() then
+            SetNuiFocus(false, false)
+        end
     end
 
     if type(value) == 'table' and type(value.action) == 'string' then
@@ -41,13 +44,15 @@ end
 
 --- supv.registerReactCallback
 ---@param name string
----@param func fun(data: any, cb: fun(...: any))
+---@param cb fun(data: any, cb: fun(...: any))
 ---@param visible? boolean
-local function RegisterReactCallback(name, func, visible)
-    RegisterNUICallback(name, func)
-    if visible then
-        SendReactMessage(false)
-    end
+local function RegisterReactCallback(name, cb, visible)
+    RegisterNUICallback(name, function(...)
+        if visible then
+            SendReactMessage(false)
+        end
+        cb(...)
+    end)
 end
 
 return {

@@ -69,7 +69,7 @@ const DialogComponent = () => {
 
     return (
         <>
-            {Browser(toggle)};
+            {Browser(toggle)}
 
             <Dialog transition={"skew-down"} withBorder opened={opened} withCloseButton onClose={() => CloseDialog(false)} size="lg" radius="md" position={{top: '20%', right: '45%'}}>
                 <Title order={1} align='center' mb="xs" underline={true}> {(state.title) || (isEnvBrowser() && "Titre")} </Title>
