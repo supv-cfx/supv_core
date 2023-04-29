@@ -1,7 +1,13 @@
 local PerformHttpRequest <const>, GetResourceMetadata <const> = PerformHttpRequest, GetResourceMetadata
 local version <const> = GetResourceMetadata(supv.env, 'version', 0)
 
-local function Checker(url, webhook, timer, isBeta)
+--- supv.version.check
+---@param url string
+---@param webhook? table
+---@param timer? number
+---@param isBeta? boolean
+---@param perso? fun(resp: table)
+local function Checker(url, webhook, timer, isBeta, perso)
     local message = supv.json.load(('locales/%s'):format(supv.lang), supv.name)
 
     local from <const> = url
@@ -40,7 +46,9 @@ local function Checker(url, webhook, timer, isBeta)
                     end
                 end
             else
-                -- todo
+                if perso then
+                    perso(resp)
+                end
             end            
         end, 'GET')
     end)
