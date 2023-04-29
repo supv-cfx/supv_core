@@ -16,8 +16,8 @@ local function Checker(url, webhook, timer, isBeta)
             resp = json.decode(resp)
             -- print(json.encode(resp, {indent=true}))
 
-            if from == 'github' then
-                local lastVersion = resp.tag_name
+            if from == 'github' or from == 'tebex' then
+                local lastVersion = from == 'github' and resp.tag_name or from == 'tebex' and resp.version
                 lastVersion = lastVersion:gsub('v', '')
 
                 if isBeta then
@@ -33,14 +33,12 @@ local function Checker(url, webhook, timer, isBeta)
                     if current ~= minimum then
                         if current < minimum then
                             print('^9---------------------------------------------------------')
-                            print(message.need_update:format(supv.env, version, lastVersion, resp.html_url))
+                            print(message.need_update:format(supv.env, version, lastVersion, from == 'github' and resp.html_url or from == 'tebex' and resp.link))
                             print('^9---------------------------------------------------------')
                             return
                         else break end
                     end
                 end
-            elseif from == 'tebex' then
-                -- todo
             else
                 -- todo
             end            
