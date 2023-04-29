@@ -6,5 +6,5 @@ exports('load', function()
         return error(err or ("unable to load module '%s'"):format(file), 3)
     end
 
-    return func()
+    return func
 end)
