@@ -2,11 +2,11 @@
 ---@param vector4? boolean-false
 local function GetCoords(self, vector4)
     local coords = GetEntityCoords(supv.cache.ped)
+    self.coords = coords
     if vector4 then
         local heading = GetEntityHeading(supv.cache.ped)
         return vec4(coords.x, coords.y, coords.z, heading)
     end
-    self.coords = coords
     return coords
 end
 
@@ -14,7 +14,7 @@ end
 ---@param coords vec3
 ---@return float
 local function GetDistanceBetweenCoords(self, coords)
-    self.dist = #(self:getCoords() - coords)
+    self.dist = #(self:getCoords().xyz - coords)
     return self.dist
 end
 
