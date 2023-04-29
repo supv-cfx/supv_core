@@ -1,5 +1,5 @@
 export interface DialogProps {
-    title: string;
+    title?: string;
     subtitle?: string;
     description: string;
 }
