@@ -5,6 +5,26 @@ assert(os.setlocale(cfg.localization))
 
 local PerformHttpRequest <const> = PerformHttpRequest
 
+---@class WebhookDataProps
+---@field bot_name? string
+---@field avatar? string
+---@field date_format? string
+---@field footer_icon? string
+
+---@class WebhookEmbedProps
+---@field title? string
+---@field description? string
+---@field image? string
+---@field color? integer
+
+---@class WebhookMessageProps
+---@field text string
+---@field data WebhookDataProps
+
+--- supv.webhook('embed')
+---@param url string
+---@param embeds WebhookEmbedProps
+---@param data WebhookDataProps
 local function embed(url, embeds, data)
     local date = {
         letter = ("\n%s %s"):format(supv.string.firstToUpper(os.date("%A %d")), supv.string.firstToUpper(os.date("%B %Y : [%H:%M:%S]"))):to_utf8(),
@@ -35,6 +55,10 @@ local function embed(url, embeds, data)
     }), {['Content-Type'] = 'application/json'})
 end
 
+--- supv.webhook('message')
+---@param url string
+---@param text string
+---@param data WebhookDataProps.bot_name
 local function message(url, text, data)
     url = cfg.channel[url] or url
 
