@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWrench } from '@fortawesome/free-solid-svg-icons';
 
 import { debugDialog } from './debug/dialog';
+import { debugNotification } from './debug/notifcation';
 
 const DevTool: React.FC = () => {
 
@@ -26,6 +27,7 @@ const DevTool: React.FC = () => {
                 <Stack spacing="md">
                     <Divider />
                     <Button variant="outline" color="blue" fullWidth onClick={() => {debugDialog(); setOpened(false)}}>Dialog</Button>
+                    <Button variant='outline' color='red' fullWidth onClick={() => debugNotification()}>Notication</Button>
                 </Stack>
             </Drawer>
         </>
