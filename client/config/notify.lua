@@ -3,11 +3,11 @@ return {
 
     -- native
     native = {
-
+        
     },
 
     --
     react = {
-
+        maxNotification = 6,
     }
 }
