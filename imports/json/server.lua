@@ -35,5 +35,5 @@ end
 
 return {
     load = Loadjson,
-    write = Writejson
+    save = Writejson
 }
