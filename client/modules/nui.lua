@@ -13,13 +13,13 @@ local SendNUIMessage <const>, type <const>, SetNuiFocus <const>, table <const>, 
 ---@param options? SendReactOptions
 local function SendReactMessage(visible, value, options)
     if type(visible) == 'boolean' then
-        SendNUIMessage({
-            action = 'setVisible',
-            data = visible
-        })
+        --SendNUIMessage({
+        --    action = 'setVisible',
+        --    data = visible
+        --})
         
         ---@todo reset focus options when visible is false and focus active = true
-        if not visible and IsNuiFocused() then
+        if visible == false and IsNuiFocused() then
             SetNuiFocus(false, false)
         end
     end
