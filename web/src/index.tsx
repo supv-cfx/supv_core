@@ -10,8 +10,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { isEnvBrowser } from './utils/misc';
 import './index.css';
 
-//import {VisibilityProvider} from './providers/VisibilityProvider';
-
 library.add(fas, far, fab);
 
 if (isEnvBrowser()) {
