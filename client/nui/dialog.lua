@@ -8,20 +8,20 @@ end, true)
 
 
 ---@class DialogDataProps
----@field title string
+---@field title? string
 ---@field subtitle? string
----@field description string
+---@field description? string
 
 --- supv.createDialog
 ---@param data DialogDataProps
 ---@return boolean
 function supv.createDialog(data)
     if type(data) ~= 'table' then return end
-    if not data.title or not data.description then return end
+    if not data.title and not data.description and not data.subtitle then return end
     if p then return end
 
     nui.SendReactMessage(true, {
-        action = 'supv:dialog:create',
+        action = 'supv:dialog:opened',
         data = data
     }, {
         focus = true
