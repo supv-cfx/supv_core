@@ -8,7 +8,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { isEnvBrowser } from './utils/misc';
-import './index.css';
+import ConfigProvider from './providers/ConfigProvider';
 
 library.add(fas, far, fab);
 
@@ -25,7 +25,9 @@ const root = document.getElementById('root');
 ReactDOM.createRoot(root!).render(
   <React.StrictMode>
     <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles withNormalizeCSS>
-      <App />
+      <ConfigProvider>
+        <App />
+      </ConfigProvider>
     </MantineProvider>  
   </React.StrictMode>,
 );
