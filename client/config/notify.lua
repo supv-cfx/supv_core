@@ -1,13 +1,14 @@
 return {
-    type = 'native', -- native | react <wip>
+    type = 'react', -- native | react <wip>
 
-    -- native
+    -- native notify (gta5/redm)
     native = {
         
     },
 
-    --
+    -- react notify
     react = {
-        maxNotification = 6,
+        maxNotification = 6, -- queue max size
+        notificationStyles = GetConvar('supv_core:interface:notification:simple'),
     }
 }
