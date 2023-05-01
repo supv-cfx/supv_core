@@ -42,12 +42,15 @@ local function call_module(self, index, ...)
     if not module then
         module = load_module(self, index)
         if not module then
-            print(index, ...)
-            local method = export[index](nil, ...)
-            if not method then
-                error(("Erreur en appelant le module (import/export)\n- Modules : %s\n- Service : %s"):format(index, service), 3)
+            local function method(...)
+                return export[index](nil, ...)
             end
-            self[index] = method
+            
+            if not ... then
+                self[index] = method
+                ---error(("Erreur en appelant le module (import/export)\n- Modules : %s\n- Service : %s"):format(index, service), 3)
+            end
+            
             return method
         end
     end
