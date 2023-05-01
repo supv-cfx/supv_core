@@ -1,4 +1,4 @@
-//import React from 'react';
+import React from 'react';
 import { ToastPosition } from 'react-hot-toast';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
@@ -12,4 +12,7 @@ export interface NotificationProps {
   position?: ToastPosition; // default: top-right
   color?: string; // default: check on type
   closable?: boolean; // default: false (not semi-implementation)
+  border?: boolean; // default: false (not semi-implementation)
+  iconAnim: string; // default: false
+  style?: React.CSSProperties;
 }
