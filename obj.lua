@@ -48,7 +48,6 @@ local function call_module(self, index, ...)
             
             if not ... then
                 self[index] = method
-                ---error(("Erreur en appelant le module (import/export)\n- Modules : %s\n- Service : %s"):format(index, service), 3)
             end
             
             return method
