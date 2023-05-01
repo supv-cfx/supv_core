@@ -1,7 +1,7 @@
 export const NotificationConfigDev = {
     container: {
-        width: 300,
-        maxWidth: 400,
+        width: 'fit-content',
+        maxWidth: 300,
         minWidth: 300,
         height: 'fit-content',
         backgroundColor: 'dark.4',
