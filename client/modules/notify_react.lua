@@ -1,4 +1,4 @@
-local config <const>, nui <const> = require 'client.config.notify', require 'client.modules.nui'
+local config <const> = require 'client.config.notify', require 'client.modules.nui'
 
 ---@class notification_react_simple
 ---@field title? string
@@ -20,7 +20,7 @@ local count = 0 ---@type integer
 ---@param select string
 ---@param data notification_react_simple
 local function Notify(select, data)
-    if count >= config.maxNotification then
+    if count >= config.react.maxNotification then
         queu[#queu+1] = {
             select = select,
             data = data
@@ -44,7 +44,7 @@ end
 ---@param cb fun(data: queueId, cb: fun(...: any))
 nui.RegisterReactCallback('supv:notificiation:onRemove', function(_, cb)
     count -= 1
-    if count < config.maxNotification and #queu > 0 then
+    if count < config.react.maxNotification and #queu > 0 then
         local queuData = queu[1]
         table.remove(queu, 1)
         Notify(queuData.select, queuData.data)
