@@ -11,13 +11,15 @@ function supv.eventRegister(name, cb)
     if type(name) ~= 'string' then return end
     if cb and type(cb) ~= 'function' then return end
 
-    while not token do
-        Wait(500)
-    end
+    CreateThread(function()
+        while not token do
+            Wait(500)
+        end
 
-    name = ("__%s__:%s:%s:%s"):format('supv', token, supv.service,name)
-    
-    RegisterNetEvent(name, cb)
+        name = ("__%s__:%s:%s:%s"):format('supv', token, supv.service,name)
+        
+        RegisterNetEvent(name, cb)
+    end)
 end
 
 --- supv.eventHandler @ AddEventHandler
