@@ -51,19 +51,18 @@ end
 ---@param path string
 ---@param ext string
 local function LoadExternal(resource, path, ext)
-    local filePath, folder = path, resource
+    local filePath, folder, result = path, resource
     filePath = filePath:gsub('%.', '/')
-    if ext == 'json' then goto JSON end
-    local import = LoadResourceFile(folder, filePath)
-    local func, err = load(import, ('@@%s/%s/%s.lua'):format(folder, filePath))
-    if not func or err then
-        return error(err or ("unable to load module '%s/%s.lua'"):format(folder, filePath), 3)
-    end
 
-    local result = func()
+    if ext == 'lua' then
+        local import = LoadResourceFile(folder, filePath)
+        local func, err = load(import, ('@@%s/%s/%s.lua'):format(folder, filePath))
+        if not func or err then
+            return error(err or ("unable to load module '%s/%s.lua'"):format(folder, filePath), 3)
+        end
 
-    if ext == 'json' then
-        ::JSON::
+        result = func()
+    elseif ext == 'json' then
         filePath = filePath:gsub('%.json', '')
         result = supv.json.load(filePath, folder)
     end
