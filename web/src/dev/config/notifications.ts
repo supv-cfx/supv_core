@@ -6,6 +6,7 @@ export const NotificationConfigDev = {
         height: 'fit-content',
         backgroundColor: 'dark.4',
         fontFamily: 'Ubuntu',
+        position: 'top-right',
     },
     title: {
         fontWeight: 500,
