@@ -1,5 +1,6 @@
 export interface NotificationConfigProviderProps {
     container: {
+        position: any;
         width: string | number;
         maxWidth: number;
         minWidth: number;
