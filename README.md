@@ -8,4 +8,4 @@
 
 :uk:
 
-Used by: [@SUP2Ak]/[supv_setting]
+"Used by: [@SUP2Ak]/[supv_setting]"
