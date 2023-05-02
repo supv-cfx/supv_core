@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import ReactMarkdown from 'react-markdown';
-import { createStyles, Notification, keyframes, Loader } from '@mantine/core';
+import { createStyles, Notification, keyframes } from '@mantine/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNuiEvent } from '../../hooks/useNuiEvent';
 import type { NotificationProps } from '../../typings/Notification';
@@ -9,99 +9,8 @@ import type { NotificationProps } from '../../typings/Notification';
 import { useConfig } from '../../providers/ConfigProvider';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import {SelectAnime} from '../../animation/notifications';
 
-const enterAnimationTop = keyframes({
-  from: {
-    opacity: 0,
-    transform: 'translateY(-30px)',
-  },
-  to: {
-    opacity: 1,
-    transform: 'translateY(0px)',
-  },
-});
-
-const enterAnimationBottom = keyframes({
-  from: {
-    opacity: 0,
-    transform: 'translateY(30px)',
-  },
-  to: {
-    opacity: 1,
-    transform: 'translateY(0px)',
-  },
-});
-
-const exitAnimationTop = keyframes({
-  from: {
-    opacity: 1,
-    transform: 'translateY(0px)',
-  },
-  to: {
-    opacity: 0,
-    transform: 'translateY(-100%)',
-  },
-});
-
-const exitAnimationRight = keyframes({
-  from: {
-    opacity: 1,
-    transform: 'translateX(0px)',
-  },
-  to: {
-    opacity: 0,
-    transform: 'translateX(100%)',
-  },
-});
-
-const exitAnimationLeft = keyframes({
-  from: {
-    opacity: 1,
-    transform: 'translateX(0px)',
-  },
-  to: {
-    opacity: 0,
-    transform: 'translateX(-100%)',
-  },
-});
-
-const exitAnimationBottom = keyframes({
-  from: {
-    opacity: 1,
-    transform: 'translateY(0px)',
-  },
-  to: {
-    opacity: 0,
-    transform: 'translateY(100%)',
-  },
-});
-
-
-const slideInEllipticTopFwd = keyframes({
-  from: {
-    transform: 'translateY(-600px) rotateX(-30deg) scale(0)',
-    transformOrigin: '50% 100%',
-    opacity: 0,
-  },
-  to: {
-    transform: 'translateY(0) rotateX(0) scale(1)',
-    transformOrigin: '50% 1400px',
-    opacity: 1,
-  },
-});
-
-const slideOutEllipticTopBck = keyframes({
-  from: {
-    transform: 'translateY(0) rotateX(0) scale(1)',
-    transformOrigin: '50% 1400px',
-    opacity: 1,
-  },
-  to: {
-    transform: 'translateY(-600px) rotateX(-30deg) scale(0)',
-    transformOrigin: '50% 100%',
-    opacity: 0,
-  },
-});
 
 const Notifications: React.FC = () => {
 
@@ -117,6 +26,8 @@ const Notifications: React.FC = () => {
         await new Promise((resolve) => setTimeout(resolve, 200));
         fetchNui('supv:notification:removeQueue');
     }*/
+
+
 
     const iconeAnimation = (anim: string) => {
       switch (anim) {
@@ -141,24 +52,26 @@ const Notifications: React.FC = () => {
 
     useNuiEvent<NotificationProps>('supv:notification:send', (data) => {
         if (!data.title && !data.description) return;
-        let position = data.position;
+        console.log(data.position)
+        let position = !data.position ? config.notificationStyles.container.position : data.position;
         //position = 'bottom-right'
         if (!data.icon && data.type !== 'loading' && data.type) {
             data.icon = data.type === 'error' ? 'xmark' : data.type === 'success' ? 'check' : data.type === 'warning' ? 'exclamation' : 'info';
         }
         let description: string = data.description?.includes('~~~') ? data.description : data.description ? data.description.replace('\n', '  \n  ') : ''
-        
+
+        const {posEnter, posExit} = SelectAnime(data?.animation?.enter, data?.animation?.exit, position?.includes('bottom') ? 'bottom' : 'top', position?.includes('top') ? 'top' : position?.includes('right') ? 'right' : position?.includes('left') ? 'left' : 'right', 'top', undefined);
+
         toast.custom(
             (t) => (
                 <Notification withBorder={data.border} loading={data.type === 'loading'} {...data.icon ? { icon: 
                   <FontAwesomeIcon icon={data.icon} beat={iconeAnimation(data.iconAnim)} fade={iconeAnimation(data.iconAnim)}/> } : undefined}
                     title={data.title} radius='md' withCloseButton={data.closable || false} onClose={() => { data.closable && toast.dismiss(t.id)/*; onRemoveQueue() */}} 
                     color={!data.type && !data.color ? 'dark' : data.color ? data.color : data.type === 'error' ? 'red' : data.type === 'success' ? 'teal' : data.type === 'warning' ? 'orange' : data.type === 'loading' ? 'white' : 'blue'} sx={{
-                        animation: t.visible
-                            ? `${position?.includes('bottom') ? enterAnimationBottom : slideInEllipticTopFwd} 0.5s ease-out forwards`
-                            : `${slideOutEllipticTopBck} 0.5s ease-in forwards`,
-
-                    }} /*onAnimationEnd={() => onRemoveQueue()}*/ className={`${classes.container}`} style={data.style}>
+                      animation: t.visible
+                          ? `${posEnter} 0.2s ease-out forwards`
+                          : `${posExit} 0.9s ease-in forwards`,
+                  }} /*onAnimationEnd={() => onRemoveQueue()}*/ className={`${classes.container}`} style={data.style}>
                     {data.description && (
                         <ReactMarkdown
                         children={description}
