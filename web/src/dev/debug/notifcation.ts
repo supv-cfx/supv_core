@@ -23,7 +23,7 @@ export const debugNotification = () => {
       data: {
         id: '2',
         title: 'Whereas recognition of the inherent dignity',
-        description: 'Notification description\nwith new line',
+        description: '~r~Notification~r~ ~p~description~p~\nwith new line',
         type: 'success',
         position: 'top-right',
         //duration: 5000,
@@ -121,7 +121,7 @@ export const debugNotification = () => {
       } as NotificationProps,
     }
   ]);
-  /*
+  
   debugData([
     {
       action: 'supv:notification:send',
@@ -157,5 +157,5 @@ export interface NotificationProps {
         }
       } as NotificationProps,
     }
-  ]);*/
+  ]);
 } // screwdriver-wrench

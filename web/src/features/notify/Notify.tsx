@@ -10,6 +10,34 @@ import { useConfig } from '../../providers/ConfigProvider';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {SelectAnime} from '../../animation/notifications';
+import { renderToString } from 'react-dom/server';
+
+function formatText(text: string) {
+  const parts = text.split(/(~r~|~o~|~y~|~g~|~b~|~p~)/);
+  return (
+    <>
+      {parts.map((part, index) => {
+        switch (part) {
+          case "~r~":
+            return <span key={index} style={{ color: "red" }} />;
+          case "~o~":
+            return <span key={index} style={{ color: "orange" }} />;
+          case "~y~":
+            return <span key={index} style={{ color: "yellow" }} />;
+          case "~g~":
+            return <span key={index} style={{ color: "green" }} />;
+          case "~b~":
+            return <span key={index} style={{ color: "blue" }} />;
+          case "~p~":
+            return <br key={index} />;
+          default:
+            return <span key={index}>{part}</span>;
+        }
+      })}
+    </>
+  );
+}
+
 
 
 const Notifications: React.FC = () => {
@@ -73,7 +101,7 @@ const Notifications: React.FC = () => {
                           : `${posExit} 0.9s ease-in forwards`,
                   }} /*onAnimationEnd={() => onRemoveQueue()}*/ className={`${classes.container}`} style={data.style}>
                     {data.description && (
-                        <ReactMarkdown
+                      <ReactMarkdown
                         children={description}
                         components={{
                           code({node, inline, className, children, ...props}) {
@@ -91,7 +119,7 @@ const Notifications: React.FC = () => {
                                 {children}
                               </code>
                             )
-                          }
+                          },
                         }}
                       />
                     )}
