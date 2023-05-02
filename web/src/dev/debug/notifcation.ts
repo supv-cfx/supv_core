@@ -128,21 +128,7 @@ export const debugNotification = () => {
       data: {
         title: 'MarkDown',
         description: `
-~~~ts
-export interface NotificationProps {
-  title?: string;
-  id?: number | string;
-  description?: string; 
-  type?: string; 
-  duration?: number; // default: 3000
-  icon?: IconProp; // default: check on type
-  position?: ToastPosition; // default: top-right
-  color?: string; // default: check on type
-  closable?: boolean; // default: false (not semi-implementation)
-  border?: boolean; // default: false (not semi-implementation)
-  iconAnim: string; // default: false
-}
-~~~
+        ~r~Markdown~r~
 `,
         //type: 'loading',
         //position: 'bottom-right',
@@ -152,7 +138,6 @@ export interface NotificationProps {
         icon: 'code',
         closable: true,
         style: {
-          maxWidth: 1920,
           backgroundColor: 'rgba(0,0,0,0.25)',
         }
       } as NotificationProps,
