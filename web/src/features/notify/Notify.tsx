@@ -29,6 +29,7 @@ import { iconeAnimation } from '../../animation/icones';
  *    style = { fontSize: '16px', backgroundColor: rgba(255, 255, 255, 0.25) },
  *    animation = {enter = 'slide', exit = 'slideInElliptic'}
  *})
+ * @class Notifications
  * @param {string?} data.title - Title of the notification
  * @param {string?} data.description - Description of the notification
  * @param {string?} data.type - Type of the notification
