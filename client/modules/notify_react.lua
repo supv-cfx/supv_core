@@ -1,3 +1,5 @@
+--[[
+
 local config <const> = require 'client.config.notify', require 'client.modules.nui'
 
 ---@class notification_react_simple
@@ -52,4 +54,4 @@ nui.RegisterReactCallback('supv:notificiation:onRemove', function(_, cb)
     cb(1)
 end)
 
-return Notify
+return Notify ]]
