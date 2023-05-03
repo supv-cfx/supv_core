@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, forwardRef, KeyboardEvent, UIEvent } from 'react';
-import { Container, Paper, Button, Text, Grid, Autocomplete, Group, MantineColor, SelectItemProps, Divider } from '@mantine/core';
+import { Container, Paper, Button, Text, Grid, Autocomplete, Group, MantineColor, SelectItemProps, Divider, Input, Popover, Badge } from '@mantine/core';
 import { useListState } from '@mantine/hooks';
-
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark, faTimes, faList, faVolumeMute, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 import EmojiReaction from './Reactions'
@@ -19,33 +19,80 @@ interface ItemProps extends SelectItemProps {
   description: string;
   icon: any;
 }
+interface Argument {
+  name: string;
+  type: string;
+  optional?: boolean;
+}
 
-const COMMANDS = [
+interface CommandProps {
+  label: string;
+  description: string;
+  icon: IconDefinition;
+  value: string;
+  arguments?: Argument[];
+}
+
+const COMMANDS: CommandProps[] = [
   { label: 'Help', description: 'Afficher l\'aide', icon: faCheck, value: '/help' },
   { label: 'List', description: 'Liste des utilisateurs', icon: faList, value: '/list' },
-  { label: 'Mute', description: 'Mettre en sourdine', icon: faVolumeMute, value: '/mute' },
-  { label: 'Unmute', description: 'Désactiver la sourdine', icon: faVolumeUp, value: '/unmute' },
+  { label: 'Mute', description: 'Mettre en sourdine', icon: faVolumeMute, value: '/mute', arguments: [{ name: 'playerId', type: 'number' }, { name: 'duration', type: 'number', optional: true }] },
+  { label: 'Unmute', description: 'Désactiver la sourdine', icon: faVolumeUp, value: '/unmute', arguments: [{ name: 'playerId', type: 'number' }] },
   { label: 'Clear', description: 'Vider les messages du chat', icon: faTimes, value: '/clear' },
 ];
 
 const data = COMMANDS.map((item) => ({ ...item, value: item.value }));
 
-const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
-  ({ description, value, icon, ...others }: ItemProps, ref) => (
-    <div ref={ref} {...others}>
-      <Group noWrap>
-        <FontAwesomeIcon icon={icon} size="lg" style={{ marginRight: 8 }} />
+interface PopoverItemProps {
+  command: CommandProps;
+  onClose: () => void;
+  onSelect: (value: string) => void;
+}
 
-        <div>
-          <Text>{value}</Text>
-          <Text size="xs" color="dimmed">
-            {description}
-          </Text>
-        </div>
-      </Group>
+const PopoverItem = ({ command, onClose, onSelect }: PopoverItemProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  let label = command.value;
+  if (command.arguments) {
+    const args = command.arguments.map((arg) => `[${arg.name}: ${arg.type}]`).join(' ');
+    label += ` ${args}`;
+  }
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const itemStyle = {
+    padding: '8px',
+    backgroundColor: isHovered ? 'rgba(24, 100, 171, 0.5)' : 'transparent', // Changer la couleur de fond en fonction du survol
+  };
+
+  return (
+    <div
+      className="command-item"
+      style={itemStyle}
+      onClick={() => {
+        onSelect(command.value);
+        //onClose();
+      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Text size="sm" color="dimmed"> {command.description} </Text>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <FontAwesomeIcon icon={command.icon} style={{ marginRight: '8px' }} />
+        <Text>{command.value}</Text>
+      </div>
+      {command.arguments && (
+        <Text size="sm" color="dimmed"> {label} </Text>
+      )}
     </div>
-  )
-);
+  );
+};
 
 // work for chronium only not finish yet
 const scrollbarStyle = `
@@ -79,6 +126,15 @@ const ChatText: React.FC = () => {
   const anchorRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(null);
+
+  const [commands, setCommands] = useState<CommandProps[]>(() => {
+    return COMMANDS.map((command) => {
+      if (!('arguments' in command)) {
+        return { ...command, arguments: [] };
+      }
+      return command;
+    });
+  });
 
   const [filteredCommands, setFilteredCommands] = useState(COMMANDS);
 
@@ -141,18 +197,30 @@ const ChatText: React.FC = () => {
     }
   }, [messages]);
 
+  const [command, setCommand] = useState<string>('');
+
   const handleInputChange = (value: string) => {
     setMessage(value);
+  
     if (value.startsWith('/')) {
-      setFilteredCommands(
-        data.filter((command) =>
-          command.value.toLowerCase().includes(value.slice(1).toLowerCase())
-        )
+      const commandName = value.split(' ')[0];
+      setCommand(commandName);
+    } else {
+      setCommand('');
+    }
+  
+    if (command) {
+      const matchingCommands = data.filter(
+        (cmd) => cmd.value.startsWith(command.toLowerCase())
       );
+      setFilteredCommands(matchingCommands);
+    } else if (value.startsWith('/') && value.length == 1) {
+      setFilteredCommands(data);
     } else {
       setFilteredCommands([]);
     }
   };
+  
 
   const handleReactionClick = (messageIndex: number, reaction: string) => {
     const updatedMessages = [...messages];
@@ -173,14 +241,14 @@ const ChatText: React.FC = () => {
       <Container style={{ top: 10, left: 10, position: 'fixed' }}>
         <Paper style={{ padding: '16px'/*, backgroundColor: 'rgba(0,0,0,0.75)'*/ }} shadow="xl">
           <Grid gutter="xs">
-            <Grid.Col span={12}>
+            <Grid.Col span={12} style={{paddingBottom: 10}}>
               <Text align="center" size="xl">
                 supv_core Chat
               </Text>
             </Grid.Col>
           </Grid>
           <Divider />
-          <Grid gutter="xs">
+          <Grid gutter="xs" style={{paddingBottom: 10}}>
             <Grid.Col span={12}>
               <div style={{ maxHeight: '300px', overflowY: 'auto', width: 500 }} onScroll={handleScroll} ref={messagesContainerRef}>
                 {messages.map((msg, index) => (
@@ -194,21 +262,38 @@ const ChatText: React.FC = () => {
             </Grid.Col>
           </Grid>
           <Divider />
-          <Grid gutter="xs">
-            <Grid.Col span={8}>
-              <Autocomplete
+            <Grid gutter="xs" style={{paddingTop: 5}}>
+              <Grid.Col span={12}>
+              <Input
                 placeholder="Ecrivez votre message..."
                 value={message}
-                data={filteredCommands}
-                itemComponent={AutoCompleteItem}
-                onChange={(value) => handleInputChange(value)}
+                onChange={(event) => handleInputChange(event.currentTarget.value)}
                 onKeyDown={handleKeyPress}
               />
-            </Grid.Col>
-            <Grid.Col span={4}>
-              <Button onClick={sendMessage} fullWidth>
-                Envoyer
-              </Button>
+              {filteredCommands.length > 0 && (
+                <Popover
+                  //target={<div />}
+                  opened={Boolean(filteredCommands.length)}
+                  onClose={() => setFilteredCommands([])}
+                  position="bottom"
+                  withArrow
+                >
+                  <div style={{ maxHeight: '300px', overflowY: 'scroll' }}>
+                    {filteredCommands.map((cmd) => (
+                      <PopoverItem
+                        key={cmd.label}
+                        command={cmd}
+                        onClose={() => setFilteredCommands([])}
+                        
+                        onSelect={(value) => {
+                          setMessage(value);
+                          setFilteredCommands([cmd]);
+                        }}
+                      />
+                    ))}
+                  </div>
+                </Popover>
+              )}
             </Grid.Col>
           </Grid>
         </Paper>
