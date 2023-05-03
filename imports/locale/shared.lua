@@ -55,8 +55,8 @@ local function LoadExternal(resource, path, ext)
     filePath = filePath:gsub('%.', '/')
 
     if ext == 'lua' then
-        local import = LoadResourceFile(folder, filePath)
-        local func, err = load(import, ('@@%s/%s/%s.lua'):format(folder, filePath))
+        local import = LoadResourceFile(folder, filePath..'.lua')
+        local func, err = load(import, ('@@%s/%s.lua'):format(folder, filePath))
         if not func or err then
             return error(err or ("unable to load module '%s/%s.lua'"):format(folder, filePath), 3)
         end
@@ -68,7 +68,7 @@ local function LoadExternal(resource, path, ext)
     end
 
     if type(result) ~= 'table' then
-        return error(("Le fichier '%s/%s' ne retourne pas une table"):format(folder, filePath), 2)
+        return error(("Le fichier '%s/%s' ne retourne pas une table mais (%s)"):format(folder, filePath, type(result)), 2)
     end
 
     for k, v in pairs(result) do
