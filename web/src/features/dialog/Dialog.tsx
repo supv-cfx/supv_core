@@ -57,9 +57,9 @@ const DialogComponent: React.FC = () => {
         <Divider />
         <ReactMarkdown
           children={state.description}
-          remarkPlugins={[remarkGfm]}
-          /*components={{
-            /*code({ node, inline, className, children, ...props }) {
+          /*remarkPlugins={[remarkGfm]}*/
+          components={{
+            code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || '')
               return !inline && match ? (
                 <SyntaxHighlighter
@@ -87,7 +87,7 @@ const DialogComponent: React.FC = () => {
             //    />
             //  );
             //}
-          }}*/
+          }}
         />
         <Group align="center" position='center'> {/* Need personalized icon */}
           {AnimatedButton(faXmark, 'Annuler', CloseDialog, false, 'red')}
