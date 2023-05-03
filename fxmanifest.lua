@@ -26,6 +26,7 @@ ui_page 'web/build/index.html'
 
 files {
     'obj.lua',
+    'shared/config/*.lua',
     'client/config/*.lua',
     'client/modules/*.lua',
     'locales/*.json',
