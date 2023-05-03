@@ -2,15 +2,15 @@ import { useDisclosure } from '@mantine/hooks';
 import { Dialog, Group, Button, Text, Title, Divider } from '@mantine/core';
 import { fetchNui } from "../../utils/fetchNui";
 import { useNuiEvent } from '../../hooks/useNuiEvent';
-import { Children, useState } from 'react';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import type { DialogProps } from '../../typings/Dialog';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-
-// Need rewrite code and not use Dialog from Mantine, but modal from Mantine or create a new component persnalized
+//import {remark} from 'remark'
+import remarkGfm from 'remark-gfm'
 
 const DialogComponent: React.FC = () => {
   const [state, setState] = useState<DialogProps>({ title: '', subtitle: '', description: '' });
@@ -39,6 +39,7 @@ const DialogComponent: React.FC = () => {
   }
 
   useNuiEvent<DialogProps>('supv:dialog:opened', (data) => {
+
     setState({ title: data.title, description: data.description, subtitle: data.subtitle });
     toggle();
   });
@@ -50,14 +51,15 @@ const DialogComponent: React.FC = () => {
 
   return (
     <>
-      <Dialog transition={"skew-down"} withBorder opened={opened} withCloseButton onClose={() => CloseDialog(false)} size="lg" radius="md" position={{ top: '20%', right: '45%' }} style={{width: 'fit-content'}}>
+      <Dialog transition={"skew-down"} withBorder opened={opened} withCloseButton onClose={() => CloseDialog(false)} size="lg" radius="md" position={{ top: '20%', right: '45%' }} style={{width: 'fit-content', backgroundColor: 'rgba(0,0,0,0.8'}}>
         <Title order={1} align='center' mb="xs" underline={true}> {state.title} </Title>
         <Title order={2} align={!state.title ? 'center' : 'left'} mb="xs" weight={1} italic={true}> {state.subtitle} </Title>
         <Divider />
         <ReactMarkdown
           children={state.description}
-          components={{
-            code({ node, inline, className, children, ...props }) {
+          remarkPlugins={[remarkGfm]}
+          /*components={{
+            /*code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || '')
               return !inline && match ? (
                 <SyntaxHighlighter
@@ -85,7 +87,7 @@ const DialogComponent: React.FC = () => {
             //    />
             //  );
             //}
-          }}
+          }}*/
         />
         <Group align="center" position='center'> {/* Need personalized icon */}
           {AnimatedButton(faXmark, 'Annuler', CloseDialog, false, 'red')}
