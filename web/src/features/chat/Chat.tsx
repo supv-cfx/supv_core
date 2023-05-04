@@ -92,14 +92,18 @@ const PopoverItem = ({ command, onClose, onSelect }: PopoverItemProps) => {
 };
 
 const ChatText: React.FC = () => {
+
+  const [chatVisible, setChatVisible] = useState<string>('visible'); // visible | hidden | onNewMessage + timer to hide
   const [message, setMessage] = useState<string>('');
   const [messages, handlers] = useListState<Message>([]);
   const viewport = useRef<HTMLDivElement | null>(null);
   const viewportCommands = useRef<HTMLDivElement | null>(null);
   const [opened, { toggle }] = useDisclosure(false);
   //const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
-  const [filteredCommands, setFilteredCommands] = useState(COMMANDS);
+  const [filteredCommands, setFilteredCommands] = useState<CommandProps[]>([]);
   const [command, setCommand] = useState<string>('');
+
+  //
 
   const scrollToBottom = () => viewport.current?.scrollTo({ top: viewport.current.scrollHeight, behavior: 'smooth' });
   const scrollToCenter = () => viewport.current?.scrollTo({ top: viewport.current.scrollHeight / 2, behavior: 'smooth' });
@@ -184,9 +188,17 @@ const ChatText: React.FC = () => {
     //setEmojiPickerOpen(false);
   };
 
+  const ToggleChat = (args: string) => { //A faire plus tard: visible | hidden | onNewMessage + timer to hide
+    setChatVisible(args);
+  }
+
   return (
     <>
-      <Container style={{ top: 10, left: 10, position: 'fixed' }}>
+      <Container style={{ top: 10, left: 10, position: 'fixed',
+          visibility: chatVisible === 'visible' ? 'visible' : 'hidden',
+          opacity: chatVisible === 'visible' ? 1 : 0,
+          transition: 'visibility 0s, opacity 0.5s linear' // Add transition later...
+        }}>
         <Paper style={{ padding: '16px'/*, backgroundColor: 'rgba(0,0,0,0.75)'*/ }} shadow="xl">
           <Grid grow gutter="xs">
             <Grid.Col span={12} style={{ paddingBottom: 10 }}>
