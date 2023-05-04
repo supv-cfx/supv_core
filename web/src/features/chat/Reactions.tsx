@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSmile, faLaugh, faHeart, faThumbsUp, faAngry } from '@fortawesome/free-regular-svg-icons';
+import { faLaugh, faHeart, faThumbsUp, faAngry } from '@fortawesome/free-regular-svg-icons';
 
 interface EmojiReactionProps {
   reactions: { [key: string]: number };
