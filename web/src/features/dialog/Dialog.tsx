@@ -12,6 +12,8 @@ import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 //import {remark} from 'remark'
 import remarkGfm from 'remark-gfm'
 
+// This code is a mess, I know. I'll fix it later... Maybe.
+
 const DialogComponent: React.FC = () => {
   const [state, setState] = useState<DialogProps>({ title: '', subtitle: '', description: '' });
   const [opened, { toggle, close }] = useDisclosure(false);
