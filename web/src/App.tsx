@@ -1,24 +1,32 @@
+import React, { useState } from 'react';
+import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
+import { themeOverride } from './theme';
+
+//import {useConfig} from './providers/ConfigProvider'; // TODO: use config
 import { isEnvBrowser } from './utils/misc';
-import DevTool from './dev/DevEnv';
-//import { Notifications } from '@mantine/notifications';
 
 import ConvertUnixTime from './features/tool/ConvertUnix';
 import DialogComponent from './features/dialog/Dialog';
 import SimpleNotifications from './features/notify/SimpleNotifyWrapp';
 import ChatText from './features/chat/Chat';
-//import {useConfig} from './providers/ConfigProvider';
+
+import DevTool from './dev/DevEnv';
 
 const App: React.FC = () => {
-
-    //const { config } = useConfig();
-
+    //const { config } = useConfig(); // TODO: use config
+    const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');
+    const toggleColorScheme = (value?: ColorScheme) => setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
     return (
         <>
-            <ChatText />
-            <ConvertUnixTime />
-            <DialogComponent />
-            <SimpleNotifications/>
-            {isEnvBrowser() && <DevTool />}
+            <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+                <MantineProvider theme={{colorScheme, ...themeOverride}} withGlobalStyles withNormalizeCSS>
+                    <ChatText />
+                    <ConvertUnixTime />
+                    <DialogComponent />
+                    <SimpleNotifications/>
+                    {isEnvBrowser() && <DevTool />}
+                </MantineProvider>
+            </ColorSchemeProvider>
         </>
     )
 }
