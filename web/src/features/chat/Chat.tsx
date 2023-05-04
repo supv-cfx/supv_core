@@ -111,7 +111,7 @@ const ChatText: React.FC = () => {
         // Exécuter la fonction correspondant à la commande
         handleCommand(message);
       } else {
-        handlers.append({ id: 'à changer' || '', username: 'SUP2Ak' || '', content: message, timestamp: new Date().toLocaleTimeString(), reactions: {} });
+        handlers.append({ id: 'Auto gen par le server' || '', username: 'SUP2Ak' || '', content: message, timestamp: new Date().toLocaleTimeString(), reactions: {} });
         if (viewport.current && (viewport.current.scrollHeight - viewport.current.scrollTop <= (viewport.current.clientHeight + 200))) {
           scrollToBottom();
         }
@@ -127,7 +127,6 @@ const ChatText: React.FC = () => {
     if (commandArgs[0] === 'clear') {
       handlers.setState([]); // reset
       setFilteredCommands([]);
-      
     } else {
       alert(`Commande : ${commandArgs[0]}, Arguments : ${commandArgs.slice(1).join(', ')}`);
     }
@@ -203,7 +202,7 @@ const ChatText: React.FC = () => {
                 <div style={{ maxHeight: '300px', width: 500 }}>
                   {messages.map((msg, index) => (
                     <Text key={index} style={{ wordWrap: 'break-word', maxWidth: '99%', userSelect: 'text' }}>
-                      <b>{msg.timestamp}</b><br />{msg.username}: {msg.content}
+                      <b>{`[${msg.timestamp}]`}</b><br /><b><u>{msg.username}:</u></b> {msg.content}
                       <EmojiReaction reactions={msg.reactions} onReactionClick={(reaction: string) => handleReactionClick(index, reaction)} />
                     </Text>
                   ))}
