@@ -1,9 +1,9 @@
 import React, { useState, useRef, KeyboardEvent } from 'react';
-import { Container, Paper, Text, Grid, Divider, Input, Popover, ScrollArea, Burger, Menu } from '@mantine/core';
+import { Container, Paper, Text, Grid, Divider, Input, Popover, ScrollArea, Burger, Menu, useMantineColorScheme } from '@mantine/core';
 import { useListState, useDisclosure } from '@mantine/hooks';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes, faList, faVolumeMute, faVolumeUp, faArrowUp, faArrowDown, faArrowsLeftRight, faTrashArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes, faList, faVolumeMute, faVolumeUp, faArrowUp, faArrowDown, faArrowsLeftRight, faTrashArrowUp, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import EmojiReaction from './Reactions'
 import EmojiPickerButton from './Emoji';
 
@@ -91,6 +91,8 @@ const PopoverItem = ({ command, onClose, onSelect }: PopoverItemProps) => {
   );
 };
 
+
+
 const ChatText: React.FC = () => {
 
   const [chatVisible, setChatVisible] = useState<string>('visible'); // visible | hidden | onNewMessage + timer to hide
@@ -102,6 +104,8 @@ const ChatText: React.FC = () => {
   //const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
   const [filteredCommands, setFilteredCommands] = useState<CommandProps[]>([]);
   const [command, setCommand] = useState<string>('');
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const dark = colorScheme === 'dark';
 
   //
 
@@ -148,6 +152,9 @@ const ChatText: React.FC = () => {
     setMessage(value);
 
     if (value.startsWith('/')) {
+      if (value.length === 1) {
+        setFilteredCommands(COMMANDS);
+      }
       const commandName = value.split(' ')[0];
       setCommand(commandName);
     } else {
@@ -274,6 +281,16 @@ const ChatText: React.FC = () => {
                     Down
                   </Menu.Item>
                   <Menu.Label>Options</Menu.Label>
+                  <Menu.Item
+                    
+                    onClick={() => {
+                      toggleColorScheme();
+                    }}
+                    color={dark ? 'yellow' : 'black'}
+                    icon={<FontAwesomeIcon icon={dark ? faMoon : faSun} />}
+                  >
+                    {dark ? 'Light mode' : 'Dark mode'}
+                  </Menu.Item>
                   <Menu.Item
                     closeMenuOnClick
                     onClick={() => {
