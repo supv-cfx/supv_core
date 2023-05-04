@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import EmojiPicker, { Theme, Categories } from 'emoji-picker-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSmile } from '@fortawesome/free-regular-svg-icons';
-import { Button } from '@mantine/core';
+import { Button, useMantineColorScheme, ColorScheme } from '@mantine/core';
 
 interface EmojiPickerProps {
     onSelect: (emoji: Object) => void;
@@ -35,11 +35,16 @@ const config = { // https://www.npmjs.com/package/emoji-picker-react
 
 const EmojiPickerButton: React.FC<EmojiPickerProps> = ({ onSelect }) => {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const {colorScheme} = useMantineColorScheme();
+    const dark = colorScheme == 'dark';
 
     const handleSelectEmoji = (emoji: any) => {
         setShowEmojiPicker(false);
         onSelect(emoji.emoji);
     };
+
+    config.theme = dark ? Theme.DARK : Theme.LIGHT;
+    let color: string = dark ? '#fff' : '#000';
 
     return (
         <>
@@ -55,7 +60,7 @@ const EmojiPickerButton: React.FC<EmojiPickerProps> = ({ onSelect }) => {
                     }}
                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                 >
-                    <FontAwesomeIcon icon={faSmile} style={{ paddingBottom: 5 }} />
+                    <FontAwesomeIcon icon={faSmile} style={{ paddingBottom: 5, color: color}} />
                 </Button>
                 {showEmojiPicker && (
                     <div
