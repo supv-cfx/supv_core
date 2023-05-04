@@ -5,6 +5,7 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faList, faVolumeMute, faVolumeUp, faArrowUp, faArrowDown, faArrowsLeftRight, faTrashArrowUp } from '@fortawesome/free-solid-svg-icons';
 import EmojiReaction from './Reactions'
+import EmojiPickerButton from './Emoji';
 
 interface Message {
   id: string;
@@ -93,10 +94,12 @@ const PopoverItem = ({ command, onClose, onSelect }: PopoverItemProps) => {
 const ChatText: React.FC = () => {
   const [message, setMessage] = useState<string>('');
   const [messages, handlers] = useListState<Message>([]);
-  const [filteredCommands, setFilteredCommands] = useState(COMMANDS);
   const viewport = useRef<HTMLDivElement | null>(null);
   const viewportCommands = useRef<HTMLDivElement | null>(null);
   const [opened, { toggle }] = useDisclosure(false);
+  //const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
+  const [filteredCommands, setFilteredCommands] = useState(COMMANDS);
+  const [command, setCommand] = useState<string>('');
 
   const scrollToBottom = () => viewport.current?.scrollTo({ top: viewport.current.scrollHeight, behavior: 'smooth' });
   const scrollToCenter = () => viewport.current?.scrollTo({ top: viewport.current.scrollHeight / 2, behavior: 'smooth' });
@@ -123,6 +126,8 @@ const ChatText: React.FC = () => {
 
     if (commandArgs[0] === 'clear') {
       handlers.setState([]); // reset
+      setFilteredCommands([]);
+      
     } else {
       alert(`Commande : ${commandArgs[0]}, Arguments : ${commandArgs.slice(1).join(', ')}`);
     }
@@ -135,8 +140,6 @@ const ChatText: React.FC = () => {
       sendMessage();
     }
   };
-
-  const [command, setCommand] = useState<string>('');
 
   const handleInputChange = (value: string) => {
     setMessage(value);
@@ -158,6 +161,10 @@ const ChatText: React.FC = () => {
     } else {
       setFilteredCommands([]);
     }
+
+    if (value === '') {
+      setFilteredCommands([]);
+    }
   };
 
   const handleReactionClick = (messageIndex: number, reaction: string) => {
@@ -173,6 +180,11 @@ const ChatText: React.FC = () => {
     handlers.setItem(messageIndex, message);
   };
 
+  const handleSelectEmoji = (emoji: Object) => {
+    setMessage((prevMessage) => prevMessage + emoji);
+    //setEmojiPickerOpen(false);
+  };
+
   return (
     <>
       <Container style={{ top: 10, left: 10, position: 'fixed' }}>
@@ -180,7 +192,7 @@ const ChatText: React.FC = () => {
           <Grid grow gutter="xs">
             <Grid.Col span={12} style={{ paddingBottom: 10 }}>
               <Text align="center" size="xl">
-                supv_core Chat
+                🇫🇷 Nom du serveur 🇫🇷
               </Text>
             </Grid.Col>
           </Grid>
@@ -201,7 +213,7 @@ const ChatText: React.FC = () => {
           </Grid>
           <Divider />
           <Grid style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Grid.Col span={10} style={{alignItems: 'center'}}>
+            <Grid.Col span={10} style={{ alignItems: 'center' }}>
               <Input
                 placeholder="Ecrivez votre message..."
                 value={message}
@@ -210,7 +222,8 @@ const ChatText: React.FC = () => {
                 style={{ width: '100%' }}
               />
             </Grid.Col>
-            <Grid.Col span={2} style={{display: 'flex', justifyContent: 'center'}}>
+            <Grid.Col span={2} style={{ display: 'flex', justifyContent: 'center' }}>
+            <EmojiPickerButton onSelect={handleSelectEmoji} />
               <Menu
                 width={150}
                 shadow="md"
@@ -221,7 +234,7 @@ const ChatText: React.FC = () => {
                 transitionProps={{ transition: 'rotate-right', duration: 150 }}
               >
                 <Menu.Target>
-                  <Burger opened={opened} onClick={toggle}  />
+                  <Burger opened={opened} onClick={toggle} />
                 </Menu.Target>
                 <Menu.Dropdown>
                   <Menu.Label>Scroll</Menu.Label>
@@ -258,7 +271,7 @@ const ChatText: React.FC = () => {
                     color="red"
                     icon={<FontAwesomeIcon icon={faTrashArrowUp} />}
                   >
-                    Down
+                    Clear
                   </Menu.Item>
                 </Menu.Dropdown>
               </Menu>
