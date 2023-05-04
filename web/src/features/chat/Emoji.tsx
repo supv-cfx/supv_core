@@ -1,41 +1,19 @@
 import React, { useState } from 'react';
-import EmojiPicker, { Theme, Categories } from 'emoji-picker-react';
+import EmojiPicker, { Theme } from 'emoji-picker-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSmile } from '@fortawesome/free-regular-svg-icons';
-import { Button, useMantineColorScheme, ColorScheme } from '@mantine/core';
+import { Button, useMantineColorScheme } from '@mantine/core';
+import { useConfig } from '../../providers/ConfigProvider';
 
 interface EmojiPickerProps {
     onSelect: (emoji: Object) => void;
 }
 
-
-// A mettre plus tard dans le config : interface.cfg et l'inclure dans le ConfigProvider!
-const config = { // https://www.npmjs.com/package/emoji-picker-react
-    previewConfig: {
-        defaultEmoji: '1f60a',
-        defaultCaption: "What's your mood?",
-        showPreview: true,
-
-    },
-    searchPlaceholder: 'Recherche des emojis', // Not working ?
-    categories: [
-        { name: 'Récent', category: Categories.SUGGESTED },
-        { name: 'Smileys & People', category: Categories.SMILEYS_PEOPLE },
-        { name: 'Animals & Nature', category: Categories.ANIMALS_NATURE },
-        { name: 'Food & Drink', category: Categories.FOOD_DRINK },
-        { name: 'Travel & Places', category: Categories.TRAVEL_PLACES },
-        { name: 'Activities', category: Categories.ACTIVITIES },
-        { name: 'Objects', category: Categories.OBJECTS },
-        { name: 'Symbols', category: Categories.SYMBOLS },
-        { name: 'Flags', category: Categories.FLAGS }
-    ],
-    theme: Theme.DARK
-};
-
-
 const EmojiPickerButton: React.FC<EmojiPickerProps> = ({ onSelect }) => {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const {colorScheme} = useMantineColorScheme();
+    const { config, setConfig } = useConfig();
+
     const dark = colorScheme == 'dark';
 
     const handleSelectEmoji = (emoji: any) => {
@@ -43,9 +21,10 @@ const EmojiPickerButton: React.FC<EmojiPickerProps> = ({ onSelect }) => {
         onSelect(emoji.emoji);
     };
 
-    config.theme = dark ? Theme.DARK : Theme.LIGHT;
+    config.emojiPicker.theme = dark ? Theme.DARK : Theme.LIGHT;
+    
     let color: string = dark ? '#fff' : '#000';
-
+    setConfig(config);
     return (
         <>
             <div style={{ position: 'relative' }}>
@@ -71,7 +50,7 @@ const EmojiPickerButton: React.FC<EmojiPickerProps> = ({ onSelect }) => {
                             transform: 'translateY(10px)',
                         }}
                     >
-                        <EmojiPicker onEmojiClick={handleSelectEmoji} {...config} />
+                        <EmojiPicker onEmojiClick={handleSelectEmoji} theme={config.emojiPicker.theme} {...config} />
                     </div>
                 )}
             </div>

@@ -2,16 +2,19 @@ import { Context, createContext, useContext, useEffect, useState } from 'react';
 import { MantineColor } from '@mantine/core';
 import { fetchNui } from '../utils/fetchNui';
 import { 
-  NotificationConfigProviderProps
+  NotificationConfigProviderProps,
+  EmojiPickerProps
 } from '../typings';
 import {
-  NotificationConfigDev
+  NotificationConfigDev,
+  ConfigEmojiPicker
 } from '../dev/config';
 
 interface Config {
   primaryColor: MantineColor;
   primaryShade: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
   notificationStyles: NotificationConfigProviderProps;
+  emojiPicker: EmojiPickerProps;
 }
 
 interface ConfigCtxValue {
@@ -26,6 +29,7 @@ const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
     primaryColor: 'blue',
     primaryShade: 6,
     notificationStyles: NotificationConfigDev,
+    emojiPicker: ConfigEmojiPicker,
   });
 
   useEffect(() => {
