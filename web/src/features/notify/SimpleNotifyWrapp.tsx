@@ -1,5 +1,5 @@
 import React from 'react';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast, Toaster/*, useToasterStore */} from 'react-hot-toast';
 import ReactMarkdown from 'react-markdown';
 import { createStyles, Notification } from '@mantine/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +9,7 @@ import { useConfig } from '../../providers/ConfigProvider';
 import { SelectAnime } from '../../animation/notifications';
 import { iconeAnimation } from '../../animation/icones';
 //import { fetchNui } from '../../utils/fetchNui';
+//import { useQueue, useCounter } from '@mantine/hooks';
 
 /**
  * Notifications - A component for displaying notifications
@@ -46,11 +47,12 @@ import { iconeAnimation } from '../../animation/icones';
  * @returns {Toaster} notifications
  * @type {NotificationProps}
 */
-const Notifications: React.FC = () => {
+const SimpleNotifications: React.FC = () => {
 
   const { config } = useConfig();
   const useStyles = createStyles((theme) => ({...config.notificationStyles}));
   const { classes } = useStyles();
+  //const { toasts, pausedAt } = useToasterStore(); // A utiliser plus tards pour un système de queue!
 
   /*const onRemoveQueue = async () => {
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -59,6 +61,11 @@ const Notifications: React.FC = () => {
 
   useNuiEvent<NotificationProps>('supv:notification:send', (data) => {
     if (!data.title && !data.description) return;
+
+    /*if (toasts.length > 9) { // A utiliser plus tards pour un système de queue!
+      console.log('too many notifications');
+    }:*/
+
     let position = !data.position ? config.notificationStyles.container.position : data.position;
     //position = 'bottom-right' //to test
     if (!data.icon && data.type !== 'loading' && data.type) { data.icon = data.type === 'error' ? 'xmark' : data.type === 'success' ? 'check' : data.type === 'warning' ? 'exclamation' : 'info';};
@@ -72,7 +79,7 @@ const Notifications: React.FC = () => {
           icon:
             <FontAwesomeIcon icon={data.icon} beat={iconeAnimation(data.iconAnim)} fade={iconeAnimation(data.iconAnim)} />
         } : undefined}
-          title={data.title} radius='md' withCloseButton={data.closable || false} onClose={() => { data.closable && toast.dismiss(t.id)/*; onRemoveQueue() */ }}
+          title={data.title} radius='md' withCloseButton={data.closable || false} onClose={() => { data.closable && toast.dismiss(t.id)/*; onRemoveQueue()*/  }}
           color={!data.type && !data.color ? 'dark' : data.color ? data.color : data.type === 'error' ? 'red' : data.type === 'success' ? 'teal' : data.type === 'warning' ? 'orange' : data.type === 'loading' ? 'white' : 'blue'} sx={{
             animation: t.visible
               ? `${posEnter} 0.3s ease-out forwards`
@@ -93,7 +100,7 @@ const Notifications: React.FC = () => {
     );
   });
 
-  return <Toaster />;
+  return <Toaster/>;
 };
 
-export default Notifications;
+export default SimpleNotifications;
