@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef, forwardRef, KeyboardEvent, UIEvent } from 'react';
-import { Container, Paper, Button, Text, Grid, Autocomplete, Group, MantineColor, SelectItemProps, Divider, Input, Popover, Badge } from '@mantine/core';
-import { useListState } from '@mantine/hooks';
+import React, { useState, useRef, KeyboardEvent } from 'react';
+import { Container, Paper, Text, Grid, Divider, Input, Popover, ScrollArea, Burger, Menu } from '@mantine/core';
+import { useListState, useDisclosure } from '@mantine/hooks';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faXmark, faTimes, faList, faVolumeMute, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes, faList, faVolumeMute, faVolumeUp, faArrowUp, faArrowDown, faArrowsLeftRight, faTrashArrowUp } from '@fortawesome/free-solid-svg-icons';
 import EmojiReaction from './Reactions'
 
 interface Message {
@@ -14,11 +14,6 @@ interface Message {
   reactions: { [key: string]: number };
 }
 
-interface ItemProps extends SelectItemProps {
-  color: MantineColor;
-  description: string;
-  icon: any;
-}
 interface Argument {
   name: string;
   type: string;
@@ -33,6 +28,7 @@ interface CommandProps {
   arguments?: Argument[];
 }
 
+// Seulement pour tester
 const COMMANDS: CommandProps[] = [
   { label: 'Help', description: 'Afficher l\'aide', icon: faCheck, value: '/help' },
   { label: 'List', description: 'Liste des utilisateurs', icon: faList, value: '/list' },
@@ -94,64 +90,17 @@ const PopoverItem = ({ command, onClose, onSelect }: PopoverItemProps) => {
   );
 };
 
-// work for chronium only not finish yet
-const scrollbarStyle = `
-  ::-webkit-scrollbar {
-    width: 2px;
-    maxHeight: 200px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 4px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
-  }
-`;
-
-const ScrollbarStyle: React.FC = () => {
-  return <style>{scrollbarStyle}</style>;
-};
-
 const ChatText: React.FC = () => {
   const [message, setMessage] = useState<string>('');
   const [messages, handlers] = useListState<Message>([]);
-  const [autoScroll, setAutoScroll] = useState(true);
-  const anchorRef = useRef<HTMLDivElement>(null);
-  const messagesContainerRef = useRef<HTMLDivElement>(null);
-  const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(null);
-
-  const [commands, setCommands] = useState<CommandProps[]>(() => {
-    return COMMANDS.map((command) => {
-      if (!('arguments' in command)) {
-        return { ...command, arguments: [] };
-      }
-      return command;
-    });
-  });
-
   const [filteredCommands, setFilteredCommands] = useState(COMMANDS);
+  const viewport = useRef<HTMLDivElement | null>(null);
+  const viewportCommands = useRef<HTMLDivElement | null>(null);
+  const [opened, { toggle }] = useDisclosure(false);
 
-  const scrollToBottom = () => {
-    if (autoScroll) {
-      anchorRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleScroll = (e: UIEvent<HTMLDivElement>) => {
-    const element = e.currentTarget;
-    const atBottom = Math.ceil(element.scrollHeight - element.scrollTop) === element.clientHeight;
-
-    if (atBottom !== autoScroll) {
-      setAutoScroll(atBottom);
-    }
-  };
+  const scrollToBottom = () => viewport.current?.scrollTo({ top: viewport.current.scrollHeight, behavior: 'smooth' });
+  const scrollToCenter = () => viewport.current?.scrollTo({ top: viewport.current.scrollHeight / 2, behavior: 'smooth' });
+  const scrollToTop = () => viewport.current?.scrollTo({ top: 0, behavior: 'smooth' });
 
   const sendMessage = () => {
     if (message.trim() !== '') {
@@ -160,7 +109,9 @@ const ChatText: React.FC = () => {
         handleCommand(message);
       } else {
         handlers.append({ id: 'à changer' || '', username: 'SUP2Ak' || '', content: message, timestamp: new Date().toLocaleTimeString(), reactions: {} });
-        scrollToBottom();
+        if (viewport.current && (viewport.current.scrollHeight - viewport.current.scrollTop <= (viewport.current.clientHeight + 200))) {
+          scrollToBottom();
+        }
       }
       setMessage('');
     }
@@ -185,42 +136,29 @@ const ChatText: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (autoScroll) {
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      };
-      const timeout = setTimeout(() => {
-        scrollToBottom();
-      }, 1000);
-      setScrollTimeout(timeout);
-    }
-  }, [messages]);
-
   const [command, setCommand] = useState<string>('');
 
   const handleInputChange = (value: string) => {
     setMessage(value);
-  
+
     if (value.startsWith('/')) {
       const commandName = value.split(' ')[0];
       setCommand(commandName);
     } else {
       setCommand('');
     }
-  
+
     if (command) {
       const matchingCommands = data.filter(
         (cmd) => cmd.value.startsWith(command.toLowerCase())
       );
       setFilteredCommands(matchingCommands);
-    } else if (value.startsWith('/') && value.length == 1) {
+    } else if (value.startsWith('/') && value.length === 1) {
       setFilteredCommands(data);
     } else {
       setFilteredCommands([]);
     }
   };
-  
 
   const handleReactionClick = (messageIndex: number, reaction: string) => {
     const updatedMessages = [...messages];
@@ -237,65 +175,121 @@ const ChatText: React.FC = () => {
 
   return (
     <>
-      <ScrollbarStyle />
       <Container style={{ top: 10, left: 10, position: 'fixed' }}>
         <Paper style={{ padding: '16px'/*, backgroundColor: 'rgba(0,0,0,0.75)'*/ }} shadow="xl">
-          <Grid gutter="xs">
-            <Grid.Col span={12} style={{paddingBottom: 10}}>
+          <Grid grow gutter="xs">
+            <Grid.Col span={12} style={{ paddingBottom: 10 }}>
               <Text align="center" size="xl">
                 supv_core Chat
               </Text>
             </Grid.Col>
           </Grid>
           <Divider />
-          <Grid gutter="xs" style={{paddingBottom: 10}}>
+          <Grid gutter="xs" style={{ paddingBottom: 10 }}>
             <Grid.Col span={12}>
-              <div style={{ maxHeight: '300px', overflowY: 'auto', width: 500 }} onScroll={handleScroll} ref={messagesContainerRef}>
-                {messages.map((msg, index) => (
-                  <Text key={index} style={{ wordWrap: 'break-word', maxWidth: '99%', userSelect: 'text' }}>
-                    <b>{msg.timestamp}</b><br />{msg.username}: {msg.content}
-                    <EmojiReaction reactions={msg.reactions} onReactionClick={(reaction: string) => handleReactionClick(index, reaction)} />
-                  </Text>
-                ))}
-                <div ref={anchorRef} />
-              </div>
+              <ScrollArea.Autosize mah={300} viewportRef={viewport}>
+                <div style={{ maxHeight: '300px', width: 500 }}>
+                  {messages.map((msg, index) => (
+                    <Text key={index} style={{ wordWrap: 'break-word', maxWidth: '99%', userSelect: 'text' }}>
+                      <b>{msg.timestamp}</b><br />{msg.username}: {msg.content}
+                      <EmojiReaction reactions={msg.reactions} onReactionClick={(reaction: string) => handleReactionClick(index, reaction)} />
+                    </Text>
+                  ))}
+                </div>
+              </ScrollArea.Autosize>
             </Grid.Col>
           </Grid>
           <Divider />
-            <Grid gutter="xs" style={{paddingTop: 5}}>
-              <Grid.Col span={12}>
+          <Grid style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Grid.Col span={10} style={{alignItems: 'center'}}>
               <Input
                 placeholder="Ecrivez votre message..."
                 value={message}
                 onChange={(event) => handleInputChange(event.currentTarget.value)}
                 onKeyDown={handleKeyPress}
+                style={{ width: '100%' }}
               />
-              {filteredCommands.length > 0 && (
-                <Popover
-                  //target={<div />}
-                  opened={Boolean(filteredCommands.length)}
-                  onClose={() => setFilteredCommands([])}
-                  position="bottom"
-                  withArrow
-                >
-                  <div style={{ maxHeight: '300px', overflowY: 'scroll' }}>
-                    {filteredCommands.map((cmd) => (
-                      <PopoverItem
-                        key={cmd.label}
-                        command={cmd}
-                        onClose={() => setFilteredCommands([])}
-                        
-                        onSelect={(value) => {
-                          setMessage(value);
-                          setFilteredCommands([cmd]);
-                        }}
-                      />
-                    ))}
-                  </div>
-                </Popover>
-              )}
+            </Grid.Col>
+            <Grid.Col span={2} style={{display: 'flex', justifyContent: 'center'}}>
+              <Menu
+                width={150}
+                shadow="md"
+                defaultOpened={opened}
+                closeOnItemClick={false}
+                onClose={toggle}
+                position="right-start"
+                transitionProps={{ transition: 'rotate-right', duration: 150 }}
+              >
+                <Menu.Target>
+                  <Burger opened={opened} onClick={toggle}  />
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Label>Scroll</Menu.Label>
+                  <Menu.Item
+                    disabled={viewport.current && viewport.current.clientHeight < 300 ? true : false}
+                    onClick={scrollToTop}
+                    color="blue"
+                    icon={<FontAwesomeIcon icon={faArrowUp} />}
+                  >
+                    Up
+                  </Menu.Item>
+                  <Menu.Item
+                    disabled={viewport.current && viewport.current.clientHeight < 300 ? true : false}
+                    onClick={scrollToCenter}
+                    color="blue"
+                    icon={<FontAwesomeIcon icon={faArrowsLeftRight} />}
+                  >
+                    Center
+                  </Menu.Item>
+                  <Menu.Item
+                    disabled={viewport.current && viewport.current.clientHeight < 300 ? true : false}
+                    onClick={scrollToBottom}
+                    color="blue"
+                    icon={<FontAwesomeIcon icon={faArrowDown} />}
+                  >
+                    Down
+                  </Menu.Item>
+                  <Menu.Label>Options</Menu.Label>
+                  <Menu.Item
+                    closeMenuOnClick
+                    onClick={() => {
+                      handlers.setState([]);
+                    }}
+                    color="red"
+                    icon={<FontAwesomeIcon icon={faTrashArrowUp} />}
+                  >
+                    Down
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
             </Grid.Col>
           </Grid>
+
+          <ScrollArea.Autosize mah={300} viewportRef={viewportCommands}>
+            {filteredCommands.length > 0 && (
+              <Popover
+                //target={<div />}
+                opened={Boolean(filteredCommands.length)}
+                onClose={() => setFilteredCommands([])}
+                position="bottom"
+                withArrow
+              >
+                <div style={{ maxHeight: '300px' }}>
+                  {filteredCommands.map((cmd) => (
+                    <PopoverItem
+                      key={cmd.label}
+                      command={cmd}
+                      onClose={() => setFilteredCommands([])}
+                      onSelect={(value) => {
+                        setMessage(value);
+                        setFilteredCommands([cmd]);
+                      }}
+                    />
+                  ))}
+                </div>
+              </Popover>
+            )}
+          </ScrollArea.Autosize>
         </Paper>
       </Container>
     </>
