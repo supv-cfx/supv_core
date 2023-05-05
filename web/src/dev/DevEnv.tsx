@@ -3,7 +3,7 @@ import { ActionIcon, Tooltip, Drawer, Stack, Divider, Button } from '@mantine/co
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWrench, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-import { debugDialog } from './debug/dialog';
+import { debugModalsConfirm } from './debug/modals/confirm';
 import { debugNotification } from './debug/notifcation';
 
 const DevTool: React.FC = () => {
@@ -31,7 +31,7 @@ const DevTool: React.FC = () => {
                         variant="outline" color="orange" size='xs' fullWidth onClick={() => setSide(side === 'left' ? 'right' : 'left')}
                     >Side</Button>
                     <Divider />
-                    <Button variant="outline" color="blue" fullWidth onClick={() => {debugDialog(); setOpened(false)}}>Dialog</Button>
+                    <Button variant="outline" color="blue" fullWidth onClick={() => {debugModalsConfirm(); setOpened(false)}}>Dialog</Button>
                     <Button variant='outline' color='red' fullWidth onClick={() => debugNotification()}>Notication</Button>
                 </Stack>
             </Drawer>

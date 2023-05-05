@@ -1,3 +1,7 @@
+---@deprecated 
+--- supv.createDialog is deprecated, supv.createModals should be used instead but not implemented yet
+
+
 local p, nui <const> = nil, require 'client.modules.nui'
 
 ---@param data boolean

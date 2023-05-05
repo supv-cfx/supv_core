@@ -1,25 +1,16 @@
+/*
 import { debugData } from "../../utils/debugData";
-import type {DialogProps} from "../../typings/Dialog";
+import type {ModalProps} from "../../typings";
 
 export const debugDialog = () => {
-  /*debugData([
-      {
-        action: 'supv:dialog:opened',
-        data: {
-          /*title: 'Dialog title',
-          subtitle: 'Lorem Ipsum',
-          description: 'Contrary to popular.',
-        } as DialogProps,
-      }
-  ]);*/
-
   debugData([
-      {
-        action: 'supv:dialog:opened',
-        data: {
-          title: 'Dialog title',
-          subtitle: 'Mon code snippet',
-          description:/*`
+    {
+      action: 'supv:modal:opened',
+      data: {
+        type: 'confirm',
+        title: 'Dialog title',
+        subtitle: 'Mon code snippet',
+        description:`
 A paragraph with *emphasis* and **strong importance**.
 > A block quote with ~strikethrough~ and a URL: https://reactjs.org.
 
@@ -31,7 +22,25 @@ A table:
 
 | a | b |
 | - | - |
-          ` */`
+        `
+        } as ModalProps,
+      }
+  ]);     
+}
+
+/*
+  /*debugData([
+      {
+        action: 'supv:dialog:opened',
+        data: {
+          /*title: 'Dialog title',
+          subtitle: 'Lorem Ipsum',
+          description: 'Contrary to popular.',
+        } as DialogProps,
+      }
+  ]);*/
+
+ /*`
 ~~~tsx
 return (
   <>
@@ -56,8 +65,4 @@ return (
   </>
 );
 ~~~       
-`,
-        } as DialogProps,
-      }
-  ]);
-}
+`,*/

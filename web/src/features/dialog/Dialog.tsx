@@ -1,3 +1,8 @@
+/**
+ * @deprecated This component is deprecated and will be rewritten in the future.
+*/
+
+/*
 import { useDisclosure } from '@mantine/hooks';
 import { Dialog, Group, Button, Text, Title, Divider } from '@mantine/core';
 import { fetchNui } from "../../utils/fetchNui";
@@ -11,11 +16,12 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 //import {remark} from 'remark'
 import remarkGfm from 'remark-gfm'
+*/
 
 // This code is a mess, I know. I'll fix it later... Maybe.
-
+/*
 const DialogComponent: React.FC = () => {
-  const [state, setState] = useState<DialogProps>({ title: '', subtitle: '', description: '' });
+  //const [state, setState] = useState<DialogProps>({ type:'' ,title: '', subtitle: '', description: '' });
   const [opened, { toggle, close }] = useDisclosure(false);
 
   const AnimatedButton = (iconAwesome: any, text: string, closed: Function, args: boolean, color: string) => {
@@ -42,7 +48,7 @@ const DialogComponent: React.FC = () => {
 
   useNuiEvent<DialogProps>('supv:dialog:opened', (data) => {
 
-    setState({ title: data.title, description: data.description, subtitle: data.subtitle });
+    //setState({ type : data.type, title: data.title, description: data.description, subtitle: data.subtitle });
     toggle();
   });
 
@@ -59,7 +65,7 @@ const DialogComponent: React.FC = () => {
         <Divider />
         <ReactMarkdown
           children={state.description}
-          /*remarkPlugins={[remarkGfm]}*/
+          /*remarkPlugins={[remarkGfm]}
           components={{
             code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || '')
@@ -91,7 +97,7 @@ const DialogComponent: React.FC = () => {
             //}
           }}
         />
-        <Group align="center" position='center'> {/* Need personalized icon */}
+        <Group align="center" position='center'> {/* Need personalized icon }
           {AnimatedButton(faXmark, 'Annuler', CloseDialog, false, 'red')}
           {AnimatedButton(faCheck, 'Valider', CloseDialog, true, 'green')}
         </Group>
