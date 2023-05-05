@@ -4,8 +4,15 @@
  
 ---@class SendReactOptions
 ---@field focus? boolean|table
+---@field locations? string|table
+---@field keepInput? boolean
 
-local SendNUIMessage <const>, type <const>, SetNuiFocus <const>, table <const>, RegisterNUICallback <const> = SendNUIMessage, type, SetNuiFocus, table, RegisterNUICallback
+local SetCursorLocation <const>, SetNuiFocusKeepInput<const>, SendNUIMessage <const>, type <const>, SetNuiFocus <const>, table <const>, RegisterNUICallback <const>, IsNuiFocused <const> = SetCursorLocation, SetNuiFocusKeepInput, SendNUIMessage, type, SetNuiFocus, table, RegisterNUICallback, IsNuiFocused 
+
+local Locations <const> = {
+    ['top-right'] = {},
+    ['bottom-right'] = {0.90, 0.90}
+}
 
 --- supv.sendReactMessage
 ---@param visible? boolean
@@ -38,7 +45,17 @@ local function SendReactMessage(visible, value, options)
             SetNuiFocus(options.focus[1], options.focus[2])
         end
 
-        ---@todo add more options about focus
+        if type(options.locations) == 'string' then
+            SetCursorLocation(Locations[options.locations][1], Locations[options.locations][2])
+        elseif type(options.locations) == 'table' then
+            SetCursorLocation(options.locations[1] or options.locations.x, options.locations[2] or options.locations.y)
+        end
+
+        if type(options.keepInput) == 'boolean' then
+            SetNuiFocusKeepInput(options.keepInput)  
+        end
+
+        ---@todo Need more options about focus options?
     end
 end
 
@@ -59,3 +76,9 @@ return {
     SendReactMessage = SendReactMessage,
     RegisterReactCallback = RegisterReactCallback
 }
+
+--[[
+    SetCursorLocation(0.90, 0.90) bottom-right
+    SetNuiFocus(true, true)
+    SetNuiFocusKeepInput(true)
+--]]
