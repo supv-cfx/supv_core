@@ -108,6 +108,17 @@ elseif supv.service == 'server' then
             return value
         end
     })
+
+    MySQL = setmetatable({}, {
+        __index = function(self, key)
+            local value = rawget(self, key)
+            if not value then
+                supv.mysql.init()
+                value = MySQL[key]
+            end
+            return value
+        end
+    })
 end
 
 if lib then return end
