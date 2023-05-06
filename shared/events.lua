@@ -1,4 +1,4 @@
-local RegisterNetEvent <const>, AddEventHandler <const>, TriggerEvent <const>, GetHashKey <const> = RegisterNetEvent, AddEventHandler, TriggerEvent, GetHashKey
+local RegisterNetEvent <const>, AddEventHandler <const>, TriggerEvent <const>, joaat <const> = RegisterNetEvent, AddEventHandler, TriggerEvent, joaat
 
 local timers = {}
 
@@ -52,7 +52,7 @@ local function RegisterCooldown(name, timer, global)
 end
 
 local function FormatEvent(name, from)
-    return ("__supv__:%s:%s"):format(from or supv.service, GetHashKey(name))
+    return ("__supv__:%s:%s"):format(from or supv.service, joaat(name))
 end
 
 function supv.on(name, cb, cooldown, global)
