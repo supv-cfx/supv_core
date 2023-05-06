@@ -20,10 +20,6 @@ local Locations <const> = {
 ---@param options? SendReactOptions
 local function SendReactMessage(visible, value, options)
     if type(visible) == 'boolean' then
-        --SendNUIMessage({
-        --    action = 'setVisible',
-        --    data = visible
-        --})
         
         ---@todo reset focus options when visible is false and focus active = true
         if visible == false and IsNuiFocused() then

@@ -15,6 +15,7 @@ elseif notif.type == 'react' then
     
     local function Notify(select, data)
         if select == 'simple' then
+            if not data.position then data.position = 'top-right' end
             nui.SendReactMessage(true,{
                 action = 'supv:notification:send',
                 data = data
