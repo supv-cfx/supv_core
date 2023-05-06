@@ -1,6 +1,5 @@
 local notif <const> = require 'client.config.notify'
 
-
 if notif.type == 'native' then
     local notify <const> = require 'client.modules.notify_native'
 
@@ -9,12 +8,12 @@ if notif.type == 'native' then
         notify(...)
     end
 
-    supv.eventRegister('supv_core:notify', notify)
+    --supv.eventRegister('supv_core:notify', notify)
 elseif notif.type == 'react' then
 
     local nui <const> = require 'client.modules.nui'
     
-    local function Notify(select, data)   
+    local function Notify(select, data)
         if select == 'simple' then
             nui.SendReactMessage(true,{
                 action = 'supv:notification:send',
@@ -33,6 +32,5 @@ elseif notif.type == 'react' then
         Notify(...)
     end
 
-    supv.eventRegister('supv_core:notify', Notify)
+    supv.onNet('notify', Notify, 1000)
 end
-
