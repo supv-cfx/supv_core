@@ -17,7 +17,7 @@ export const OpenModalConfirm: React.FC<ModalConfirmProps> = ({ title, subtitle,
 
     const handleConfirm = (value: boolean) => {
         //console.log(value, 'value')
-        fetchNui('supv:modal:confirm', value);
+        fetchNui('supv:modal:closed', value);
         handleClose();
     }
 

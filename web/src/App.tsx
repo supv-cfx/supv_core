@@ -21,7 +21,7 @@ const App: React.FC = () => {
         <>
             <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
                 <MantineProvider theme={{colorScheme, ...themeOverride}} withGlobalStyles withNormalizeCSS>
-                    <ChatText />
+                    {/*<ChatText />*/}
                     <ConvertUnixTime />
                     <ModalWrapper />
                     <SimpleNotifications />
