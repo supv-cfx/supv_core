@@ -47,7 +47,7 @@ import { iconeAnimation } from '../../animation/icones';
  * @returns {Toaster} notifications
  * @type {NotificationProps}
 */
-const SimpleNotifications: React.FC = () => {
+const NotificationsWrapper: React.FC = () => {
 
   const { config } = useConfig();
   const useStyles = createStyles((theme) => ({...config.notificationStyles}));
@@ -103,4 +103,4 @@ const SimpleNotifications: React.FC = () => {
   return <Toaster/>;
 };
 
-export default SimpleNotifications;
+export default NotificationsWrapper;

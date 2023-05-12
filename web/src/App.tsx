@@ -7,7 +7,7 @@ import { isEnvBrowser } from './utils/misc';
 
 import ConvertUnixTime from './features/tool/ConvertUnix';
 //import DialogComponent from './features/dialog/Dialog';
-import SimpleNotifications from './features/notify/SimpleNotifyWrapp';
+import NotificationsWrapper from './features/notify/SimpleNotifyWrapp';
 import ModalWrapper from './features/modal/ModalWrapper';
 import ChatText from './features/chat/Chat';
 
@@ -17,6 +17,7 @@ const App: React.FC = () => {
     //const { config } = useConfig(); // TODO: use config
     const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');
     const toggleColorScheme = (value?: ColorScheme) => setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+    
     return (
         <>
             <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
@@ -24,7 +25,7 @@ const App: React.FC = () => {
                     {/*<ChatText />*/}
                     <ConvertUnixTime />
                     <ModalWrapper />
-                    <SimpleNotifications />
+                    <NotificationsWrapper />
                     {isEnvBrowser() && <DevTool />}
                 </MantineProvider>
             </ColorSchemeProvider>
