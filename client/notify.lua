@@ -35,3 +35,17 @@ elseif notif.type == 'react' then
 
     supv.onNet('notify', Notify, 1000)
 end
+
+--[[ some teste
+RegisterCommand('test', function()
+    print('ok')
+end)
+
+
+RegisterKeyMapping('+test', 'test', 'keyboard', 'x')
+local h = ('%s'):format(joaat('+test') | 0x80000000)
+--local controlValue = GetControlNormal(0, controlIndex) -- récupère la valeur de contrôle pour la touche "F
+--local Control = GetControlValue(0, controlValue) -- récupère la valeur de contrôle pour la touche "F
+
+print(GetControlInstructionalButton(0 , h, true):sub(3), '112')
+]]
