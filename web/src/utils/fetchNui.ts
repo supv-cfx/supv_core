@@ -9,7 +9,13 @@
  * @return returnData - A promise for the data sent back by the NuiCallbacks CB argument
  */
 
-export async function fetchNui<T = any>(eventName: string, data?: any): Promise<T> {
+import { isEnvBrowser } from "./misc";
+
+export async function fetchNui<T = any>(eventName: string, data?: any, devEnv?: any): Promise<T> {
+  if (process.env.NODE_ENV === "development" && isEnvBrowser()) {
+    console.log(`fetchNui: ${eventName} =>`, JSON.stringify(data)); return Promise.resolve(devEnv || {} as T)
+  };
+
   const options = {
     method: 'post',
     headers: {
