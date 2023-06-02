@@ -12,7 +12,7 @@
     "@fortawesome/react-fontawesome": "fortawesome/react-fontawesome",
     "@mantine/core": "^6.0.9",
     "@mantine/dates": "^6.0.9",
-    "@mantine/form": "^6.0.9",
+    "@mantine/form": "^6.0.13",
     "@mantine/hooks": "^6.0.9",
     "@mantine/modals": "^6.0.9",
     "@mantine/notifications": "^6.0.9",
