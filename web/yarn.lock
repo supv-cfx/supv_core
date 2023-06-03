@@ -1397,8 +1397,9 @@
     "@fortawesome/fontawesome-common-types" "6.4.0"
 
 "@fortawesome/react-fontawesome@fortawesome/react-fontawesome":
-  version "0.2.0"
-  resolved "https://codeload.github.com/fortawesome/react-fontawesome/tar.gz/976c1adc59934b34e52b11c03dda4bd69831a6df"
+  version "0.1.18"
+  uid "872d0b047409bc5fbb5b0fc8abcde5219d9d7301"
+  resolved "https://codeload.github.com/fortawesome/react-fontawesome/tar.gz/872d0b047409bc5fbb5b0fc8abcde5219d9d7301"
   dependencies:
     prop-types "^15.8.1"
 
