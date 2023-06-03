@@ -65,7 +65,7 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^6.4.3",
+    "@craco/craco": "^7.1.0",
     "cross-env": "^7.0.3",
     "rimraf": "^5.0.1"
   }
