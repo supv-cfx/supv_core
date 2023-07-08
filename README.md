@@ -1,5 +1,7 @@
 <h1 align="center"><u><b>supv_core v0.7.6b</b></u></h1>
 
+![GitHub all releases](https://img.shields.io/github/downloads/SUP2Ak/supv_core/total?color=%2329c785&style=for-the-badge)
+
 :fr:
 
 **Tout ce qu'il y a en dessous de ce message est pour la version v0.3b**
