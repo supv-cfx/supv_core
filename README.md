@@ -152,3 +152,6 @@ https://sup2ak.gitbook.io/documentation/supv-documentation/fivem-script/supv_cor
     - Init marker (marker.new, markerObj:hidden, markerObj:remove, markerObj:visible),
 - [Resources] :
     - Add RadioAudio controler
+
+
+![GitHub all releases](https://img.shields.io/github/downloads/SUP2Ak/supv_core/total?color=%2329c785&style=for-the-badge) 
