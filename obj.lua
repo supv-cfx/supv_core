@@ -121,6 +121,17 @@ elseif supv.service == 'server' then
     })
 end
 
+framework = setmetatable({}, {
+    __index = function(self, key)
+        local value = rawget(self, key)
+        if not value then
+            value = supv.framework[key]
+            rawset(self, key, value)
+        end
+        return value
+    end
+})
+
 if lib then return end
 
 -- credit: ox_lib <https://github.com/overextended/ox_lib/blob/master/init.lua>
