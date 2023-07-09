@@ -1,58 +1,84 @@
-local supv_core <const> = 'supv_core'
-local LoadResourceFile <const>, IsDuplicityVersion <const> = LoadResourceFile, IsDuplicityVersion
-local service <const> = (IsDuplicityVersion() and 'server') or 'client'
+
+
+local supv_core <const>, service <const> = 'supv_core', (IsDuplicityVersion() and 'server') or 'client'
+local LoadResourceFile <const>, IsDuplicityVersion <const>, joaat <const>, await <const>, GetCurrentResourceName <const> = LoadResourceFile, IsDuplicityVersion, joaat, Citizen.Await, GetCurrentResourceName
 local GetGameName <const> = GetGameName
-local GetCurrentResourceName <const> = GetCurrentResourceName
 
-local function load_module(self, index)
-    local dir <const> = ("imports/%s"):format(index)
-    local chunk <const> = LoadResourceFile(supv_core, ('%s/%s.lua'):format(dir, service))
-    local shared <const> = LoadResourceFile(supv_core, ('%s/shared.lua'):format(dir))
-    local func, err
-    
-    if chunk or shared then
-        if shared then
-            func, err = load(shared, ('@@%s/%s/%s'):format(supv_core, index, 'shared'))
-        else
-            func, err = load(chunk, ('@@%s/%s/%s'):format(supv_core, index, service))
-        end
-
-        if not func or err then return error(("Erreur pendant le chargement du module\n- Provenant de : %s\n- Modules : %s\n- Service : %s\n - Erreur : %s"):format(dir, index, service, err), 3) end
-
-        local result = func()
-        self[index] = result
-        return self[index]
-    end
-end
-
-local function call_module(self, index, ...)
-    local module = rawget(self, index)
-
-    if not module then
-        module = load_module(self, index)
-        return module
-    end
+---@param name string
+---@param from? string<'client' | 'server'> default is sl.service
+---@return string
+local function FormatEvent(self, name, from)
+    return ("__sl__:%s:%s"):format(from or self.service, joaat(name))
 end
 
 supv = setmetatable({
-    service = service, 
-    name = GetCurrentResourceName(),
-    game = GetGameName(),
-    env = GetCurrentResourceName(),
-    await = Citizen.Await,
-    lang = GetConvar('supv:locale', 'fr')
+    service = service, ---@type string<'client' | 'server'>
+    name = supv_core, ---@type string<'supv_core'>
+    env = supv_core, ---@type string<'resource_name?'>
+    game = GetGameName(), ---@type string<'fivem' | 'redm'>
+    hashEvent = FormatEvent,
+    await = await,
+    lang = GetConvar('supv:locale', 'fr') ---@type string<'fr' | 'en' | unknown>
 }, {
-    __index = call_module, 
-    __call = call_module, 
-    __newindex = function(self, name, func)
-    rawset(self, name, func)
-    exports(name, func)
-end})
+    __newindex = function(self, name, value)
+        rawset(self, name, value)
+        if type(value) == 'function' then
+            exports(name, value)
+        end
+    end
+})
 
-require = supv.require.load
+local loaded = {}
+package = {
+    loaded = setmetatable({}, {
+        __index = loaded,
+        __newindex = function() end,
+        __metatable = false,
+    }),
+    path = './?.lua;'
+}
 
-supv.locale.init()
+local _require = require
+function require(modname)
 
-if supv.service == 'server' then
-    supv.version.check('github', nil, 500)
+    local module = loaded[modname]
+    if not module then
+        if module == false then
+            error(("^1circular-dependency occurred when loading module '%s'^0"):format(modname), 2)
+        end
+
+        local success, result = pcall(_require, modname)
+
+        if success then
+            loaded[modname] = result
+            return result
+        end
+
+        local modpath = modname:gsub('%.', '/')
+        local paths = { string.strsplit(';', package.path) }
+        for i = 1, #paths do
+            local scriptPath = paths[i]:gsub('%?', modpath):gsub('%.+%/+', '')
+            local resourceFile = LoadResourceFile(supv_core, scriptPath)
+            if resourceFile then
+                loaded[modname] = false
+                scriptPath = ('@@%s/%s'):format(supv_core, scriptPath)
+
+                local chunk, err = load(resourceFile, scriptPath)
+
+                if err or not chunk then
+                    loaded[modname] = nil
+                    return error(err or ("unable to load module '%s'"):format(modname), 3)
+                end
+                
+                module = chunk(modname) or true
+                loaded[modname] = module
+
+                return module
+            end
+        end
+
+        return error(("module '%s' not found"):format(modname), 2)
+    end
+
+    return module
 end
