@@ -65,6 +65,7 @@ supv = setmetatable({
     cache = {},
     config = {},
     await = Citizen.Await,
+    useFramework = (GetResourceState('es_extended') ~= 'missing' and 'esx') or (GetResourceState('qb-core') ~= 'missing' and 'qbcore'),
     updateCache = function(key, cb)
         AddEventHandler(('supv_core:cache:%s'):format(key), cb)
     end
@@ -121,16 +122,18 @@ elseif supv.service == 'server' then
     })
 end
 
-framework = setmetatable({}, {
-    __index = function(self, key)
-        local value = rawget(self, key)
-        if not value then
-            value = supv.framework[key]
-            rawset(self, key, value)
+if supv.useFramework then
+    framework = setmetatable({}, {
+        __index = function(self, key)
+            local value = rawget(self, key)
+            if not value then
+                value = load_module(self, 'framework')[key]
+                rawset(self, key, value)
+            end
+            return value
         end
-        return value
-    end
-})
+    })
+end
 
 if lib then return end
 
