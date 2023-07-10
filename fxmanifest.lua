@@ -3,8 +3,7 @@ games {'gta5', 'rdr3'}
 lua54 'yes'
 use_experimental_fxv2_oal 'yes'
 
-version '1.0'
-
+version 'work in progress'
 author 'SUP2Ak#3755'
 link 'https://github.com/SUP2Ak/supv_core'
 github 'https://github.com/SUP2Ak'
@@ -23,19 +22,26 @@ how_to_use {
 
 ui_page 'web/build/index.html'
 
-server_script 'package/dist/server/server.js'
+--server_script 'package/dist/server/server.js'
 shared_script 'init.lua'
 client_script 'modules/init.lua'
 server_script 'modules/init.lua'
 
 files {
     'obj.lua',
-    'shared/config/*.lua',
-    'client/config/*.lua',
-    'client/modules/*.lua',
+    'modules/**/shared/**'
+    'modules/**/client/**'
+    --'shared/config/*.lua',
+    --'client/config/*.lua',
+    --'client/modules/*.lua',
     'locales/*.json',
     'imports/**/client.lua',
     'imports/**/shared.lua',
     'web/build/index.html',
     'web/build/**/*'
+}
+
+dependencies {
+    '/server:6551', -- requires at least server build 6551 (txAdmin v6.0.1)
+    '/onesync', -- requires onesync enabled
 }
