@@ -11,6 +11,10 @@ function method.setGang(obj, key, value)
     obj.setFaction(key, value)
 end
 
+function method.flush()
+    return nil, collectgarbage()
+end
+
 function player:__index(index)
     local value = method[index]
     
