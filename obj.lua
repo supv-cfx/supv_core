@@ -4,6 +4,7 @@ local LoadResourceFile <const> = LoadResourceFile
 local GetResourceState <const> = GetResourceState
 local GetGameName <const> = GetGameName
 local GetCurrentResourceName <const> = GetCurrentResourceName
+local Await <const> = Citizen.Await
 local export = exports[supv_core]
 
 local service <const> = (IsDuplicityVersion() and 'server') or 'client'
@@ -14,6 +15,10 @@ end
 
 if not GetResourceState(supv_core):find('start') then
 	error('^1supv_core doit être lancé avant cette ressource!^0', 2)
+end
+
+local function FormatEvent(self, name, from)
+    return ("__supv__:%s:%s"):format(from or service, joaat(name))
 end
 
 local function load_module(self, index)
@@ -62,15 +67,13 @@ supv = setmetatable({
     game = GetGameName(),
     env = GetCurrentResourceName(),
     lang = GetConvar('supv:locale', 'fr'),
-    cache = {},
-    config = {},
-    await = Citizen.Await,
+    cache = service == 'client' and {},
+    await = Await,
     useFramework = (GetResourceState('es_extended') ~= 'missing' and 'esx') or (GetResourceState('qb-core') ~= 'missing' and 'qbcore'),
-    updateCache = function(key, cb)
-        AddEventHandler(('supv_core:cache:%s'):format(key), cb)
+    onCache = service == 'client' and function(key, cb)
+        AddEventHandler(FormatEvent(nil, ('cache:%s'):format(key)), cb)
     end
-},
-{ 
+}, { 
     __index = call_module, 
     __call = call_module 
 })
@@ -78,7 +81,7 @@ supv = setmetatable({
 if supv.service == 'client' then
     setmetatable(supv.cache, {
         __index = function(self, key)
-            AddEventHandler(('supv_core:cache:%s'):format(key), function(value)
+            AddEventHandler(FormatEvent(('cache:%s'):format(key)), function(value)
                 self[key] = value
                 return self[key]
             end)
@@ -88,27 +91,27 @@ if supv.service == 'client' then
         end
     })
 
-    setmetatable(supv.config, {
-        __index = function(self, key)
-            local value = rawget(self, key)
-            if not value then
-                value = export:getConfig(key)
-                rawset(self, key, value)
-            end
-            return value
-        end
-    })
+    --setmetatable(supv.config, {
+    --    __index = function(self, key)
+    --        local value = rawget(self, key)
+    --        if not value then
+    --            value = export:getConfig(key)
+    --            rawset(self, key, value)
+    --        end
+    --        return value
+    --    end
+    --})
 elseif supv.service == 'server' then
-    setmetatable(supv.config, {
-        __index = function(self, key)
-            local value = rawget(self, key)
-            if not value then
-                value = export:getConfig(key)
-                rawset(self, key, value)
-            end
-            return value
-        end
-    })
+    --setmetatable(supv.config, {
+    --    __index = function(self, key)
+    --        local value = rawget(self, key)
+    --        if not value then
+    --            value = export:getConfig(key)
+    --            rawset(self, key, value)
+    --        end
+    --        return value
+    --    end
+    --})
 
     MySQL = setmetatable({}, {
         __index = function(self, key)
@@ -139,7 +142,6 @@ if lib then return end
 
 -- credit: ox_lib <https://github.com/overextended/ox_lib/blob/master/init.lua>
 local intervals = {}
---- Dream of a world where this PR gets accepted.
 ---@param callback function | number
 ---@param interval? number
 ---@param ... any
