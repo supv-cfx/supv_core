@@ -1,0 +1,6 @@
+return {
+    client = {
+        'modals',
+        'notify',
+    },
+}
