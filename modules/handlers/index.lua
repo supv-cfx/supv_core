@@ -5,6 +5,7 @@ return {
     },
 
     server = {
-        'events'
+        'events',
+        'webhook'
     }
 }
