@@ -4,7 +4,7 @@
 ---@field action string
 ---@field data? any
 ---@type table
- 
+
 ---@class SendReactOptions
 ---@field focus? boolean | {[1]: boolean, [2]: boolean}
 ---@field locations? CursorPositionProps | {x: float, y: float}
