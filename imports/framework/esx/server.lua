@@ -1,3 +1,44 @@
+local ESX <const> = exports["es_extended"]:getSharedObject()
+local Framework = {}
+
+function Framework.GetPlayerFromId(source)
+    local player <const> = ESX.GetPlayerFromId(source)
+    return player
+end
+
+function Framework.GetPlayerFromIdentifier(identifier)
+    local player <const> = ESX.GetPlayerFromIdentifier(identifier)
+    return player
+end
+
+function Framework.GetPlayers(key, value)
+    local players <const> = ESX.GetExtendedPlayers(key, value)
+    return players
+end
+
+function Framework.SetJob(player, job, grade)
+    player.setJob(job, grade)
+end
+
+function Framework.SetGang(player, gang, grade)
+    player.setFaction(gang, grade) -- or player.setJob2(gang, grade)
+end
+
+function Framework.GetJob(player)
+    return player.getJob()
+end
+
+function Framework.GetGang(player)
+    return player.getFaction() -- or player.getJob2()
+end
+
+function Framework.GetPlayerData(player) -- maybe useless
+    return player
+end
+
+return Framework
+
+--[[
 local ESX = exports['es_extended']:getSharedObject()
 local player, method = {}, {}
 
@@ -39,3 +80,4 @@ end
 return {
     GetPlayerFromId = GetPlayerFromId
 }
+]]

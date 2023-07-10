@@ -1,4 +1,48 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
+local QBCore <const> = exports["qb-core"]:GetCoreObject()
+local Framework = {}
+
+function Framework.GetPlayerFromdId(source)
+    local player <const> = QBCore.Functions.GetPlayer(source)
+    return player
+end
+
+function Framework.GetPlayers(key, value)
+    local players <const> = QBCore.Functions.GetQBPlayers()
+    if key and value then
+        local filter = {}
+        for _, v in pairs(players)
+            if v.PlayerData[key] == value then
+                filter[#filter + 1] = v
+            end
+        end
+        return filter
+    end
+    return players
+end
+
+function Framework.GetPlayerData(player)
+    return player.PlayerData
+end
+
+function Framework.GetJob(player)
+    return player.PlayerData.job
+end
+
+function Framework.GetGang(player)
+    return player.PlayerData.gang
+end
+
+function Framework.SetJob(player, job, grade)
+    player.Functions.SetJob(job, grade)
+end
+
+function Framework.SetGang(player, gang, grade)
+    player.Functions.SetGang(gang, grade)
+end
+
+return Framework
+
+--[[
 local player, method = {}, {}
 
 function method.getGang(obj)
@@ -41,3 +85,5 @@ end
 return {
     GetPlayerFromId = GetPlayerFromId
 }
+
+]]
