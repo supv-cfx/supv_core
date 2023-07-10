@@ -57,6 +57,6 @@ end
 return {
     starts = Starts,
     random = RandomString,
-    firstToUpper = FirstToUpper
+    firstToUpper = FirstToUpper,
     uuid = GenerateUUID
 }
