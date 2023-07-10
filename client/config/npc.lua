@@ -1,3 +1,0 @@
-return {
-    model = 'test1'
-}
