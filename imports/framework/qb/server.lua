@@ -1,4 +1,48 @@
 local QBCore <const> = exports["qb-core"]:GetCoreObject()
+local Player, method = {}, {}
+
+function Player:__index(index)
+    local value = method[index]
+
+    if value then
+        return function(...)
+            return value(self, ...)
+        end
+    end
+
+    return self[index]
+end
+
+function method.GetGang(player)
+    return player.PlayerData.gang
+end
+
+function method.SetGang(player, key, value)
+    player.Functions.SetGang(key, value)
+end
+
+function method.GetJob(player)
+    return player.PlayerData.job
+end
+
+function method.SetJob(player, key, value)
+    player.Functions.SetJob(key, value)
+end
+
+function method.Flush()
+    return nil, collectgarbage()
+end
+
+local function GetPlayerFromId(source)
+    local player = QBCore.Functions.GetPlayer(source)
+    return player and setmetatable(player, Player)
+end
+
+return {
+    GetPlayerFromId = GetPlayerFromId
+}
+
+--[[
 local Framework = {}
 
 function Framework.GetPlayerFromdId(source)
@@ -41,7 +85,7 @@ function Framework.SetGang(player, gang, grade)
 end
 
 return Framework
-
+--]]
 --[[
 local player, method = {}, {}
 
