@@ -24,16 +24,18 @@ ui_page 'web/build/index.html'
 
 --server_script 'package/dist/server/server.js'
 shared_script 'init.lua'
-client_script 'modules/init.lua'
 server_script 'modules/init.lua'
+client_script 'modules/init.lua'
 
 files {
     'obj.lua',
-    'modules/**/shared/**'
-    'modules/**/client/**'
-    --'shared/config/*.lua',
-    --'client/config/*.lua',
-    --'client/modules/*.lua',
+    'data/client/**.json',
+    'config/modules.lua',
+    'config/client/*.lua',
+    'config/shared/*.lua',
+    'modules/**/index.lua',
+    'modules/**/shared/**',
+    'modules/**/client/**',
     'locales/*.json',
     'imports/**/client.lua',
     'imports/**/shared.lua',
