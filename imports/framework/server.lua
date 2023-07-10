@@ -1,5 +1,4 @@
 local GetResourceState <const> = GetResourceState
-local core <const> = (GetResourceState('es_extended') ~= 'missing' and 'esx') or (GetResourceState('qb-core') ~= 'missing' and 'qbcore')
 
 local function import(framework)
     local file <const> = ('imports/framework/%s/server.lua'):format(framework)
@@ -12,6 +11,6 @@ local function import(framework)
     return chunk()
 end
 
-if core then
-   return import(core) 
+if supv.useFramework then
+    return import(supv.useFramework) 
 end
