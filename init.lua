@@ -8,7 +8,7 @@ local GetGameName <const> = GetGameName
 ---@param from? string<'client' | 'server'> default is sl.service
 ---@return string
 local function FormatEvent(self, name, from)
-    return ("__sl__:%s:%s"):format(from or self.service, joaat(name))
+    return ("__supv__:%s:%s"):format(from or self.service, joaat(name))
 end
 
 supv = setmetatable({
@@ -82,3 +82,5 @@ function require(modname)
 
     return module
 end
+
+callback = require(('imports.callback.%s'):format(service))
