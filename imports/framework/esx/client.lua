@@ -4,10 +4,10 @@ local PlayerData = setmetatable({}, {
         local value = rawget(self, key)
         if not value then
             if key ~= 'gang' then
-                value = ESX.PlayerData[key]
+                value = ESX.PlayerData?[key]
                 rawset(self, key, value)
             else
-                value = ESX.PlayerData.faction
+                value = ESX.PlayerData?.faction
                 rawset(self, key, value)
             end
         end
@@ -16,9 +16,8 @@ local PlayerData = setmetatable({}, {
 })
 
 RegisterNetEvent("esx:playerLoaded", function(xPlayer)
-    PlayerData.job = xPlayer.PlayerData.job
-    PlayerData.gang = xPlayer.PlayerData.faction
-
+    PlayerData.job = xPlayer.PlayerData?.job
+    PlayerData.gang = xPlayer.PlayerData?.faction
 end)
 
 AddEventHandler('esx:setPlayerData', function(key, value)
