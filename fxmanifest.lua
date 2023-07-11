@@ -3,7 +3,7 @@ games {'gta5', 'rdr3'}
 lua54 'yes'
 use_experimental_fxv2_oal 'yes'
 
-version 'work in progress'
+version '0.0.0'
 author 'SUP2Ak#3755'
 link 'https://github.com/SUP2Ak/supv_core'
 github 'https://github.com/SUP2Ak'
