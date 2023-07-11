@@ -84,3 +84,7 @@ function require(modname)
 end
 
 callback = require(('imports.callback.%s'):format(service))
+
+if service == 'server' then
+    require('imports.version.server').check('github', nil, 500)
+end
