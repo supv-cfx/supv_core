@@ -8,7 +8,7 @@ local version <const> = GetResourceMetadata(supv.env, 'version', 0)
 ---@param isBeta? boolean
 ---@param perso? fun(resp: table)
 local function Checker(url, webhook, timer, isBeta, perso)
-    local message = supv.json.load(('locales/%s'):format(supv.lang), supv.name)
+    local message = json.decode(LoadResourceFile(supv.name, ('locales/%s.json'):format(supv.lang)))
 
     local from <const> = url
     url = from == 'tebex' and ("https://raw.githubusercontent.com/SUP2Ak/version-tebex-script/main/%s.json"):format(supv.env) or from == 'github' and ('https://api.github.com/repos/SUP2Ak/%s/releases/latest'):format(supv.env) or url
