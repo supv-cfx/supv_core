@@ -192,4 +192,4 @@ function ClearInterval(id)
 	intervals[id] = -1
 end
 
-require = supv.require.load
+require = supv.require

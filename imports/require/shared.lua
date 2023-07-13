@@ -18,7 +18,7 @@ local _require = require
 ---Loads the given module inside the current resource, returning any values returned by the file or `true` when `nil`.
 ---@param modname string
 ---@return unknown?
-local function Load(modname)
+local function LoadModule(modname)
     if type(modname) ~= 'string' then return end
 
     local module = loaded[modname]
@@ -65,10 +65,7 @@ local function Load(modname)
     return module
 end
 
-return {
-    load = Load,
-    get = loaded
-}
+return LoadModule
 
 --[[ old method, not working with zones module because need require (glm) to calculate vector
     
