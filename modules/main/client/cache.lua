@@ -14,7 +14,8 @@ local cache = {}
 function cache:set(key, value)
     if not self[key] or self[key] ~= value then
         self[key] = value
-        TriggerEvent(('supv_core:cache:%s'):format(key), value)
+        supv.emit(('cache:%s'):format(key), value)
+        -- TriggerEvent(('supv_core:cache:%s'):format(key), value)
         return true
     end
 end
