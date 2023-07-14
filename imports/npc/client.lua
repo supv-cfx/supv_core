@@ -10,6 +10,7 @@ local FreezeEntityPosition <const> = FreezeEntityPosition
 local SetPedComponentVariation <const> = SetPedComponentVariation
 local SetPedDefaultComponentVariation <const> = SetPedDefaultComponentVariation
 local GiveWeaponToPed <const> = GiveWeaponToPed
+local SetModelAsNoLongerNeeded <const> = SetModelAsNoLongerNeeded
 
 ---@class NpcWeaponsProps
 ---@field model string|number
@@ -47,12 +48,13 @@ local function New(model, coords, data)
     local p = promise.new()
 
     CreateThread(function()
-        RequestModel(self.hash)
-        while not HasModelLoaded(self.hash) do
+        RequestModel(self.model)
+        while not HasModelLoaded(self.model) do
             Wait(1)
         end
 
         self.ped = CreatePed(_, self.model, self.vec4.x, self.vec4.y, self.vec4.z, self.vec4.w, data?.network or true, false)
+        SetModelAsNoLongerNeeded(self.model)
 
         if DoesEntityExist(self.ped) then
             SetBlockingOfNonTemporaryEvents(self.ped, data?.blockevent or true)
