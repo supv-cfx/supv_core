@@ -25,12 +25,12 @@ assert(os.setlocale(config.localization))
 ---@param embeds WebhookEmbedProps
 ---@param data WebhookDataProps
 local function embed(url, embeds, data)
-    local date <const>, c <const> = {
+    local date <const> = {
         letter = ("\n%s %s"):format(toUpper(os.date("%A %d")), toUpper(os.date("%B %Y : [%H:%M:%S]"))):to_utf8(),
         numeric = ("\n%s"):format(os.date("[%d/%m/%Y] - [%H:%M:%S]"))
-    }, config or supv.getConfig('webhook')
+    }
 
-    url = c.channel[url] or url
+    url = config.channel[url] or url
 
     local _embed = {
         {
@@ -38,8 +38,8 @@ local function embed(url, embeds, data)
 			["title"] = embeds.title or '',
 			["description"] = embeds.description or '',
 			["footer"] = {
-				["text"] = data?.date_format and date[data?.date_format] or c.default.date_format and date[c.default.date_format],
-				["icon_url"] = data?.footer_icon or c.default.foot_icon,
+				["text"] = data?.date_format and date[data?.date_format] or config.default.date_format and date[config.default.date_format],
+				["icon_url"] = data?.footer_icon or config.default.foot_icon,
 			},
             ['image'] = {
                 ['url'] = embeds.image or nil
@@ -48,9 +48,9 @@ local function embed(url, embeds, data)
     }
 
     PerformHttpRequest(url, function(err, text, headers) end, 'POST', json.encode({
-        username = data?.bot_name or c.default.bot_name,
+        username = data?.bot_name or config.default.bot_name,
         embeds = _embed,
-        avatar_url = data?.avatar or c.default.avatar,
+        avatar_url = data?.avatar or config.default.avatar,
     }), {['Content-Type'] = 'application/json'})
 end
 
@@ -59,12 +59,11 @@ end
 ---@param text string
 ---@param data WebhookDataProps.bot_name
 local function message(url, text, data)
-    local c <const> = config or supv.getConfig('webhook')
-
-    url = c.channel[url] or url
+    local c <const> = config
+    url = config.channel[url] or url
 
     PerformHttpRequest(url, function(err, text, headers) end, 'POST', json.encode({
-        username = data.bot_name or c.default.bot_name,
+        username = data.bot_name or config.default.bot_name,
         content = text
     }), {['Content-Type'] = 'application/json', ['charset'] = 'utf-8'})
 end
@@ -87,6 +86,6 @@ if config.playing_from ~= 'shared' then return end
 
 ---@todo need more implementation about webhook send from client
 supv:onNet('webhook:received', function (source, types, ...)
-    warn(source, 'play webhook from client')
+    warn(("%s trying to playing webhook from client"):format(source))
     supv.webhook(types, ...)
 end)
