@@ -20,6 +20,8 @@ function cache:set(key, value)
 end
 
 CreateThread(function()
+    cache:set('playerid', PlayerId())
+    cache:set('serverid', GetPlayerServerId(cache.playerid))
     while true do
         cache:set('ped', PlayerPedId())
 
@@ -53,5 +55,5 @@ end)
 
 
 function supv.getCache(key)
-    return cache[key]
+    return cache[key] or cache
 end
