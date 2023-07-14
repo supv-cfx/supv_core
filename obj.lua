@@ -81,7 +81,7 @@ supv = setmetatable({
 if supv.service == 'client' then
     setmetatable(supv.cache, {
         __index = function(self, key)
-            AddEventHandler(FormatEvent(('cache:%s'):format(key)), function(value)
+            AddEventHandler(FormatEvent(nil, ('cache:%s'):format(key)), function(value)
                 self[key] = value
                 return self[key]
             end)
