@@ -3,7 +3,7 @@ local function notify(select, data)
 
     if select == 'simple' then
         supv.sendReactMessage(true,{
-            action = 'sl:notification:send',
+            action = 'supv:notification:send',
             data = data
         })
     end
