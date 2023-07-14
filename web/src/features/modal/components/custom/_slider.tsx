@@ -1,51 +1,39 @@
 import React, { useState } from 'react';
-import { Slider, Text, Stack } from '@mantine/core';
+import { Slider, Text, Box } from '@mantine/core';
+import type { _SliderProps } from '../../../../typings';
 
-interface Props {
-  key: string;
-  index: number;
-  label?: string;
-  defaultValue?: number;
-  min?: number;
-  max?: number;
-  step?: number;
-  onChanged: (index: number, value: number) => void;
-}
-
-export const SliderField: React.FC<Props> = ({
+export const SliderField: React.FC<_SliderProps> = ({
   index,
-  key,
   label,
   defaultValue,
   min,
   max,
   step,
+  transition,
   onChanged,
 }) => {
   const [value, setValue] = useState<number>(defaultValue || 0);
-  const [endValue, setEndValue] = useState<number>(defaultValue || 0);
 
   return (
-    <>
-        <Stack p={0}>
-            <Text td='dimmed' size='xs'>{label}</Text>
-            <Slider
-                key={key}
-                label={value}
-                defaultValue={defaultValue || 0}
-                min={min || 0}
-                max={max || 100}
-                step={step || 1}
-                value={value}
-                onChangeEnd={(value) => {
-                setEndValue(value);
-                onChanged(index, endValue);
-                }}
-                onChange={(value) => {
-                    setValue(value);
-                }}
-            />
-        </Stack>
-    </>
+    <Box mx='auto' sx={{ paddingTop: '10px' }}>
+      <Text size='sm'>{label}</Text>
+      <Slider
+        label={value}
+        defaultValue={defaultValue || 0}
+        min={min || 0}
+        max={max || 100}
+        step={step || 1}
+        value={value}
+        labelTransition={transition?.name || 'fade'}
+        labelTransitionDuration={transition?.duration || 100}
+        labelTransitionTimingFunction={transition?.timingFunction || 'ease'}
+        onChangeEnd={(value) => {
+          onChanged(index, value);
+        }}
+        onChange={(value) => {
+          setValue(value);
+        }}
+      />
+    </Box>
   );
 };

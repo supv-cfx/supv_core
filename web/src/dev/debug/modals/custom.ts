@@ -1,42 +1,62 @@
 import { debugData } from '../../../utils/debugData';
-import type { ModalProps } from '../../../typings';
+import type { ModalPropsCustom/*, Option */} from '../../../typings';
 const modalOptions = [
-  { type: 'input', name: 'inputField', label: 'Input Field', required: true },
+  { type: 'input', label: 'Input Field', required: true, callback: true, error: 'Message perso' },
+  { type: 'select', label: 'Select Field', options: 
+  [
+    { value: 'react', label: 'React' },
+    { value: 'ng', label: 'Angular' },
+    { value: 'svelte', label: 'Svelte' },
+    { value: 'vue', label: 'Vue' }
+  ], required: true, error: 'Select an option' },
   {
     type: 'checkbox',
-    name: 'checkboxField',
     label: 'Checkbox Field',
-    checked: true,
   },
   {
     type: 'password',
-    name: 'inputField',
-    label: 'Input Field',
+    label: 'Password Field',
     required: true,
   },
   {
     type: 'slider',
-    name: 'sliderField',
     label: 'Slider Field',
-    min: 120,
+    /*min: 120,
     max: 240,
-    default: 180,
+    default: 180,*/
+    transition: {
+      name: 'skew-up',
+      duration: 100,
+      timingFunction: 'ease-in-out'
+    }
   },
   {
-    type: 'date-input',
+    type: 'date',
     label: 'Date Input Field',
+    required: true
+  },
+  {
+    type: 'number',
+    label: 'Number Input Field',
+    format: {separator: ',', value: '€'},
   }
 ];
 
 export const debugModalsCustom = () => {
   debugData([
     {
-      action: 'supv:modal:opened',
+      action: 'supv:modal:opened-custom',
       data: {
-        type: 'custom',
-        title: 'Dialog title',
+        title: 'Title of the modal',
+        useCallback: true,
+        transition: {
+          name: 'skew-up',
+          duration: 200,
+          timingFunction: 'ease-in-out'
+        },
+        //canCancel: false,
         options: modalOptions,
-      } as ModalProps,
+      } as ModalPropsCustom,
     },
   ]);
 };

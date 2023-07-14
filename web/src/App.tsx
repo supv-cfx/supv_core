@@ -8,8 +8,9 @@ import { isEnvBrowser } from './utils/misc';
 import ConvertUnixTime from './features/tool/ConvertUnix';
 //import DialogComponent from './features/dialog/Dialog';
 import NotificationsWrapper from './features/notify/SimpleNotifyWrapp';
-import ModalWrapper from './features/modal/ModalWrapper';
-import ChatText from './features/chat/Chat';
+import ModalConfirm from './features/modal/ModalConfirm';
+import ModalCustom from './features/modal/ModalCustom';
+//import ChatText from './features/chat/Chat';
 
 import DevTool from './dev/DevEnv';
 
@@ -24,7 +25,8 @@ const App: React.FC = () => {
                 <MantineProvider theme={{colorScheme, ...themeOverride}} withGlobalStyles withNormalizeCSS>
                     {/*<ChatText />*/}
                     <ConvertUnixTime />
-                    <ModalWrapper />
+                    <ModalCustom />
+                    <ModalConfirm />
                     <NotificationsWrapper />
                     {isEnvBrowser() && <DevTool />}
                 </MantineProvider>

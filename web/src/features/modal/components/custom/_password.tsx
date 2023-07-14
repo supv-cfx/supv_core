@@ -1,32 +1,26 @@
 import React from 'react';
 import { PasswordInput  } from '@mantine/core';
+import type { _PasswordProps } from '../../../../typings';
 
-interface Props {
-  key: string;
-  index: number;
-  label?: string;
-  data?: Data;
-  onChanged: (index: number, value: string) => void;
-}
-
-export const PasswordField: React.FC<Props> = ({
+export const PasswordField: React.FC<_PasswordProps> = ({
   index,
-  key,
   label,
   data,
   onChanged,
+  props
 }) => {
   return (
     <>
       <PasswordInput 
-        key={key}
         label={label}
+        sx={{ paddingTop: '10px' }}
         placeholder={data?.placeholder || ''}
         description={data?.description || ''}
         required={data?.required || false}
         minLength={data?.min || 0}
         maxLength={data?.max || 255}
-        onChange={(event) => onChanged(index, event.target.value)}
+        onChange={(event) => onChanged(index, event.target.value, data?.required, data?.callback)}
+        error={props.error || false}
       />
     </>
   );

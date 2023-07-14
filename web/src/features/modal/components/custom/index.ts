@@ -4,3 +4,4 @@ export * from './_password';
 export * from './_dateInput';
 export * from './_slider';
 export * from './_select';
+export * from './_number';

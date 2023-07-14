@@ -1,29 +1,41 @@
 import React from 'react';
 import { Select } from '@mantine/core';
+import type { _SelectProps } from '../../../../typings';
 
-interface Props {
-  key: string;
-  index: number;
-  label?: string;
-  data?: Data;
-  onChanged: (index: number, value: string) => void;
-}
-
-export const SelectField: React.FC<Props> = ({
+export const SelectField: React.FC<_SelectProps> = ({
   index,
-  key,
   label,
   data,
+  options,
   onChanged,
+  props
 }) => {
   return (
     <>
       <Select
-        key={key}
+        withinPortal
         label={label}
-        data={[...data as any]}
+        data={[...options] as any}
+        sx={{paddingTop: '10px' }}
         required={data?.required || false}
-        onChange={(value) => onChanged(index, value as string)}
+        withAsterisk={data?.required || false}
+        onChange={(value) => onChanged(index, value as string, data?.required, data?.callback)}
+        error={props.error || false}
+        styles={(theme) => ({
+          item: {
+            '&[data-selected]': {
+              color: theme.colors.gray[1],
+              backgroundColor: theme.colors.teal[6],
+              '&, &:hover': {
+                color: theme.colors.gray[1],
+              },
+            },
+            '&[data-hovered]': {
+              color: theme.colors.teal[8],
+            },
+            color: theme.colors.gray[1],
+          },
+        })}
       />
     </>
   );
