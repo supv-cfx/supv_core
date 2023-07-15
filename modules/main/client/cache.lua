@@ -10,7 +10,7 @@ local GetPedInVehicleSeat <const> = GetPedInVehicleSeat
 local GetVehicleMaxNumberOfPassengers <const> = GetVehicleMaxNumberOfPassengers
 local GetCurrentPedWeapon <const> = GetCurrentPedWeapon
 
-local cache = {}
+local cache = _ENV.cache
 function cache:set(key, value)
     if (self[key] == nil) or (self[key] ~= value) then
         self[key] = value
