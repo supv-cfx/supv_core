@@ -70,6 +70,7 @@ supv = setmetatable({
     cache = service == 'client' and {},
     await = Await,
     useFramework = (GetResourceState('es_extended') ~= 'missing' and 'esx') or (GetResourceState('qb-core') ~= 'missing' and 'qbcore'),
+    useInventory = (GetResourceState('ox_inventory') ~= 'missing' and 'ox') or (GetResourceState('qb-inventory') ~= 'missing' and 'qbcore') or (GetResourceState('es_extended') ~= 'missing' and 'esx'),
     onCache = service == 'client' and function(key, cb)
         AddEventHandler(FormatEvent(nil, ('cache:%s'):format(key)), cb)
     end
@@ -131,6 +132,19 @@ if supv.useFramework then
             local value = rawget(self, key)
             if not value then
                 value = load_module(self, 'framework')[key]
+                rawset(self, key, value)
+            end
+            return value
+        end
+    })
+end
+
+if supv.useInventory then
+    inventory = setmetatable({}, {
+        __index = function(self, key)
+            local value = rawget(self, key)
+            if not value then
+                value = load_module(self, 'inventory')[key]
                 rawset(self, key, value)
             end
             return value
