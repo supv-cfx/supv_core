@@ -5,7 +5,7 @@ local LoadResourceFile <const> = LoadResourceFile
 ---@param resourceName? string
 ---@return string
 local function Loadjson(filePath, resourceName)
-    local resource <const> = resourceName or supv.env or GetCurrentResourceName()
+    local resource <const> = resourceName or supv.env
     local filename <const> = filePath
     local str <const> = json.decode(LoadResourceFile(resource, ("%s.json"):format(filename)))
     if not str then
