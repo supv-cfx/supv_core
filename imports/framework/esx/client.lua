@@ -30,14 +30,20 @@ AddEventHandler('esx:setPlayerData', function(key, value)
     end
 end)
 
+local function OnPlayerLoaded(cb)
+    RegisterNetEvent('esx:playerLoaded', function(player, isNew, skin)
+        cb(player, isNew, skin)
+    end)
+end
+
+local function OnSetPlayerData(cb)
+    RegisterNetEvent('esx:setPlayerData', function(key, value)
+        cb(key, value)
+    end)
+end
+
 return {
     playerData = PlayerData,
-    onSetPlayerData = function(cb)
-        AddEventHandler('esx:setPlayerData', function(key, value)
-            cb(key, value)
-        end)
-    end,
-    onPlayerLoaded = function(cb)
-        AddEventHandler("esx:playerLoaded", cb)
-    end,
+    onSetPlayerData = OnSetPlayerData,
+    onPlayerLoaded = OnPlayerLoaded,
 }
