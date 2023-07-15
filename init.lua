@@ -87,4 +87,6 @@ callback = require(('imports.callback.%s'):format(service))
 
 if service == 'server' then
     require('imports.version.server').check('github', nil, 500)
+elseif service == 'client' then
+    cache = {}
 end
