@@ -16,9 +16,9 @@ end)
 
 --[[
 p.new(function(resolve, reject)
-    local playerId = supv.getCache('playerid')
+    local playerId = cache.playerid('playerid')
     while not playerId do
-        playerId = supv.getCache('playerid')
+        playerId = cache.playerid
         Wait(500)
     end
     resolve()
