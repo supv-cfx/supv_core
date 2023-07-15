@@ -62,7 +62,7 @@ const NotificationsWrapper: React.FC = () => {
 
   useNuiEvent<NotificationProps>('supv:notification:send', async (data) => {
     if (!data.title && !data.description) return;
-    console.log(JSON.stringify(config.notificationStyles), 'config.notificationStyles')
+
     /*if (toasts.length > 9) { // A utiliser plus tards pour un système de queue!
       console.log('too many notifications');
     }:*/
