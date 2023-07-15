@@ -1,4 +1,4 @@
-local GetResourceState <const> = GetResourceState
+local LoadResourceFile <const> = LoadResourceFile
 
 local function import(framework)
     local file <const> = ('imports/framework/%s/server.lua'):format(framework)
