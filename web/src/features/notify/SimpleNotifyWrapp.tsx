@@ -51,6 +51,7 @@ const NotificationsWrapper: React.FC = () => {
 
   const { config } = useConfig();
   const useStyles = createStyles((theme) => ({...config.notificationStyles}));
+  
   const { classes } = useStyles();
   //const { toasts, pausedAt } = useToasterStore(); // A utiliser plus tards pour un système de queue!
 
@@ -59,9 +60,9 @@ const NotificationsWrapper: React.FC = () => {
       fetchNui('supv:notification:removeQueue');
   };*/
 
-  useNuiEvent<NotificationProps>('supv:notification:send', (data) => {
+  useNuiEvent<NotificationProps>('supv:notification:send', async (data) => {
     if (!data.title && !data.description) return;
-
+    console.log(JSON.stringify(config.notificationStyles), 'config.notificationStyles')
     /*if (toasts.length > 9) { // A utiliser plus tards pour un système de queue!
       console.log('too many notifications');
     }:*/
@@ -69,10 +70,10 @@ const NotificationsWrapper: React.FC = () => {
     let position = !data.position ? config.notificationStyles.container.position : data.position;
     //position = 'bottom-right' //to test
     if (!data.icon && data.type !== 'loading' && data.type) { data.icon = data.type === 'error' ? 'xmark' : data.type === 'success' ? 'check' : data.type === 'warning' ? 'exclamation' : 'info';};
-    let description: string = data.description ? data.description.replace('\n', '  \n  ') : '';
+    let description: string = data.description ? data.description.replace('\n', '  \n') : '';
 
     const { posEnter, posExit } = SelectAnime(data?.animation?.enter, data?.animation?.exit, position?.includes('bottom') ? 'bottom' : 'top', position?.includes('top') ? 'top' : position?.includes('right') ? 'right' : position?.includes('left') ? 'left' : 'right', 'top', undefined);
-
+    await new Promise((resolve) => setTimeout(resolve, 50));
     toast.custom(
       (t) => (
         <Notification withBorder={data.border} loading={data.type === 'loading'} {...data.icon ? {
