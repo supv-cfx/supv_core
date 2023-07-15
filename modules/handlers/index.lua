@@ -1,11 +1,13 @@
 return {
     client = {
         'events',
-        'nui'
+        'ace',
+        'nui',
     },
 
     server = {
         'events',
+        'ace',
         'webhook'
     }
 }
