@@ -5,6 +5,7 @@ local function GetCoords(self, vector4)
     self.coords = coords
     if vector4 then
         local heading = GetEntityHeading(supv.cache.ped)
+        self.heading = heading
         return vec4(coords.x, coords.y, coords.z, heading)
     end
     return coords
