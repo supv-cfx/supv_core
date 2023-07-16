@@ -1,7 +1,9 @@
 local Inventory = {}
+local GetPlayerFromId in framework
 
 function Inventory:AddItem(inv, itemName, itemCount, metadata)
-    local can = inv.canCarryItem(itemName, itemCount)
+    local player = GetPlayerFromId(inv)
+    local can = player.canCarryItem(itemName, itemCount)
     if not can then
         return false
     end
@@ -11,12 +13,14 @@ function Inventory:AddItem(inv, itemName, itemCount, metadata)
 end
 
 function Inventory:RemoveItem(inv, itemName, itemCount, slot, metadata)
-    inv.removeInventoryItem(itemName, itemCount, slot, metadata)
+    local player = GetPlayerFromId(inv)
+    player.removeInventoryItem(itemName, itemCount, slot, metadata)
     return true
 end
 
 function Inventory:HasItem(inv, itemName, itemCount, metadata)
-    local items = inv.getInventoryItem(itemName).count
+    local player = GetPlayerFromId(inv)
+    local items = player.getInventoryItem(itemName).count
     return items >= itemCount
 end
 
