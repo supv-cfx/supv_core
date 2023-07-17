@@ -18,6 +18,7 @@ import {
 import { debugNotification } from './debug/notifcation';
 import { debugModalsConfirm } from './debug/modals/confirm';
 import { debugModalsCustom } from './debug/modals/custom';
+import { debugResourceManager } from './debug/resource';
 
 interface Props {
   text: string;
@@ -106,6 +107,14 @@ const DevTool: React.FC = () => {
             onClick={() => debugNotification()}
           >
             Notication
+          </Button>
+          <Button
+            variant='outline'
+            color='yellow'
+            fullWidth
+            onClick={() => {debugResourceManager(); setOpened(false)}}
+          >
+            Resource Manager
           </Button>
         </Stack>
       </Drawer>
