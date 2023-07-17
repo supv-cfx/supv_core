@@ -8,10 +8,11 @@ const modalOptions = [
     { value: 'ng', label: 'Angular' },
     { value: 'svelte', label: 'Svelte' },
     { value: 'vue', label: 'Vue' }
-  ], required: true, error: 'Select an option' },
+  ], required: true, error: 'Select an option', callback: true },
   {
     type: 'checkbox',
     label: 'Checkbox Field',
+    callback: true,
   },
   {
     type: 'password',
