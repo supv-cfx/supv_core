@@ -22,7 +22,7 @@ const ModalCustom: React.FC = () => {
     const options = data.options;
     setData(data);
     options.map((field: Option, index: number) => {
-      form.setFieldValue(`${index}`, 
+      return form.setFieldValue(`${index}`, 
         {
           value :
             field.type === ('input' || 'select' || 'password' || 'date') ? field.default || '' 
