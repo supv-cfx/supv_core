@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextInput, Box } from "@mantine/core";
-import { _ButtonsEditor } from "./_buttons";
+import { ButtonsEditor } from "./_buttons";
 import { _StringEditorProps } from "../../../typings";
 
 export const InputEdit: React.FC<_StringEditorProps> = ({
@@ -35,7 +35,7 @@ export const InputEdit: React.FC<_StringEditorProps> = ({
         onChange={(e) => {setValue(e.currentTarget.value)}}
 				m={5}
 			/>
-      <_ButtonsEditor 
+      <ButtonsEditor 
         inputKey={inputKey}
         resource={resource}
         file={file}

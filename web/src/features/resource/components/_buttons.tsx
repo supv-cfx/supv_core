@@ -9,7 +9,7 @@ import {
 import { fetchNui } from "../../../utils/fetchNui";
 import { _ButtonEditorProps } from "../../../typings";
 
-export const _ButtonsEditor: React.FC<_ButtonEditorProps> = ({ inputKey, resource, file, value, setIsDisabled, isDisabled }) => {
+export const ButtonsEditor: React.FC<_ButtonEditorProps> = ({ inputKey, resource, file, value, setIsDisabled, isDisabled }) => {
 	const [isHovered, setIsHovered] = useState<number>(0);
 
 	return (

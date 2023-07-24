@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Switch } from "@mantine/core";
-import { _ButtonsEditor } from "./_buttons";
+import { ButtonsEditor } from "./_buttons";
 import { _BooleanSwitchProps } from "../../../typings";
 
 export const BooleanEdit: React.FC<_BooleanSwitchProps> = ({
@@ -35,7 +35,7 @@ export const BooleanEdit: React.FC<_BooleanSwitchProps> = ({
         size="xs"
         m={5}
       />
-      <_ButtonsEditor
+      <ButtonsEditor
         inputKey={inputKey}
         resource={resource}
         file={file}

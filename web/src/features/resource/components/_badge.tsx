@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { _ButtonsEditor } from "./_buttons";
+import { ButtonsEditor } from "./_buttons";
 import { _BadgeEditorProps } from "../../../typings";
 
 export const BadgeEdit: React.FC<_BadgeEditorProps> = ({
@@ -88,7 +88,7 @@ export const BadgeEdit: React.FC<_BadgeEditorProps> = ({
 					))}
 				</Group>
 			</NavLink>
-      <_ButtonsEditor
+      <ButtonsEditor
         inputKey={inputKey}
         resource={resource}
         file={file}
