@@ -26,3 +26,13 @@ export interface _StringEditorProps {
 	resource: string;
 	file: string;
 }
+
+export interface _BadgeEditorProps {
+	inputKey: string;
+	label: string;
+	description?: string;
+	placeholder?: string;
+	defaultValue?: Array<string>;
+  resource: string;
+  file: string;
+}
