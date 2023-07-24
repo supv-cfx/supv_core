@@ -7,7 +7,7 @@ const options: Object = {
 			reload: true,
 			start: true,
 			stop: true,
-      description: `Description of the resource MarkDown supported  \neh ouéééé
+			description: `Description of the resource MarkDown supported  \neh ouéééé
 
 
 A paragraph with *emphasis* and **strong importance**.
@@ -24,15 +24,37 @@ A paragraph with *emphasis* and **strong importance**.
 			server: {
 				test: [
 					{
+            id:'supv_core.testInput',
 						type: "input",
-						label: "Input Field4",
+						label: "Input Field4ss",
 						required: true,
 						callback: true,
 						error: "Message perso",
 					},
+          {
+            id:'supv_core.canSwap',
+            type: "boolean",
+            label: "Boolean Field",
+            value: false,
+            default: true,
+            description: "Description of the field",
+          },
+          {
+            id:'supv_core.testTable',
+            type: 'table',
+            label: 'Table Field',
+            description: 'Description of the field',
+            default: [
+              "adder",
+              "t20",
+              "entityxf",
+              "raptor",
+            ],
+          },
 					{
+            id: 'supv_core.testText',
 						type: "text",
-						label: "Text Field3",
+						label: "Text Field3ww",
 						required: true,
 						callback: true,
 						error: "Message perso",
@@ -40,13 +62,15 @@ A paragraph with *emphasis* and **strong importance**.
 				],
 				popo: [
 					{
+            id:'supv_core.testInputPopo',
 						type: "input",
-						label: "Input Field4",
+						label: "Input Field4ss",
 						required: true,
 						callback: true,
 						error: "Message perso",
 					},
 					{
+            id:'supv_core.testTextPopo',
 						type: "text",
 						label: "Text Field3",
 						required: true,
@@ -58,29 +82,33 @@ A paragraph with *emphasis* and **strong importance**.
 			client: {
 				xd: [
 					{
+            id:'supv_core.testInputXd',
 						type: "input",
-						label: "Input Field1",
+						label: "Input Field1ww",
 						required: true,
 						callback: true,
 						error: "Message perso",
 					},
 					{
+            id:'supv_core.testTextXd',
 						type: "text",
-						label: "Text Field2",
+						label: "Text Field2aa",
 						required: true,
 						callback: true,
 						error: "Message perso",
 					},
 					{
+            id:'supv_core.testTextXd2',
 						type: "text",
-						label: "Text Field2",
+						label: "Text Fieldtt2",
 						required: true,
 						callback: true,
 						error: "Message perso",
 					},
 					{
+            id:'supv_core.testTextXd3',
 						type: "text",
-						label: "Text Field2",
+						label: "Text Fieldsds2",
 						required: true,
 						callback: true,
 						error: "Message perso",
@@ -90,26 +118,28 @@ A paragraph with *emphasis* and **strong importance**.
 		},
 	},
 	supv_test: {
-    main: {
+		main: {
 			restart: true,
 			reload: true,
 			start: true,
-      description: 'Description of the resource',
+			description: "Description of the resource",
 		},
 
 		config: {
 			server: {
 				test: [
 					{
+            id: 'supv_test.testInput',
 						type: "input",
-						label: "Input Field",
+						label: "Input Fielqsdd",
 						required: true,
 						callback: true,
 						error: "Message perso",
 					},
 					{
+            id: 'supv_test.testText',
 						type: "text",
-						label: "Text Field",
+						label: "Text Fielqd",
 						required: true,
 						callback: true,
 						error: "Message perso",
@@ -120,15 +150,17 @@ A paragraph with *emphasis* and **strong importance**.
 			client: {
 				test: [
 					{
+            id: 'supv_test.testInputClient',
 						type: "input",
-						label: "Input Field",
+						label: "Input Fieldfd",
 						required: true,
 						callback: true,
 						error: "Message perso",
 					},
 					{
+            id: 'supv_test.testTextClient',
 						type: "text",
-						label: "Text Field",
+						label: "Text Fielgggd",
 						required: true,
 						callback: true,
 						error: "Message perso",
