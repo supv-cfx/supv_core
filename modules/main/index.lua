@@ -1,6 +1,7 @@
 return {
     client = {
-        'cache'
+        'cache',
+        'resource'
     },
 
     server = {
