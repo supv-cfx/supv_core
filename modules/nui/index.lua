@@ -4,4 +4,8 @@ return {
         'modals',
         'notify',
     },
+
+    server = {
+        'notify',
+    }
 }
