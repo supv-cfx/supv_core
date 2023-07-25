@@ -5,6 +5,9 @@ export interface _BooleanSwitchProps {
   currentValue: boolean;
   resource: string;
   file: string;
+	navKey: string;
+	index: number;
+	setResourceData: (resourceName: string, file: string, value: any, navKey: string, index: number) => void;
 }
 
 export interface _ButtonEditorProps {
@@ -14,6 +17,9 @@ export interface _ButtonEditorProps {
   file: string;
   isDisabled: boolean;
   setIsDisabled: (value: boolean) => void;
+	navKey: string;
+	index: number;
+	setResourceData: (resourceName: string, file: string, value: any, navKey: string, index: number) => void;
 }
 
 export interface _StringEditorProps {
@@ -25,6 +31,9 @@ export interface _StringEditorProps {
 	currentValue?: string;
 	resource: string;
 	file: string;
+	navKey: string;
+	index: number;
+	setResourceData: (resourceName: string, file: string, value: any, navKey: string, index: number) => void;
 }
 
 export interface _BadgeEditorProps {
@@ -35,4 +44,7 @@ export interface _BadgeEditorProps {
 	defaultValue?: Array<string>;
   resource: string;
   file: string;
+	navKey: string;
+	index: number;
+	setResourceData: (resourceName: string, file: string, value: any, navKey: string, index: number) => void;
 }

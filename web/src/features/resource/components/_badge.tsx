@@ -21,6 +21,9 @@ export const BadgeEdit: React.FC<_BadgeEditorProps> = ({
 	defaultValue,
   resource,
   file,
+  navKey,
+  index,
+  setResourceData
 }) => {
 	const [isHovered, setIsHovered] = useState<number>(0);
 	const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -95,6 +98,9 @@ export const BadgeEdit: React.FC<_BadgeEditorProps> = ({
         value={value}
         setIsDisabled={setIsDisabled}
         isDisabled={isDisabled}
+        navKey={navKey}
+        index={index}
+        setResourceData={setResourceData}
       />
 		</Box>
 	);

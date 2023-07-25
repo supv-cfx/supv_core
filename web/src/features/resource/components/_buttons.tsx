@@ -9,7 +9,17 @@ import {
 import { fetchNui } from "../../../utils/fetchNui";
 import { _ButtonEditorProps } from "../../../typings";
 
-export const ButtonsEditor: React.FC<_ButtonEditorProps> = ({ inputKey, resource, file, value, setIsDisabled, isDisabled }) => {
+export const ButtonsEditor: React.FC<_ButtonEditorProps> = ({
+	inputKey,
+	resource,
+	file,
+	value,
+	setIsDisabled,
+	isDisabled,
+	setResourceData,
+	navKey,
+	index,
+}) => {
 	const [isHovered, setIsHovered] = useState<number>(0);
 
 	return (
@@ -20,15 +30,18 @@ export const ButtonsEditor: React.FC<_ButtonEditorProps> = ({ inputKey, resource
 				color="green"
 				onMouseEnter={() => setIsHovered(1)}
 				onMouseLeave={() => setIsHovered(0)}
-				onClick={(e) => { !isDisabled &&
-					setIsDisabled(true);
+				onClick={(e) => {
+					!isDisabled && setIsDisabled(true);
+					!isDisabled &&
+						setResourceData(resource, file, value, navKey, index);
 					const k = !isDisabled && inputKey.replace(`${resource}.`, "");
-					!isDisabled && fetchNui("supv:rm:validate", {
-						resource: resource,
-						file: file,
-						key: k,
-						value: value,
-					});
+					!isDisabled &&
+						fetchNui("supv:rm:validate", {
+							resource: resource,
+							file: file,
+							key: k,
+							value: value,
+						});
 				}}
 			>
 				<FontAwesomeIcon icon={faCheck} shake={isHovered === 1} />

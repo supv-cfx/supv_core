@@ -10,6 +10,9 @@ export const BooleanEdit: React.FC<_BooleanSwitchProps> = ({
   currentValue,
   resource,
   file,
+  navKey,
+  index,
+  setResourceData
 }) => {
 	const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [value, setValue] = useState<boolean>(currentValue);
@@ -42,6 +45,9 @@ export const BooleanEdit: React.FC<_BooleanSwitchProps> = ({
         value={value}
         setIsDisabled={setIsDisabled}
         isDisabled={isDisabled}
+        index={index}
+        navKey={navKey}
+        setResourceData={setResourceData}
       />
 		</Box>
 	);

@@ -12,6 +12,9 @@ export const InputEdit: React.FC<_StringEditorProps> = ({
 	currentValue,
 	resource,
 	file,
+	navKey,
+	index,
+	setResourceData
 }) => {
 	const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [value, setValue] = useState<string | undefined>(currentValue || defaultValue);
@@ -35,13 +38,16 @@ export const InputEdit: React.FC<_StringEditorProps> = ({
         onChange={(e) => {setValue(e.currentTarget.value)}}
 				m={5}
 			/>
-      <ButtonsEditor 
+      <ButtonsEditor
         inputKey={inputKey}
         resource={resource}
         file={file}
         value={value}
         setIsDisabled={setIsDisabled}
         isDisabled={isDisabled}
+				index={index} 
+				navKey={navKey}
+				setResourceData={setResourceData}
       />
 		</Box>
 	);
