@@ -167,7 +167,7 @@ const ResourceManager: React.FC = () => {
 							}}
 						>
 							{navVisible && (
-								<ScrollArea key={"area-nav"} type='hover' h={480} scrollbarSize={4}>
+								<ScrollArea key={"area-nav"} type='hover' h={500} scrollbarSize={4}>
 									<Navbar
 										height={500}
 										p="xs"
@@ -223,7 +223,7 @@ const ResourceManager: React.FC = () => {
 								w={!navVisible ? 875 : { base: 700 }}
 								bg={colorScheme === "dark" ? colorScheme : "white"}
 							>
-								<ScrollArea key={"area-component"} type='hover' h={480} scrollbarSize={4}>
+								<ScrollArea key={"area-component"} type='hover' h={490} scrollbarSize={4}>
 									{/* Ici le contenu sur lequel je clique dans la NavBar */}
 									{(indexNav[0] !== undefined &&
 										indexNav[0].length !== 0 &&
