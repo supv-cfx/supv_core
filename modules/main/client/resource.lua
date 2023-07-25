@@ -23,7 +23,12 @@ supv.registerReactCallback('supv:rm:validate', function(data, cb)
     cb(1)
 end, false)
 
-supv.registerReactCallback('supv:rm:close', function(data, cb)
+supv.registerReactCallback('supv:rm:action', function(data, cb)
+    supv:emitNet('rm:action', data)
     cb(1)
+end)
+
+supv.registerReactCallback('supv:rm:close', function(data, cb)
     opened = false
+    cb(1)
 end, true)
