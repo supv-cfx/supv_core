@@ -16,7 +16,11 @@ function Manager:edit(resource, file, key, value)
         return warn(('File "%s" not registered!'):format(file))
     end
 
-    self.resources[resource][file][key] = value
+    if not self.resources[resource][file][key] or key == '?' then
+        self.resources[resource][file] = value
+    else
+        self.resources[resource][file][key] = value
+    end
 
     local menu = self.menu[resource].config[file]
     for k,v in pairs(menu) do
