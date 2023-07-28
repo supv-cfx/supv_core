@@ -38,7 +38,7 @@ export const ArraySwitch: React.FC<_ArraySwitchEditorProps> = ({
 			)}
 			{value.map((v, i) => (
 				<Switch
-					key={inputKey + i}
+					key={`${inputKey} ${i}`}
 					checked={v}
 					disabled={isDisabled}
 					label={groupLabel[i] || `${label} ${i}`}
