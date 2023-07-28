@@ -91,3 +91,22 @@ export interface _ArraySwitchEditorProps {
 		index: number
 	) => void;
 }
+
+export interface _ObjectSwitchEditorProps {
+	inputKey: string;
+	label: string;
+	description: string;
+	currentValue: Record<string, boolean>;
+	resource: string;
+	file: string;
+	navKey: string;
+	//groupLabel: string[];
+	index: number;
+	setResourceData: (
+		resource: string,
+		file: string,
+		value: string[],
+		navKey: string,
+		index: number
+	) => void;
+}

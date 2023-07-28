@@ -145,6 +145,18 @@ A paragraph with *emphasis* and **strong importance**.
 			client: {
 				test: [
 					{
+						id: "supv_test.objectSwitch",
+						type: "object-switch",
+						label: "Object Switch",
+						value: {
+							"DT_Invalid": true,
+							"DT_PoliceAutomobile": true,
+							"DT_PoliceHelicopter": true,
+							"DT_FireDepartment": true,
+							"DT_SwatAutomobile": true,
+						},
+					},
+					{
 						id: "supv_test.testInputClient",
 						type: "input",
 						label: "Input Fieldfd",
