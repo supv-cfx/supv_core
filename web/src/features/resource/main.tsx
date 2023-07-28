@@ -32,7 +32,7 @@ import {
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNuiEvent } from "../../hooks/useNuiEvent";
-import { InputEdit, BooleanEdit, BadgeEdit } from "./components/index";
+import { InputEdit, BooleanEdit, BadgeEdit, ArraySwitch } from "./components/index";
 
 
 const ResourceManager: React.FC = () => {
@@ -290,7 +290,20 @@ const ResourceManager: React.FC = () => {
                                       index={i}
                                       setResourceData={setResourceData}
 																		/>
-																	) : null;
+																	) : field.type === 'array-switch' ? (
+                                    <ArraySwitch
+                                      inputKey={field.id}
+                                      label={field.label}
+                                      description={field.description}
+                                      currentValue={field.value}
+                                      resource={indexNav[0]}
+                                      file={indexNav[1]}
+                                      navKey={keyNav}
+                                      groupLabel={field.groupLabel}
+                                      index={i}
+                                      setResourceData={setResourceData}
+                                    />
+                                  ) : null;
 																})}
 															</Accordion.Panel>
 														</Accordion.Item>

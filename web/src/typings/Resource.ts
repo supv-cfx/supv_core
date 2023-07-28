@@ -2,24 +2,36 @@ export interface _BooleanSwitchProps {
 	inputKey: string;
 	label: string;
 	description?: string;
-  currentValue: boolean;
-  resource: string;
-  file: string;
+	currentValue: boolean;
+	resource: string;
+	file: string;
 	navKey: string;
 	index: number;
-	setResourceData: (resourceName: string, file: string, value: any, navKey: string, index: number) => void;
+	setResourceData: (
+		resourceName: string,
+		file: string,
+		value: any,
+		navKey: string,
+		index: number
+	) => void;
 }
 
 export interface _ButtonEditorProps {
-  inputKey: string;
-  value?: any;
-  resource: string;
-  file: string;
-  isDisabled: boolean;
-  setIsDisabled: (value: boolean) => void;
+	inputKey: string;
+	value?: any;
+	resource: string;
+	file: string;
+	isDisabled: boolean;
+	setIsDisabled: (value: boolean) => void;
 	navKey: string;
 	index: number;
-	setResourceData: (resourceName: string, file: string, value: any, navKey: string, index: number) => void;
+	setResourceData: (
+		resourceName: string,
+		file: string,
+		value: any,
+		navKey: string,
+		index: number
+	) => void;
 }
 
 export interface _StringEditorProps {
@@ -33,7 +45,13 @@ export interface _StringEditorProps {
 	file: string;
 	navKey: string;
 	index: number;
-	setResourceData: (resourceName: string, file: string, value: any, navKey: string, index: number) => void;
+	setResourceData: (
+		resourceName: string,
+		file: string,
+		value: any,
+		navKey: string,
+		index: number
+	) => void;
 }
 
 export interface _BadgeEditorProps {
@@ -42,9 +60,34 @@ export interface _BadgeEditorProps {
 	description?: string;
 	placeholder?: string;
 	defaultValue?: Array<string>;
-  resource: string;
-  file: string;
+	resource: string;
+	file: string;
 	navKey: string;
 	index: number;
-	setResourceData: (resourceName: string, file: string, value: any, navKey: string, index: number) => void;
+	setResourceData: (
+		resourceName: string,
+		file: string,
+		value: any,
+		navKey: string,
+		index: number
+	) => void;
+}
+
+export interface _ArraySwitchEditorProps {
+	inputKey: string;
+	label: string;
+	description: string;
+	currentValue: Array<boolean>;
+	resource: string;
+	file: string;
+	navKey: string;
+	groupLabel: string[];
+	index: number;
+	setResourceData: (
+		resource: string,
+		file: string,
+		value: string[],
+		navKey: string,
+		index: number
+	) => void;
 }
