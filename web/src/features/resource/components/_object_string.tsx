@@ -36,8 +36,8 @@ export const ObjectString: React.FC<_ObjectInputEditorProps> = ({
 				<TextInput
 					key={`${inputKey}-${i}`}
 					value={value[v]}
-          description={description && description[v] || ''}
-          placeholder={placeHolders && placeHolders[v] || ''}
+          description={(description && description[v]) || ''}
+          placeholder={(placeHolders && placeHolders[v]) || ''}
 					disabled={isDisabled}
 					//label={v || `${label} ${i}`}
 					onChange={(e) => {
