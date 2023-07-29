@@ -145,6 +145,24 @@ A paragraph with *emphasis* and **strong importance**.
 			client: {
 				test: [
 					{
+						id: "supv_test.objectString",
+						type: "object-string",
+						label: "My list object string",
+						description: {
+							"test1": "TEST 1",
+							"test2": "TEST 2",
+							"test3": "TEST 3",
+							"test4": "TEST 4",
+						},
+						value: {
+							"test1": "test",
+							"test2": "test",
+							"test3": "test",
+							"test4": "test",
+							"test5": "",
+						},
+					},
+					{
 						id: "supv_test.objectSwitch",
 						type: "object-switch",
 						label: "Object Switch",

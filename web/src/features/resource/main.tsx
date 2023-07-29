@@ -32,7 +32,7 @@ import {
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNuiEvent } from "../../hooks/useNuiEvent";
-import { InputEdit, BooleanEdit, BadgeEdit, ArraySwitch, ObjectSwitch } from "./components/index";
+import { InputEdit, BooleanEdit, BadgeEdit, ArraySwitch, ObjectSwitch, ObjectString } from "./components/index";
 
 
 const ResourceManager: React.FC = () => {
@@ -314,6 +314,19 @@ const ResourceManager: React.FC = () => {
                                       navKey={keyNav}
                                       index={i}
                                       setResourceData={setResourceData}
+                                    />
+                                  ) : field.type === 'object-string' ? (
+                                    <ObjectString
+                                      inputKey={field.id}
+                                      label={field.label}
+                                      description={field.description}
+                                      currentValue={field.value}
+                                      resource={indexNav[0]}
+                                      file={indexNav[1]}
+                                      navKey={keyNav}
+                                      index={i}
+                                      setResourceData={setResourceData}
+                                      placeHolders={field.placeHolders}
                                     />
                                   ) : null;
 																})}

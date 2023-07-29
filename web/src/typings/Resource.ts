@@ -110,3 +110,22 @@ export interface _ObjectSwitchEditorProps {
 		index: number
 	) => void;
 }
+
+export interface _ObjectInputEditorProps {
+	inputKey: string;
+	label?: string;
+	description?: Record<string, string>;
+	currentValue: Record<string, string>;
+	resource: string;
+	file: string;
+	navKey: string;
+	placeHolders?: Record<string, string>;
+	index: number;
+	setResourceData: (
+		resource: string,
+		file: string,
+		value: string[],
+		navKey: string,
+		index: number
+	) => void;
+}
