@@ -42,7 +42,7 @@ const App: React.FC = () => {
 					<ModalConfirm />
 					<NotificationsWrapper />
 					<ResourceManager />
-					{isEnvBrowser() && <DevTool />}
+				{isEnvBrowser() && <DevTool />}
 				</MantineProvider>
 			</ColorSchemeProvider>
 		</>
