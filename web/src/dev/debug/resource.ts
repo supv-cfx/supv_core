@@ -21,6 +21,74 @@ A paragraph with *emphasis* and **strong importance**.
 		},
 
 		config: {
+			test: {
+				objectCustom: [
+					{
+						id: "supv_core.hide_something",
+						type: "object-custom",
+						value: {
+							scope_list: {
+								WEAPON_HEAVYSNIPER_MK2: true,
+								WEAPON_SNIPERRIFLE: true,
+								WEAPON_MARKSMANRIFLE: true,
+								WEAPON_MARKSMANRIFLE_MK2: true,
+								WEAPON_HEAVYSNIPER: true,
+							},
+							list: [3, 4, 6, 7, 8, 9, 13, 14],
+							enable: false,
+						},
+
+						data : {
+							scope_list: {
+								type: "object-switch",
+								value: {
+									WEAPON_HEAVYSNIPER_MK2: true,
+									WEAPON_SNIPERRIFLE: true,
+									WEAPON_MARKSMANRIFLE: true,
+									WEAPON_MARKSMANRIFLE_MK2: true,
+									WEAPON_HEAVYSNIPER: true,
+								},
+								label: "List of weapon allow hud",
+								canAdd: true,
+								canRemove: true,
+								addDescription: "Add a weapon",
+								keyFormat: "uppercase"
+							},
+
+							list: {
+								type: "array-multi-select",
+								value: [3, 4, 6, 7, 8, 9, 13, 14],
+								values: [
+									{ value: 0, label: "0" },
+									{ value: 1, label: "1" },
+									{ value: 2, label: "2" },
+									{ value: 3, label: "3" },
+									{ value: 4, label: "4" },
+									{ value: 5, label: "5" },
+									{ value: 6, label: "6" },
+									{ value: 7, label: "7" },
+									{ value: 8, label: "8" },
+									{ value: 9, label: "9" },
+									{ value: 10, label: "10" },
+									{ value: 11, label: "11" },
+									{ value: 12, label: "12" },
+									{ value: 13, label: "13" },
+									{ value: 14, label: "14" },
+									{ value: 15, label: "15" }
+								],
+								canAdd: true,
+								canRemove: true
+							},
+
+							enable: {
+								type: "boolean",
+								value: false,
+								description: "Enable or disable this feature"
+							}
+						},
+					},
+				],
+			},
 			server: {
 				test: [
 					{
@@ -149,17 +217,17 @@ A paragraph with *emphasis* and **strong importance**.
 						type: "object-string",
 						label: "My list object string",
 						description: {
-							"test1": "TEST 1",
-							"test2": "TEST 2",
-							"test3": "TEST 3",
-							"test4": "TEST 4",
+							test1: "TEST 1",
+							test2: "TEST 2",
+							test3: "TEST 3",
+							test4: "TEST 4",
 						},
 						value: {
-							"test1": "test",
-							"test2": "test",
-							"test3": "test",
-							"test4": "test",
-							"test5": "",
+							test1: "test",
+							test2: "test",
+							test3: "test",
+							test4: "test",
+							test5: "",
 						},
 					},
 					{
@@ -167,11 +235,11 @@ A paragraph with *emphasis* and **strong importance**.
 						type: "object-switch",
 						label: "Object Switch",
 						value: {
-							"DT_Invalid": true,
-							"DT_PoliceAutomobile": true,
-							"DT_PoliceHelicopter": true,
-							"DT_FireDepartment": true,
-							"DT_SwatAutomobile": true,
+							DT_Invalid: true,
+							DT_PoliceAutomobile: true,
+							DT_PoliceHelicopter: true,
+							DT_FireDepartment: true,
+							DT_SwatAutomobile: true,
 						},
 					},
 					{

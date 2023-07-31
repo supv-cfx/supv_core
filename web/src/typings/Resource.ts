@@ -129,3 +129,35 @@ export interface _ObjectInputEditorProps {
 		index: number
 	) => void;
 }
+
+interface _DataObjectProps {
+	type: string;
+	value: any;
+	description?: string;
+	label?: string;
+	addDescription?: string;
+	canAdd?: boolean;
+	canRemove?: boolean;
+	values?: any;
+	keyFormat?: string;
+}
+
+export interface _ObjectCustomEditorProps {
+	inputKey: string;
+	label?: string;
+	description?: Record<string, string>;
+	currentValue: Record<string, any>;
+	resource: string;
+	file: string;
+	navKey: string;
+	placeHolders?: Record<string, string>;
+	index: number;
+	data: Record<string, _DataObjectProps>;
+	setResourceData: (
+		resource: string,
+		file: string,
+		value: string[],
+		navKey: string,
+		index: number
+	) => void;
+}

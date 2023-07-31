@@ -32,8 +32,15 @@ import {
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNuiEvent } from "../../hooks/useNuiEvent";
-import { InputEdit, BooleanEdit, BadgeEdit, ArraySwitch, ObjectSwitch, ObjectString } from "./components/index";
-
+import {
+	InputEdit,
+	BooleanEdit,
+	BadgeEdit,
+	ArraySwitch,
+	ObjectSwitch,
+	ObjectString,
+	ObjectCustom,
+} from "./components/index";
 
 const ResourceManager: React.FC = () => {
 	const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -60,13 +67,19 @@ const ResourceManager: React.FC = () => {
 		fetchNui("supv:rm:close", {});
 	};
 
-  const setResourceData = (resourceName: string, file: string, value: any, keyNav: string, index: number) => {
-    setData((prevData: any) => {
-      const updatedData = { ...prevData };
-      updatedData[resourceName].config[file][keyNav][index].value = value;
-      return updatedData;
-    });
-  };
+	const setResourceData = (
+		resourceName: string,
+		file: string,
+		value: any,
+		keyNav: string,
+		index: number
+	) => {
+		setData((prevData: any) => {
+			const updatedData = { ...prevData };
+			updatedData[resourceName].config[file][keyNav][index].value = value;
+			return updatedData;
+		});
+	};
 
 	return (
 		<>
@@ -167,7 +180,12 @@ const ResourceManager: React.FC = () => {
 							}}
 						>
 							{navVisible && (
-								<ScrollArea key={"area-nav"} type='hover' h={500} scrollbarSize={4}>
+								<ScrollArea
+									key={"area-nav"}
+									type="hover"
+									h={500}
+									scrollbarSize={4}
+								>
 									<Navbar
 										height={500}
 										p="xs"
@@ -223,7 +241,12 @@ const ResourceManager: React.FC = () => {
 								w={!navVisible ? 875 : { base: 700 }}
 								bg={colorScheme === "dark" ? colorScheme : "white"}
 							>
-								<ScrollArea key={"area-component"} type='hover' h={490} scrollbarSize={4}>
+								<ScrollArea
+									key={"area-component"}
+									type="hover"
+									h={490}
+									scrollbarSize={4}
+								>
 									{/* Ici le contenu sur lequel je clique dans la NavBar */}
 									{(indexNav[0] !== undefined &&
 										indexNav[0].length !== 0 &&
@@ -259,9 +282,9 @@ const ResourceManager: React.FC = () => {
 																			currentValue={field.value}
 																			resource={indexNav[0]}
 																			file={indexNav[1]}
-                                      navKey={keyNav}
-                                      index={i}
-                                      setResourceData={setResourceData}
+																			navKey={keyNav}
+																			index={i}
+																			setResourceData={setResourceData}
 																		/>
 																	) : field.type ===
 																	  "text" ? undefined : field.type === //<Text key={i}>{field.label}</Text>
@@ -273,10 +296,9 @@ const ResourceManager: React.FC = () => {
 																			currentValue={field.value}
 																			resource={indexNav[0]}
 																			file={indexNav[1]}
-                                      navKey={keyNav}
-                                      index={i}
-                                      setResourceData={setResourceData}
-                                      
+																			navKey={keyNav}
+																			index={i}
+																			setResourceData={setResourceData}
 																		/>
 																	) : field.type === "table" ? (
 																		<BadgeEdit
@@ -286,49 +308,62 @@ const ResourceManager: React.FC = () => {
 																			defaultValue={field.default}
 																			resource={indexNav[0]}
 																			file={indexNav[1]}
-                                      navKey={keyNav}
-                                      index={i}
-                                      setResourceData={setResourceData}
+																			navKey={keyNav}
+																			index={i}
+																			setResourceData={setResourceData}
 																		/>
-																	) : field.type === 'array-switch' ? (
-                                    <ArraySwitch
-                                      inputKey={field.id}
-                                      label={field.label}
-                                      description={field.description}
-                                      currentValue={field.value}
-                                      resource={indexNav[0]}
-                                      file={indexNav[1]}
-                                      navKey={keyNav}
-                                      groupLabel={field.groupLabel}
-                                      index={i}
-                                      setResourceData={setResourceData}
-                                    />
-                                  ) : field.type === 'object-switch' ? (
-                                    <ObjectSwitch
-                                      inputKey={field.id}
-                                      label={field.label}
-                                      description={field.description}
-                                      currentValue={field.value}
-                                      resource={indexNav[0]}
-                                      file={indexNav[1]}
-                                      navKey={keyNav}
-                                      index={i}
-                                      setResourceData={setResourceData}
-                                    />
-                                  ) : field.type === 'object-string' ? (
-                                    <ObjectString
-                                      inputKey={field.id}
-                                      label={field.label}
-                                      description={field.description}
-                                      currentValue={field.value}
-                                      resource={indexNav[0]}
-                                      file={indexNav[1]}
-                                      navKey={keyNav}
-                                      index={i}
-                                      setResourceData={setResourceData}
-                                      placeHolders={field.placeHolders}
-                                    />
-                                  ) : null;
+																	) : field.type === "array-switch" ? (
+																		<ArraySwitch
+																			inputKey={field.id}
+																			label={field.label}
+																			description={field.description}
+																			currentValue={field.value}
+																			resource={indexNav[0]}
+																			file={indexNav[1]}
+																			navKey={keyNav}
+																			groupLabel={field.groupLabel}
+																			index={i}
+																			setResourceData={setResourceData}
+																		/>
+																	) : field.type === "object-switch" ? (
+																		<ObjectSwitch
+																			inputKey={field.id}
+																			label={field.label}
+																			description={field.description}
+																			currentValue={field.value}
+																			resource={indexNav[0]}
+																			file={indexNav[1]}
+																			navKey={keyNav}
+																			index={i}
+																			setResourceData={setResourceData}
+																		/>
+																	) : field.type === "object-string" ? (
+																		<ObjectString
+																			inputKey={field.id}
+																			label={field.label}
+																			description={field.description}
+																			currentValue={field.value}
+																			resource={indexNav[0]}
+																			file={indexNav[1]}
+																			navKey={keyNav}
+																			index={i}
+																			setResourceData={setResourceData}
+																			placeHolders={field.placeHolders}
+																		/>
+																	) : field.type === "object-custom" ? (
+																		<ObjectCustom
+																			inputKey={field.id}
+																			label={field.label}
+																			description={field.description}
+																			currentValue={field.value}
+																			resource={indexNav[0]}
+																			file={indexNav[1]}
+																			navKey={keyNav}
+																			index={i}
+																			data={field.data}
+																			setResourceData={setResourceData}
+																		/>
+																	) : null;
 																})}
 															</Accordion.Panel>
 														</Accordion.Item>
