@@ -1,4 +1,3 @@
----@param self? table
 ---@param vector4? boolean-false
 local function GetCoords(self, vector4)
     local coords = GetEntityCoords(supv.cache.ped)
@@ -11,7 +10,6 @@ local function GetCoords(self, vector4)
     return coords
 end
 
----@param self? table
 ---@param coords vec3
 ---@return float
 local function GetDistanceBetweenCoords(self, coords)

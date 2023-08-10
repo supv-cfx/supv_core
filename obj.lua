@@ -69,6 +69,7 @@ supv = setmetatable({
     lang = GetConvar('supv:locale', 'fr'),
     cache = service == 'client' and {},
     await = Await,
+    hashEvent = FormatEvent,
     useFramework = (GetResourceState('es_extended') ~= 'missing' and 'esx') or (GetResourceState('qb-core') ~= 'missing' and 'qbcore'),
     useInventory = (GetResourceState('ox_inventory') ~= 'missing' and 'ox') or (GetResourceState('qb-inventory') ~= 'missing' and 'qbcore') or (GetResourceState('es_extended') ~= 'missing' and 'esx'),
     onCache = service == 'client' and function(key, cb)
