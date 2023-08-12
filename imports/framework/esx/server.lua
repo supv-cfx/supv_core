@@ -29,6 +29,14 @@ function method.SetJob(player, key, value)
     player.setJob(key, value)
 end
 
+function method.GetMoneyByType(player, _type)
+    return player.getAccount(_type).money
+end
+
+function method.RemoveMoneyByType(player, _type, amount)
+    return player.removeAccountMoney(_type, amount)
+end
+
 function method.Flush()
     return nil, collectgarbage()
 end
