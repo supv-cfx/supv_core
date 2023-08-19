@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSmile } from '@fortawesome/free-regular-svg-icons';
 import { Button, useMantineColorScheme } from '@mantine/core';
 import { useConfig } from '../../providers/ConfigProvider';
+import { ConfigEmojiPicker } from '../../dev/config';
 
 interface EmojiPickerProps {
     onSelect: (emoji: Object) => void;
@@ -12,9 +13,11 @@ interface EmojiPickerProps {
 const EmojiPickerButton: React.FC<EmojiPickerProps> = ({ onSelect }) => {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const {colorScheme} = useMantineColorScheme();
-    const { config, setConfig } = useConfig();
-
-    const dark = colorScheme == 'dark';
+    //const { config, setConfig } = useConfig();
+    const config = {
+      emojiPicker: ConfigEmojiPicker
+    }
+    const dark = colorScheme === 'dark';
 
     const handleSelectEmoji = (emoji: any) => {
         setShowEmojiPicker(false);
@@ -24,7 +27,7 @@ const EmojiPickerButton: React.FC<EmojiPickerProps> = ({ onSelect }) => {
     config.emojiPicker.theme = dark ? Theme.DARK : Theme.LIGHT;
     
     let color: string = dark ? '#fff' : '#000';
-    setConfig(config);
+    //setConfig(config);
     return (
         <>
             <div style={{ position: 'relative' }}>

@@ -94,7 +94,6 @@ const PopoverItem = ({ command, onClose, onSelect }: PopoverItemProps) => {
 
 
 const ChatText: React.FC = () => {
-
   const [chatVisible, setChatVisible] = useState<string>('visible'); // visible | hidden | onNewMessage + timer to hide
   const [message, setMessage] = useState<string>('');
   const [messages, handlers] = useListState<Message>([]);

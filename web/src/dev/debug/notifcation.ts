@@ -17,7 +17,7 @@ export const debugNotification = () => {
       } as NotificationProps,
     }
   ]);
-  /*
+  
   debugData([
     {
       action: 'supv:notification:send',
@@ -143,5 +143,5 @@ export const debugNotification = () => {
         }
       } as NotificationProps,
     }
-  ]);*/
+  ]);
 } // screwdriver-wrench

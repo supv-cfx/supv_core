@@ -189,7 +189,7 @@ A paragraph with *emphasis* and **strong importance**.
 		},
 
 		config: {
-			server: {
+			/*server: {
 				test: [
 					{
 						id: "supv_test.testInput",
@@ -208,11 +208,33 @@ A paragraph with *emphasis* and **strong importance**.
 						error: "Message perso",
 					},
 				],
-			},
+			},*/
 
 			client: {
 				test: [
 					{
+						id: "supv_test.testArrayNumber",
+						type: "array-object",
+						label: "My list array number",
+						description: "Description of the field",
+						value: [
+							{id: 1, enabled: true},
+							{id: 2, enabled: true},
+							{id: 3, enabled: false},
+						],
+						canAdd: true,
+						canRemove: true,
+						addOption: {
+							in: "array",
+							type: "object",
+							description: "Description of the field",
+							build: {
+								id: 'number',
+								enabled: 'boolean'
+							}
+						}
+					}
+					/*{
 						id: "supv_test.objectString",
 						type: "object-string",
 						label: "My list object string",
@@ -257,8 +279,8 @@ A paragraph with *emphasis* and **strong importance**.
 						required: true,
 						callback: true,
 						error: "Message perso",
-					},
-					{
+					},*/
+					/*{
 						id: "supv_test.dispatch",
 						type: "array-switch",
 						label: "List of dispatch",
@@ -299,7 +321,14 @@ A paragraph with *emphasis* and **strong importance**.
 							"DT_ArmyVehicle",
 							"DT_BikerBackup",
 						],
-					},
+						canAdd: true,
+						addOption: {
+							in: "array",
+							type: "number",
+							description: "Description of the field",
+							placeHolder: "Enter a value",
+						}
+					},*/
 				],
 			},
 		},

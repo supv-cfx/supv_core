@@ -324,6 +324,8 @@ const ResourceManager: React.FC = () => {
 																			groupLabel={field.groupLabel}
 																			index={i}
 																			setResourceData={setResourceData}
+																			addOption={field.addOption}
+																			canAdd={field.canAdd}
 																		/>
 																	) : field.type === "object-switch" ? (
 																		<ObjectSwitch

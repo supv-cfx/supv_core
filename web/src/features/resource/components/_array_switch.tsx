@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Switch, Text } from "@mantine/core";
 import { ButtonsEditor } from "./_buttons";
+import { CanAddInputEditor } from "./_canAdd";
 import { _ArraySwitchEditorProps } from "../../../typings";
 
 export const ArraySwitch: React.FC<_ArraySwitchEditorProps> = ({
@@ -14,6 +15,8 @@ export const ArraySwitch: React.FC<_ArraySwitchEditorProps> = ({
 	groupLabel,
 	index,
 	setResourceData,
+	canAdd,
+	addOption,
 }) => {
 	const [isDisabled, setIsDisabled] = useState<boolean>(true);
 	const [value, setValue] = useState<Array<boolean>>(currentValue);
@@ -51,6 +54,14 @@ export const ArraySwitch: React.FC<_ArraySwitchEditorProps> = ({
 					m={10}
 				/>
 			))}
+			{canAdd && (
+				<CanAddInputEditor
+					addOption={addOption as any}
+					state={isDisabled}
+					value={value}
+					setValue={setValue}
+				/>
+			)}
 			<ButtonsEditor
 				inputKey={inputKey}
 				resource={resource}

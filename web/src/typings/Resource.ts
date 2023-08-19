@@ -83,6 +83,15 @@ export interface _ArraySwitchEditorProps {
 	navKey: string;
 	groupLabel: string[];
 	index: number;
+	canAdd?: boolean;
+	canRemove?: boolean;
+	addOption?: {
+		in: 'object' | 'array';
+		type: "text" | "number";
+		keyFormat?: "lowercase" | "uppercase" | "none";
+		description?: string;
+    placeholder?: string;
+	};
 	setResourceData: (
 		resource: string,
 		file: string,
@@ -137,6 +146,13 @@ interface _DataObjectProps {
 	label?: string;
 	addDescription?: string;
 	canAdd?: boolean;
+	canAddOptions?: {
+		in: 'object' | 'array';
+		type: "text" | "number";
+		keyFormat?: "lowercase" | "uppercase" | "none";
+		description?: string;
+    placeholder?: string;
+	};
 	canRemove?: boolean;
 	values?: any;
 	keyFormat?: string;
@@ -160,4 +176,18 @@ export interface _ObjectCustomEditorProps {
 		navKey: string,
 		index: number
 	) => void;
+}
+
+export interface _CanAddInputEditorProps {
+  state: boolean;
+  value: any;
+  setValue: any;
+	addOption: {
+    in: 'object' | 'array';
+		type: "text" | "number" | "object";
+		keyFormat?: "lowercase" | "uppercase" | "none";
+		description?: string;
+    placeholder?: string;
+		build?: Record<string, string>;
+	};
 }
