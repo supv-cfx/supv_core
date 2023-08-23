@@ -4,6 +4,9 @@ local Manager = {
     path = {}
 }
 
+local onNet <const> = require 'imports.on.server'.net
+local emitNet <const> = require 'imports.on.client'.net
+
 function Manager:edit(resource, file, key, value)
     -- print(self.resources[resource][file][key], value)
     -- print(resource, file, key, value)
@@ -63,7 +66,7 @@ function supv.addResourceManager(resource, value, menu, path)
     --print(json.encode(Manager.resources, { indent = true }))
 end
 
-supv:onNet('rm:edit', function(source, data)
+onNet('rm:edit', function(source, data)
     if not IsPlayerAceAllowed(source, 'command.supv_core') then
         return warn(('Player %s is not allowed to edit resources!'):format(GetPlayerName(source)))
     end
@@ -81,7 +84,7 @@ supv:onNet('rm:edit', function(source, data)
     Manager:edit(data.resource, data.file, data.key, data.value)
 end)
 
-supv:onNet('rm:action', function(source, data)
+onNet('rm:action', function(source, data)
     if not IsPlayerAceAllowed(source, 'command.supv_core') then
         return warn(('Player %s is not allowed to make any action resources!'):format(GetPlayerName(source)))
     end
@@ -194,5 +197,5 @@ RegisterCommand('rm', function(source) ---@todo: renamed & rework soon
         return warn('No resources registered!')
     end
 
-    supv:emitNet('open:rm', source, Manager.menu)
+    emitNet('open:rm', source, Manager.menu)
 end, true)
