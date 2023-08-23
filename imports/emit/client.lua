@@ -2,7 +2,7 @@ local TriggerEvent <const>, TriggerServerEvent <const> = TriggerEvent, TriggerSe
 local token
 
 local function PlayEvent(_, name, ...)
-    return TriggerEvent(supv:hashEvent(name), supv.token, ...)
+    TriggerEvent(supv:hashEvent(name), supv.token, ...)
 end
 
 supv.emit = setmetatable({}, {
@@ -10,8 +10,8 @@ supv.emit = setmetatable({}, {
 })
 
 function supv.emit.net(name, ...)
-    if not token then token = callback.sync(joaat('token')) end
-    return TriggerServerEvent(supv:hashEvent(name, 'server'), token, ...)
+    if not token then token = supv.callback.sync(joaat('token')) end
+    TriggerServerEvent(supv:hashEvent(name, 'server'), token, ...)
 end
 
 return supv.emit
