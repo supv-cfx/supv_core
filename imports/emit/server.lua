@@ -1,4 +1,5 @@
 local TriggerEvent <const>, TriggerClientEvent <const> = TriggerEvent, TriggerClientEvent
+local token <const> = supv.getToken()
 
 local function PlayEvent(_, name, source, ...)
     TriggerEvent(supv:hashEvent(name), supv.token, ...)
