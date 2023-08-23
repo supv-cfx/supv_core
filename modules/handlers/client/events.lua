@@ -1,5 +1,5 @@
-local RegisterNetEvent <const>, AddEventHandler <const>, TriggerEvent <const>, TriggerServerEvent <const>, joaat <const> = RegisterNetEvent, AddEventHandler, TriggerEvent, TriggerServerEvent, joaat
-local timers, GetGameTimer <const>, tokenClient = {}, GetGameTimer
+--local RegisterNetEvent <const>, AddEventHandler <const>, TriggerEvent <const>, TriggerServerEvent <const>, joaat <const> = RegisterNetEvent, AddEventHandler, TriggerEvent, TriggerServerEvent, joaat
+local timers, GetGameTimer <const> = {}, GetGameTimer
 
 ---@param name string
 ---@return table|false
@@ -24,7 +24,7 @@ local function GetCooldown(self)
 end
 
 ---@param name string
----@param timer number
+---@param timer number 
 ---@private
 local function RegisterCooldown(name, timer)
     local self = {}
@@ -36,6 +36,15 @@ local function RegisterCooldown(name, timer)
     timers[name] = self
 end
 
+function supv.RegisterEventCooldown(name, timer)
+    return RegisterCooldown(name, timer)
+end
+
+function supv.IsEventCooldown(name)
+    return IsEventCooldown(name)
+end
+
+--[[
 ---@param name string
 ---@param cb fun(...: any)
 ---@param cooldown? number
@@ -98,3 +107,4 @@ function supv:emit(name, ...)
     if type(name) ~= 'string' then return end
     TriggerEvent(self:hashEvent(name), ...)
 end
+]]

@@ -1,14 +1,19 @@
 ---@todo: more documentation soon in this code
 
-local RegisterNetEvent <const>, AddEventHandler <const>, TriggerEvent <const>, joaat <const> = RegisterNetEvent, AddEventHandler, TriggerEvent, joaat
+--local RegisterNetEvent <const>, AddEventHandler <const>, TriggerEvent <const>, joaat <const> = RegisterNetEvent, AddEventHandler, TriggerEvent, joaat
 
-supv.token = require 'imports.string.shared'.uuid() -- @return string uuid (randomly generated when resource start)
-print('token : ', supv.token)
+local timers = {}
+local GetGameTimer <const> = GetGameTimer
+
+supv.token = require 'imports.string.shared'.uuid() -- @return string uuid (randomly generated when
+
 callback.register(joaat('token'), function(source)
     return supv.token
 end)
 
-local timers = {}
+function supv.getToken()
+    return supv.token
+end
 
 ---@param name string
 ---@return table|false
@@ -52,6 +57,15 @@ local function RegisterCooldown(name, timer, global)
     end
 end
 
+function supv.RegisterEventCooldown(name, cooldown, global)
+    return RegisterCooldown(name, cooldown, global)
+end
+
+function supv.IsEventCooldown(name, global)
+    return IsEventCooldown(name, global)
+end
+
+--[[
 ---@param name string
 ---@param token? string
 ---@param source? integer
@@ -131,3 +145,4 @@ function supv:emit(name, ...) -- @ TriggerEvent
     if type(name) ~= 'string' then return end
     TriggerEvent(self:hashEvent(name), self.token, ...)
 end
+]]
