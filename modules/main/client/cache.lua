@@ -10,11 +10,12 @@ local GetPedInVehicleSeat <const> = GetPedInVehicleSeat
 local GetVehicleMaxNumberOfPassengers <const> = GetVehicleMaxNumberOfPassengers
 local GetCurrentPedWeapon <const> = GetCurrentPedWeapon
 
+local emit <const> = require 'imports.emit.client'
 local cache = _ENV.cache
 function cache:set(key, value)
     if (self[key] == nil) or (self[key] ~= value) then
         self[key] = value
-        supv:emit(('cache:%s'):format(key), value)
+        emit(('cache:%s'):format(key), value)
         return true
     end
 end
