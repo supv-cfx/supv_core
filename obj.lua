@@ -93,6 +93,8 @@ if supv.service == 'client' then
         end
     })
 
+    -- supv.token = supv.callback.sync(joaat('token'))
+
     --setmetatable(supv.config, {
     --    __index = function(self, key)
     --        local value = rawget(self, key)
@@ -114,6 +116,8 @@ elseif supv.service == 'server' then
     --        return value
     --    end
     --})
+
+    supv.token = export:getToken()
 
     MySQL = setmetatable({}, {
         __index = function(self, key)
