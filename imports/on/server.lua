@@ -3,7 +3,7 @@ local RegisterNetEvent <const>, AddEventHandler <const> = RegisterNetEvent, AddE
 local function EventHandler(name, token, source, cb, cooldown, global, ...)
     if (source and source ~= '') and (not token or token ~= supv.token) then return warn(("This player id : %s have execute event %s without token! (identifier: %s)"):format(source, name, supv.getIdentifierFromId(source, 'license'))) end
     if cooldown then
-        local eventCooldown <const> = supv.IsEventCooldown(name, global or source)
+        local eventCooldown <const> = cooldown and supv.IsEventCooldown(name, global or source)
         if eventCooldown and eventCooldown:onCooldown then
             return global and warn('Ignoring event : '..name, 'because of global cooldown'..'\n') or warn('Ignoring event', name, 'because of cooldown for source : '..source..'\n')
         end
