@@ -21,6 +21,8 @@ local function FormatEvent(self, name, from)
     return ("__supv__:%s:%s"):format(from or service, joaat(name))
 end
 
+local function void() end
+
 local function load_module(self, index)
     local func, err 
     local dir <const> = ('imports/%s'):format(index)
@@ -37,7 +39,7 @@ local function load_module(self, index)
         if err then error(("Erreur pendant le chargement du module\n- Provenant de : %s\n- Modules : %s\n- Service : %s\n - Erreur : %s"):format(dir, index, service, err), 3) end
 
         local result = func()
-        rawset(self, index, result)
+        rawset(self, index, result or void)
         return self[index]
     end
 end
@@ -45,6 +47,7 @@ end
 local function call_module(self, index, ...)
     local module = rawget(self, index)
     if not module then
+        self[index] = void
         module = load_module(self, index)
         if not module then
             local function method(...)
@@ -92,32 +95,7 @@ if supv.service == 'client' then
             return self[key]
         end
     })
-
-    -- supv.token = supv.callback.sync(joaat('token'))
-
-    --setmetatable(supv.config, {
-    --    __index = function(self, key)
-    --        local value = rawget(self, key)
-    --        if not value then
-    --            value = export:getConfig(key)
-    --            rawset(self, key, value)
-    --        end
-    --        return value
-    --    end
-    --})
 elseif supv.service == 'server' then
-    --setmetatable(supv.config, {
-    --    __index = function(self, key)
-    --        local value = rawget(self, key)
-    --        if not value then
-    --            value = export:getConfig(key)
-    --            rawset(self, key, value)
-    --        end
-    --        return value
-    --    end
-    --})
-
-    supv.token = export:getToken()
 
     MySQL = setmetatable({}, {
         __index = function(self, key)
