@@ -1,10 +1,10 @@
 return {
     client = {
         'cache',
-        'resource'
+        --'resource'
     },
 
-    server = {
-        'resource'
-    }
+    -- server = {
+        --'resource'
+    -- }
 }

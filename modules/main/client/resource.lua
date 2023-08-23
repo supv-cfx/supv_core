@@ -1,8 +1,8 @@
 local opened = false
-local onNet <const> = require 'imports.on.client'.net
-local emitNet <const> = require 'imports.on.server'.net
+local on <const> = require 'imports.on.client'
+local emit <const> = require 'imports.on.server'
 
-onNet('open:rm', function(menu)
+on.net('open:rm', function(menu)
     if opened then return end
 
     if not next(menu) then
@@ -21,12 +21,12 @@ end)
 
 supv.registerReactCallback('supv:rm:validate', function(data, cb)
     -- print(json.encode(data, { indent = true }))
-    emitNet('rm:edit', data)
+    emit.net('rm:edit', data)
     cb(1)
 end, false)
 
 supv.registerReactCallback('supv:rm:action', function(data, cb)
-    emitNet('rm:action', data)
+    emit.net('rm:action', data)
     cb(1)
 end)
 
