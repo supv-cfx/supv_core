@@ -15,4 +15,9 @@ function supv.on.net(name, cb)
     RegisterNetEvent(supv:hashEvent(name), cb)
 end
 
+function supv.on.cache(key, cb)
+    if not cb then return end
+    AddEventHandler(('cache:%s'):format(key), cb)
+end
+
 return supv.on
