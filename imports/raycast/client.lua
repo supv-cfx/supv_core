@@ -35,13 +35,12 @@ local StartShapeTestLosProbe <const> = StartShapeTestLosProbe
 ---@return table Raycast { hit: boolean, entityHit: number, endCoords: vector3, surfaceNormal: vector3, materialHash: number}
 return function(distance, flags, ignore)
     local worldVector <const>, normalVector <const> = GetWorldCoordFromScreenCoord(.5, .5) -- Center of the screenX and screenY
-    local destinationVector <const> = (worldVector + normalVector) * (distance or 10)
+    local destinationVector <const> = worldVector + normalVector * (distance or 10)
     local handle <const> = StartShapeTestLosProbe(worldVector.x, worldVector.y, worldVector.z, destinationVector.x, destinationVector.y, destinationVector.z, flags or 511, supv.cache.ped or 0, ignore or 4)
 
     while true do
         Wait(0)
         local retval <const>, hit <const>, endCoords <const>, surfaceNormal <const>, materialHash <const>, entityHit <const> = GetShapeTestResultIncludingMaterial(handle)
-
         if retval ~= 1 then
             return {
                 hit = hit,
