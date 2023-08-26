@@ -21,7 +21,7 @@ local function FormatEvent(self, name, from)
     return ("__supv__:%s:%s"):format(from or service, joaat(name))
 end
 
-local function void() end
+function void() end
 
 local function load_module(self, index)
     local func, err 
@@ -75,9 +75,9 @@ supv = setmetatable({
     hashEvent = FormatEvent,
     useFramework = (GetResourceState('es_extended') ~= 'missing' and 'esx') or (GetResourceState('qb-core') ~= 'missing' and 'qbcore'),
     useInventory = (GetResourceState('ox_inventory') ~= 'missing' and 'ox') or (GetResourceState('qb-inventory') ~= 'missing' and 'qbcore') or (GetResourceState('es_extended') ~= 'missing' and 'esx'),
-    onCache = service == 'client' and function(key, cb)
-        AddEventHandler(FormatEvent(nil, ('cache:%s'):format(key)), cb)
-    end
+    --onCache = service == 'client' and function(key, cb)
+    --    AddEventHandler(('cache:%s'):format(key), cb)
+    --end
 }, { 
     __index = call_module, 
     __call = call_module 
@@ -86,7 +86,7 @@ supv = setmetatable({
 if supv.service == 'client' then
     setmetatable(supv.cache, {
         __index = function(self, key)
-            AddEventHandler(FormatEvent(nil, ('cache:%s'):format(key)), function(value)
+            AddEventHandler(('cache:%s'):format(key), function(value)
                 self[key] = value
                 return self[key]
             end)
