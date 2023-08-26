@@ -9,13 +9,13 @@ local GetVehiclePedIsIn <const> = GetVehiclePedIsIn
 local GetPedInVehicleSeat <const> = GetPedInVehicleSeat
 local GetVehicleMaxNumberOfPassengers <const> = GetVehicleMaxNumberOfPassengers
 local GetCurrentPedWeapon <const> = GetCurrentPedWeapon
+local TriggerEvent <const> = TriggerEvent
 
-local emit <const> = require 'imports.emit.client'
 local cache = _ENV.cache
 function cache:set(key, value)
     if (self[key] == nil) or (self[key] ~= value) then
         self[key] = value
-        emit(('cache:%s'):format(key), value)
+        TriggerEvent(('cache:%s'):format(key), value)
         return true
     end
 end
@@ -56,5 +56,5 @@ end)
 
 
 function supv.getCache(key)
-    return cache[key] or cache
+    return cache[key] or key == 'vehicle' and false or false
 end
