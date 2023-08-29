@@ -4371,10 +4371,10 @@ emittery@^0.8.1:
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.8.1.tgz#bb23cc86d03b30aa75a7f734819dee2e1ba70860"
   integrity sha512-uDfvUjVrfGJJhymx/kz6prltenw1u7WrCg1oa94zYY8xxVpLLUu045LAT0dhDZdXG58/EpPL/5kA180fQ/qudg==
 
-emoji-picker-react@^4.4.11:
-  version "4.4.11"
-  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.4.11.tgz#82732164f8a2354428f57db3f391c5797beff3ce"
-  integrity sha512-HPQd0mt8l4So8YMBWSwWmCRTMBGLyxVIevr3/4dvVLWlXfsakpwcDgtbNWialCSw/aWlpBchsVdr1asMZ9Dmbg==
+emoji-picker-react@^4.4.12:
+  version "4.4.12"
+  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.4.12.tgz#3de9d30a5c7f5ec544ef2310d757305621a4a9f9"
+  integrity sha512-CpaOmUvAH4wOFiwkKivOstqPvKPs1KsmvzD0qPApKck4jRAYfhi9StXGZPsR3oWbDS+i720JXUU2ucTbI8ra5A==
   dependencies:
     clsx "^1.2.1"
 
