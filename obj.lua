@@ -95,6 +95,17 @@ if supv.service == 'client' then
             return self[key]
         end
     })
+
+    supv.config = setmetatable({}, {
+        __index = function(self, key)
+            local value = rawget(self, key)
+            if not value then
+                value = export:getConfig(key)
+                rawset(self, key, value)
+            end
+            return value
+        end
+    })
 elseif supv.service == 'server' then
 
     MySQL = setmetatable({}, {
