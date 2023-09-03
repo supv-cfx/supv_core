@@ -2,7 +2,7 @@ local TriggerEvent <const>, TriggerServerEvent <const> = TriggerEvent, TriggerSe
 local token
 
 local function PlayEvent(_, name, ...)
-    TriggerEvent(supv:hashEvent(name), supv.token, ...)
+    TriggerEvent(supv:hashEvent(name), ...)
 end
 
 supv.emit = setmetatable({}, {
