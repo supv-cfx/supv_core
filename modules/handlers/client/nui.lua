@@ -77,6 +77,11 @@ local function ResetFocus()
     SetNuiFocus(false, false)
 end
 
+RegisterNUICallback('supv:react:getConfig', function(data, cb)
+    --print(json.encode(data, {indent = true}), 'data')
+    cb(1)
+end)
+
 supv.sendReactMessage = SendReactMessage
 supv.registerReactCallback = RegisterReactCallback
 supv.resetFocus = ResetFocus
