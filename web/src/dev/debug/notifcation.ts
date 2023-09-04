@@ -138,9 +138,6 @@ export const debugNotification = () => {
         iconAnim: 'fade',
         icon: 'code',
         closable: true,
-        style: {
-          backgroundColor: 'rgba(0,0,0,0.25)',
-        }
       } as NotificationProps,
     }
   ]);

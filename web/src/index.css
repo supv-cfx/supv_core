@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@100;200&display=swap');
 
 html {
   color-scheme: normal !important;
@@ -8,7 +9,7 @@ body {
   background: none !important;
   user-select: none;
   overflow: hidden !important;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Sarabun', sans-serif;
 }
 
 #root {
