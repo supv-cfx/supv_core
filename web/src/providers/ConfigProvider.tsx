@@ -39,6 +39,5 @@ const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
   return <ConfigCtx.Provider value={{ config, setConfig }}>{children}</ConfigCtx.Provider>;
 };
 
-export default ConfigProvider;
-
 export const useConfig = () => useContext<ConfigCtxValue>(ConfigCtx as Context<ConfigCtxValue>);
+export default ConfigProvider;
