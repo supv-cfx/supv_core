@@ -38,7 +38,14 @@ const ModalConfirm: React.FC = () => {
         transitionProps={ (values.transition && {transition: values.transition.name, duration: values.transition.duration || 100, timingFunction: values.transition.timingFunction || 'ease-in-out'}) || undefined}
         title={values.title}
         size={values.size || 'md'}
-        styles={{ title: { textAlign: 'center', width: '100%', fontSize: 20}, body: {width: '100%', fontSize: 14}}}
+        styles={{ 
+          header: { background: 'linear-gradient(45deg, rgba(7, 18, 39, 0.94) 25%, rgba(8, 25, 56, 0.94) 50%, rgba(14, 44, 100, 0.86) 100%)', },
+          title: {fontFamily: 'Yellowtail', textAlign: 'center', width: '100%', fontSize: 20, color: 'white'},
+          body: { background: 'rgba(0,0,0,0.5)'},
+        }}
+        style={{
+          background: 'linear-gradient(45deg, rgba(7, 18, 39, 0.94) 25%, rgba(8, 25, 56, 0.94) 50%, rgba(14, 44, 100, 0.86) 100%)',
+        }}
       >
         <Divider variant='solid' />
         <Stack spacing='xs'>

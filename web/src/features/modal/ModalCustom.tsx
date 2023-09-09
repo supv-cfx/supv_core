@@ -80,7 +80,14 @@ const ModalCustom: React.FC = () => {
         onClose={close}
         centered
         withCloseButton={false}
-        styles={{ title: { textAlign: 'center', width: '100%', fontSize: 16 }}}
+        styles={{ 
+          header: { background: 'linear-gradient(45deg, rgba(7, 18, 39, 0.94) 25%, rgba(8, 25, 56, 0.94) 50%, rgba(14, 44, 100, 0.86) 100%)', },
+          title: {fontFamily: 'Yellowtail', textAlign: 'center', width: '100%', fontSize: 20, color: 'white'},
+          body: { background: 'rgba(0,0,0,0.5)'},
+        }}
+        style={{
+          background: 'linear-gradient(45deg, rgba(7, 18, 39, 0.94) 25%, rgba(8, 25, 56, 0.94) 50%, rgba(14, 44, 100, 0.86) 100%)',
+        }}
         transitionProps={ (getData.transition && {transition: getData.transition.name, duration: getData.transition.duration || 100, timingFunction: getData.transition.timingFunction || 'ease-in-out'}) || undefined}
         title={getData.title}
         size={getData.size || 'xs'}
