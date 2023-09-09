@@ -15,6 +15,7 @@ export const NotificationConfigDev = {
         fontWeight: 500,
         lineHeight: 'normal',
         color: 'white',
+        fontFamily: 'Yellowtail',
         //fontColor: 'dark.5',
     },
     description: {

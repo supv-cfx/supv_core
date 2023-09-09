@@ -23,7 +23,7 @@ const code = `
 ~~~
 `;*/
 
-const text = "Je pourrais aussi faire comme cela  \n  Avec un retour un la ligne  \n\t  Et la une tabulation avec un retour à la ligne";
+const text = "blablabla";
 
 export const debugModalsConfirm = () => {
   debugData([

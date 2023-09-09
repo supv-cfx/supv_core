@@ -50,6 +50,7 @@ export const debugModalsCustom = () => {
       data: {
         title: 'Title of the modal',
         useCallback: true,
+        canCancel: false,
         transition: {
           name: 'skew-up',
           duration: 200,
