@@ -24,16 +24,18 @@ export const SelectField: React.FC<_SelectProps> = ({
         styles={(theme) => ({
           item: {
             '&[data-selected]': {
-              color: theme.colors.gray[1],
-              backgroundColor: theme.colors.teal[6],
+               color: 'white',
+               background: 'rgba(14, 44, 100, 0.86)', //theme.colors.blue[6],
               '&, &:hover': {
-                color: theme.colors.gray[1],
+                color: 'white',
+                background: 'rgba(14, 44, 100, 0.86)'
               },
             },
             '&[data-hovered]': {
-              color: theme.colors.teal[8],
+              //color: theme.colors.blue[8],
+              background: 'rgba(14, 44, 100, 0.86)',
             },
-            color: theme.colors.gray[1],
+            //color: theme.colors.gray[1],
           },
         })}
       />
