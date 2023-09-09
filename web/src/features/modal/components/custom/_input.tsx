@@ -13,6 +13,7 @@ export const InputField: React.FC<_TextInputProps> = ({
     <>
       <TextInput
         label={label}
+        defaultValue={data?.default || ''}
         sx={{ paddingTop: '10px' }}
         placeholder={data?.placeholder || ''}
         description={data?.description || ''}
