@@ -24,7 +24,7 @@ assert(os.setlocale(config.localization))
 ---@param url string
 ---@param embeds WebhookEmbedProps
 ---@param data WebhookDataProps
-local function embed(url, embeds, data)
+local function embed(url, embeds, data, response)
     local date <const> = {
         letter = ("\n%s %s"):format(toUpper(os.date("%A %d")), toUpper(os.date("%B %Y : [%H:%M:%S]"))):to_utf8(),
         numeric = ("\n%s"):format(os.date("[%d/%m/%Y] - [%H:%M:%S]"))
@@ -47,11 +47,24 @@ local function embed(url, embeds, data)
 		},
     }
 
-    PerformHttpRequest(url, function(err, text, headers) end, 'POST', json.encode({
+    local p <const> = response and promise.new()
+    PerformHttpRequest(url, function(err, text, headers) 
+        if response then
+            if err ~= 200 then
+                warn(("Error while sending webhook to %s"):format(url))
+                p:reject(err)
+            end
+
+            local resp = json.decode(text)
+            p:resolve(resp)
+        end
+    end, 'POST', json.encode({
         username = data?.bot_name or config.default.bot_name,
         embeds = _embed,
         avatar_url = data?.avatar or config.default.avatar,
     }), {['Content-Type'] = 'application/json'})
+
+    return response and supv.await(p)
 end
 
 --- supv:webhook('message')
@@ -70,7 +83,7 @@ end
 
 ---@param types string
 ---@param ... any
----@return void
+---@return void | promise
 local function SendWebhookDiscord(types, ...)
     if types == 'embed' then
         return embed(...)
