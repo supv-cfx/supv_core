@@ -146,6 +146,9 @@ const NotificationsWrapper: React.FC = () => {
 							: `${posExit} 0.5s ease-in forwards`,
 					}}
           styles={{
+            title: {
+              fontFamily: 'Yellowtail',
+            },
             description: {
               color: 'white',
             },
