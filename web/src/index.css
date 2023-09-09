@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@100;200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Yellowtail&display=swap');
 
 html {
   color-scheme: normal !important;
@@ -10,6 +11,7 @@ body {
   user-select: none;
   overflow: hidden !important;
   font-family: 'Sarabun', sans-serif;
+  /*font-family: 'Yellowtail', cursive;*/
 }
 
 #root {
