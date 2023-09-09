@@ -34,7 +34,7 @@ local function Custom(data, callback)
         action = 'supv:modal:opened-custom',
         data = {
             title = data.title,
-            canCancel = data.canCancel or true,
+            canCancel = data.canCancel,
             transition = data.transition,
             options = data.options,
             useCallback = callback and true or false
