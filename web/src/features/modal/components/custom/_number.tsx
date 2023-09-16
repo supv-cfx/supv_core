@@ -36,7 +36,7 @@ export const NumberField: React.FC<_NumberInputProps> = ({
         onChange={(value: number) =>
           onChanged(index, value, data?.required, data?.callback)
         }
-        error={props.error || false}
+        error={props.error || data.required ? "Ce champ est requis!" : false}
       />
     </>
   );
