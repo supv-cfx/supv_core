@@ -40,7 +40,8 @@ local function Custom(data, callback)
             useCallback = callback and true or false
         }
     }, {
-        focus = true
+        focus = true,
+        locations = 'center'
     })
 
     p = promise.new()
@@ -57,7 +58,8 @@ local function Confirm(data)
         action = 'supv:modal:opened-confirm',
         data = data
     }, {
-        focus = true
+        focus = true,
+        locations = 'center'
     })
 
     p = promise.new()
