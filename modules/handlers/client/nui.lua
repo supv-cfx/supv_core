@@ -14,8 +14,9 @@ local SetCursorLocation <const>, SetNuiFocusKeepInput<const>, SendNUIMessage <co
 
 ---@type table<string, {x: float, y: float}>
 local cusorPosition <const> = {
-    ['top-right'] = {},
-    ['bottom-right'] = {x = 0.90, y = 0.90}
+    ['top-right'] = {x = 0.90, y = 0.10},
+    ['bottom-right'] = {x = 0.90, y = 0.90},
+    ['center'] = {x = 0.50, y = 0.50}
 }
 
 --- supv.sendReactMessage
@@ -47,7 +48,7 @@ local function SendReactMessage(visible, value, options)
         end
 
         if type(options.locations) == 'string' then
-            SetCursorLocation(cusorPosition[options.locations][1], cusorPosition[options.locations][2])
+            SetCursorLocation(cusorPosition[options.locations].x, cusorPosition[options.locations].y)
         elseif type(options.locations) == 'table' then
             SetCursorLocation(options.locations[1] or options.locations.x, options.locations[2] or options.locations.y)
         end
