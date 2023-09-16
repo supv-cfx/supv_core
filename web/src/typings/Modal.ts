@@ -27,6 +27,7 @@ export interface Option {
 export interface ModalPropsCustom {
   title: string;
   size?: string;
+  withOverlay?: boolean;
   options: Option[];
   useCallback?: boolean;
   canCancel?: boolean;
@@ -38,6 +39,7 @@ export interface ModalConfirmProps {
   description?: string;
   size?: string;
   transition?: {name: MantineTransition, duration: number, timingFunction: string};
+  withOverlay?: boolean;
 }
 
 // _components

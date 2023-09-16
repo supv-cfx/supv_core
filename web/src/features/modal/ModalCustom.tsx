@@ -91,6 +91,7 @@ const ModalCustom: React.FC = () => {
         transitionProps={ (getData.transition && {transition: getData.transition.name, duration: getData.transition.duration || 100, timingFunction: getData.transition.timingFunction || 'ease-in-out'}) || undefined}
         title={getData.title}
         size={getData.size || 'xs'}
+        withOverlay={getData.withOverlay || false}
       >
         <Divider variant='solid' />
         <Stack>

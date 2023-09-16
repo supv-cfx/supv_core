@@ -46,6 +46,7 @@ const ModalConfirm: React.FC = () => {
         style={{
           background: 'linear-gradient(45deg, rgba(7, 18, 39, 0.94) 25%, rgba(8, 25, 56, 0.94) 50%, rgba(14, 44, 100, 0.86) 100%)',
         }}
+        withOverlay={values.withOverlay || false}
       >
         <Divider variant='solid' />
         <Stack spacing='xs'>
