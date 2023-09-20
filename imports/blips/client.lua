@@ -12,6 +12,8 @@ local AddBlipForRadius <const> = AddBlipForRadius
 local SetBlipAlpha <const> = SetBlipAlpha
 local SetRadiusBlipEdge <const> = SetRadiusBlipEdge
 
+local blips = {}
+
 local function Delete(self)
     if table.type(self) == 'array' then
         for i = 1, #self do
@@ -24,6 +26,13 @@ local function Delete(self)
                 end
             end
 
+            for j = 1, #blips do
+                if blips[j] == self[i] then
+                    table.remove(blips, j)
+                    break
+                end
+            end
+
             supv.DeleteBlips(supv.env, self[i].id)
         end
     else
@@ -33,6 +42,13 @@ local function Delete(self)
         if self.circle then
             if DoesBlipExist(self.circle.id) then
                 RemoveBlip(self.circle.id)
+            end
+        end
+
+        for i = 1, #blips do
+            if blips[i] == self then
+                table.remove(blips, i)
+                break
             end
         end
 
@@ -169,6 +185,7 @@ local function Create(coords, data, circle)
                     SetRadiusBlipEdge(self[i].circle.id, self[i].circle.edge)
                 end
 
+                blips[#blips+1] = self[i]
                 supv.CreateBlips(supv.env, self[i].id, self[i].type)
             end
         elseif type(coords) == 'vector3' then
@@ -206,6 +223,8 @@ local function Create(coords, data, circle)
                 SetBlipAlpha(self.circle.id , self.circle.color)
                 SetRadiusBlipEdge(self.circle.id, self.circle.edge)
             end
+
+            blips[#blips+1] = self
             supv.CreateBlips(supv.env, self.id, self.type)
         end
 
@@ -215,6 +234,11 @@ local function Create(coords, data, circle)
     return supv.await(p)
 end
 
+local function GetAllBlips()
+    return blips
+end
+
 return {
     new = Create,
+    getAllBlips = GetAllBlips
 }
