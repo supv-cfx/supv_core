@@ -1,8 +1,8 @@
-local useModule = require 'config.shared.handlers'.blips
-
-if not useModule then return end
-useModule = nil
-
+--local useModule = require 'config.shared.handlers'.blips
+--
+--if not useModule then return end
+--useModule = nil
+--
 local blips = {}
 
 function supv.CreateBlips(env, blipId, _type)

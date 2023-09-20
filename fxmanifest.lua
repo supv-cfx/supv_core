@@ -17,6 +17,7 @@ client_script 'modules/init.lua'
 files {
     'obj.lua',
     'data/client/**.json',
+    'data/shared/**.json',
     'config/modules.lua',
     'config/client/*.lua',
     'config/shared/*.lua',
