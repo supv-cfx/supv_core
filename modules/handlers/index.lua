@@ -3,11 +3,13 @@ return {
         'events',
         'ace',
         'nui',
+        'blips',
     },
 
     server = {
         'events',
         'ace',
-        'webhook'
+        'webhook',
+        --'blips',
     }
 }
