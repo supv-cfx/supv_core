@@ -22,6 +22,7 @@ export const InputField: React.FC<_TextInputProps> = ({
         maxLength={data?.max || 255}
         onChange={(event) => onChanged(index, event.target.value, data?.required, data?.callback)}
         error={props.error || false}
+        disabled={data?.disabled || false}
       />
     </>
   );
