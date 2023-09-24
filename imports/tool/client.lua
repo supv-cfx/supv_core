@@ -183,7 +183,10 @@ local function Show(cb, types, text)
                     Draw3dText(vec3(entityCoord.x, entityCoord.y, entityCoord.z), text, 2)
                 end
                 if IsControlJustReleased(0, 38) then
-                    cb(entity, GetEntityModel(entity), GetEntityArchetypeName(entity), GetEntityCoords(entity))
+                    local entityCoord = GetEntityCoords(entity)
+                    local entityHeading = GetEntityHeading(entity)
+                    local v4 = ("vec4(%s, %s, %s, %s)"):format(entityCoord.x, entityCoord.y, entityCoord.z, entityHeading)
+                    cb(entity, GetEntityModel(entity), GetEntityArchetypeName(entity), v4)
                 end
             elseif coords.x ~= 0.0 and coords.y ~= 0.0 then
                 DrawLine(position.x, position.y, position.z, coords.x, coords.y, coords.z, color.r, color.g, color.b, color.a)
@@ -196,7 +199,7 @@ local function Show(cb, types, text)
         self.run = false
         return nil, collectgarbage()
     end
-    
+
     return self
 end
 
