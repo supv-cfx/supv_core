@@ -49,20 +49,25 @@ local function FormatTempsYears(days)
     return years, months, daysLeftAfterMonths
 end
 
-
 --- supv.math.format_time(1560351654) -> 2581, 6, "06", "17", "54" ? (WEEKS, DAYS, HOURS, MINUTES, SECONDS) : 0, 0, "00", "00", "00"
 ---@param sec number
 ---@param value? string
 ---@return number, number, string, string, string
+--[[
 local function FormatTemps(value, needed)
-    local week, days, hours, minutes, secondes, unitMap <const>  = 0, 0, 0, 0, value, {
-        ["semaine"] = 604800, -- 60*60*24*7
+    local week, days, hours, minutes, secondes = 0, 0, 0, 0, value
+
+    local unitMap <const> = {
+        -- 60*60*24*7
+        ["semaine"] = 604800, 
         ["week"]    = 604800,
-        ["jour"]    = 86400,  -- 60*60*24
+        -- 60*60*24
+        ["jour"]    = 86400,
         ["day"]     = 86400,
         ["j"]       = 86400,
         ["d"]       = 86400,
-        ["heure"]   = 3600,   -- 60*60
+        -- 60*60
+        ["heure"]   = 3600,
         ["hours"]   = 3600,
         ["h"]       = 3600,
         ["min"]     = 60,
@@ -70,7 +75,7 @@ local function FormatTemps(value, needed)
         {"s"}       = 1,
         ["sec"]     = 1,
         ["seconde"] = 1
-    } 
+    }
 
     if not needed or unitMap[needed] then
         local divFactor = unitMap[needed] or 1
@@ -85,7 +90,7 @@ local function FormatTemps(value, needed)
 
     return week, days, deuxDigits(hours), deuxDigits(minutes), deuxDigits(secondes)
 end
-
+]]
 ---@param value number
 ---@return string
 local function Digits(value)
@@ -93,7 +98,6 @@ local function Digits(value)
     local formattedNumber = ("%s%s"):format(left, (num:reverse():gsub('(%d%d%d)', '%1 '):reverse()))
     return right ~= '' and ("%s%s"):format(formattedNumber, right) or formattedNumber
 end
-
 
 return {
     round = Round,
