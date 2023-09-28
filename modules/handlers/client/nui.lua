@@ -24,7 +24,7 @@ local cusorPosition <const> = {
 ---@param value? SendReactValue
 ---@param options? SendReactOptions
 local function SendReactMessage(visible, value, options)
-    print(json.encode(value, {indent = true}))
+    --print(json.encode(value, {indent = true}))
     if type(visible) == 'boolean' then
         
         ---@todo reset focus options when visible is false and focus active = true
