@@ -21,6 +21,9 @@ local function notify(select, data)
     end
 end
 
+supv.notify = notify -- Export notify function
+on.net('notify', notify) -- Register notify event for server
+
 --[[
 RegisterCommand('notify', function()
     notify('simple', {
@@ -75,6 +78,3 @@ RegisterCommand('notify', function()
         -- },
     })
 end)]]
-
-supv.notify = notify -- Export notify function
-on.net('notify', notify) -- Register notify event for server
