@@ -29,7 +29,8 @@ local function SendReactMessage(visible, value, options)
         
         ---@todo reset focus options when visible is false and focus active = true
         if visible == false and IsNuiFocused() then
-            SetNuiFocus(false, false)
+            SetNuiFocus(supv.notify.queue(), false)
+            SetNuiFocusKeepInput(supv.notify.queue())
         end
     end
 
@@ -45,6 +46,8 @@ local function SendReactMessage(visible, value, options)
             SetNuiFocus(options.focus, options.focus)
         elseif type(options.focus) == 'table' and table.type(options.focus) == 'array' then
             SetNuiFocus(options.focus[1], options.focus[2])
+        elseif type(options.focus) == 'string' and options.focus == 'ignore' then
+           goto ignore
         end
 
         if type(options.locations) == 'string' then
@@ -54,10 +57,11 @@ local function SendReactMessage(visible, value, options)
         end
 
         if type(options.keepInput) == 'boolean' then
-            SetNuiFocusKeepInput(options.keepInput)  
+            SetNuiFocusKeepInput(options.keepInput)
         end
 
         ---@todo Need more options about focus options?
+        ::ignore::
     end
 end
 
