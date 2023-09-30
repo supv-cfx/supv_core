@@ -11,7 +11,7 @@ local Promise, IsNuiFocused <const> = {}, IsNuiFocused
 
 ---@param select string | 'simple' | 'advanced'
 ---@param data DataPropsNotify
-local function notify(_, select, data)
+local function notify(select, data)
     if not data.position then data.position = 'top-right' end
 
     if data.type == 'action' and supv.service == 'server' then
@@ -46,15 +46,13 @@ supv.registerReactCallback('supv:notify:response', function(data, cb)
     Promise[data.id] = nil
 end, true)
 
-supv.notify = setmetatable({}, {
-    __call = notify
-})
+supv.notify = notify
 
-function supv.notify.queue()
+function supv.notifyQueue()
     return next(Promise) and true or false
 end
 
-on.net('notify', supv.notify) -- Register notify event for server
+on.net('notify', notify) -- Register notify event for server
 
 --[[RegisterCommand('notify', function()
     supv.notify('simple', {

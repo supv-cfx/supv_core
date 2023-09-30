@@ -29,8 +29,8 @@ local function SendReactMessage(visible, value, options)
         
         ---@todo reset focus options when visible is false and focus active = true
         if visible == false and IsNuiFocused() then
-            SetNuiFocus(supv.notify.queue(), false)
-            SetNuiFocusKeepInput(supv.notify.queue())
+            SetNuiFocus(supv.notifyQueue(), false)
+            SetNuiFocusKeepInput(supv.notifyQueue())
         end
     end
 
