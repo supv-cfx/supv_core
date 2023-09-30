@@ -1,4 +1,5 @@
 local on <const> = require 'imports.on.client'
+local Promise, IsNuiFocused <const> = {}, IsNuiFocused
 
 ---@class DataPropsNotify
 ---@field id? string
@@ -10,23 +11,105 @@ local on <const> = require 'imports.on.client'
 
 ---@param select string | 'simple' | 'advanced'
 ---@param data DataPropsNotify
-local function notify(select, data)
+local function notify(_, select, data)
     if not data.position then data.position = 'top-right' end
 
+    if data.type == 'action' and supv.service == 'server' then
+        return warn('You can\'t use action type in server side!')
+    end
+    
+    data.key = data.type == 'action' and #Promise+1
+
     if select == 'simple' then
-        supv.sendReactMessage(true, {
-            action = 'supv:notification:send',
-            data = data
-        })
+        if data.key then
+            supv.sendReactMessage(true, {
+                action = 'supv:notification:send',
+                data = data
+            }, {
+                focus = not IsNuiFocused() and {true, false} or 'ignore',
+                keepInput = true,
+            })
+            Promise[data.key] = promise.new()
+            return supv.await(Promise[data.key])
+        else
+            supv.sendReactMessage(true, {
+                action = 'supv:notification:send',
+                data = data
+            })
+        end
     end
 end
 
-supv.notify = notify -- Export notify function
-on.net('notify', notify) -- Register notify event for server
+supv.registerReactCallback('supv:notify:response', function(data, cb)
+    cb(1)
+    if Promise[data.id] then Promise[data.id]:resolve(data.response) end
+    Promise[data.id] = nil
+end, true)
 
---[[
-RegisterCommand('notify', function()
-    notify('simple', {
+supv.notify = setmetatable({}, {
+    __call = notify
+})
+
+function supv.notify.queue()
+    return next(Promise) and true or false
+end
+
+on.net('notify', supv.notify) -- Register notify event for server
+
+--[[RegisterCommand('notify', function()
+    supv.notify('simple', {
+        title = 'action 1',
+        description = 'Mon teste action 1!',
+        type = 'action',
+    })
+
+    Wait(300)
+
+    supv.notify('simple', {
+        title = 'action 2',
+        description = 'Mon teste action 2!',
+        type = 'action',
+    })
+
+    CreateThread(function()
+        supv.openModal('confirm', {
+            title = 'Confirmation',
+            description = 'Voulez-vous vraiment faire ça?',
+        })   
+    end)
+
+    supv.notify('simple', {
+        title = 'action 3',
+        description = 'Mon teste action 3!',
+        type = 'action',
+    })
+    supv.notify('simple', {
+        title = 'action 2',
+        description = 'Mon teste action 2!',
+        type = 'action',
+    })
+    supv.notify('simple', {
+        title = 'action 2',
+        description = 'Mon teste action 2!',
+        type = 'action',
+    })
+    supv.notify('simple', {
+        title = 'action 2',
+        description = 'Mon teste action 2!',
+        type = 'action',
+    })
+    supv.notify('simple', {
+        title = 'action 2',
+        description = 'Mon teste action 2!',
+        type = 'action',
+    })
+    supv.notify('simple', {
+        title = 'action 2',
+        description = 'Mon teste action 2!',
+        type = 'action',
+    })
+
+    supv.notify('simple', {
         title = 'Sans type normal',
         description = 'Mon teste sans type!',
         -- style = {
@@ -34,9 +117,9 @@ RegisterCommand('notify', function()
         -- },
     })
 
-    Wait(300)
+    Wait(5000)
 
-    notify('simple', {
+    supv.notify('simple', {
         title = 'Warning',
         description = 'Mon teste warn!',
         type = 'warning',
@@ -47,7 +130,7 @@ RegisterCommand('notify', function()
 
     Wait(300)
 
-    notify('simple', {
+    supv.notify('simple', {
         title = 'Success',
         description = 'Mon test success',
         type = 'success',
@@ -58,7 +141,7 @@ RegisterCommand('notify', function()
 
     Wait(300)
 
-    notify('simple', {
+    supv.notify('simple', {
         title = 'Error',
         description = 'Mon test error',
         type = 'error',
@@ -69,7 +152,7 @@ RegisterCommand('notify', function()
 
     Wait(300)
 
-    notify('simple', {
+    supv.notify('simple', {
         title = 'Information',
         description = 'Mon test info',
         type = 'info',
