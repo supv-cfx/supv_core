@@ -3,7 +3,8 @@ export const NotificationConfigDev = {
         width: 300,// fit-content
         maxWidth: 300,
         minWidth: 300,
-        height: 300, // fit-content
+        maxHeight: 100,
+        //height: 300, // fit-content
         //backgroundColor: 'blue.4',
         background: 'linear-gradient(45deg, rgba(7, 18, 39, 0.94) 25%, rgba(8, 25, 56, 0.94) 50%, rgba(14, 44, 100, 0.86) 100%)',
         fontFamily: 'Sarabun',

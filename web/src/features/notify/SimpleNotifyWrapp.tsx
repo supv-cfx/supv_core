@@ -1,16 +1,15 @@
 import React from "react";
-import { toast, Toaster /*, useToasterStore */ } from "react-hot-toast";
-import ReactMarkdown from "react-markdown";
-import { createStyles, Notification } from "@mantine/core";
+import { toast, Toaster } from "react-hot-toast";
+//import ReactMarkdown from "react-markdown";
+import { createStyles, Notification, Kbd } from "@mantine/core";
+import { useQueue, useHotkeys } from "@mantine/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNuiEvent } from "../../hooks/useNuiEvent";
 import type { NotificationProps } from "../../typings/Notification";
 import { useConfig } from "../../providers/ConfigProvider";
 import { SelectAnime } from "../../animation/notifications";
-import { iconeAnimation } from "../../animation/icones";
-//import type { NotificationConfigProviderProps } from "../../typings";
-//import { fetchNui } from '../../utils/fetchNui';
-//import { useQueue, useCounter } from '@mantine/hooks';
+import { fetchNui } from "../../utils/fetchNui";
+import { isEnvBrowser } from "../../utils/misc";
 
 /**
  * Notifications - A component for displaying notifications
@@ -50,27 +49,59 @@ import { iconeAnimation } from "../../animation/icones";
  */
 const NotificationsWrapper: React.FC = () => {
 	const { config } = useConfig();
-	//console.log(config.notificationStyles)
 	const useStyles = createStyles((theme) => ({ ...config.notificationStyles }));
-
 	const { classes } = useStyles();
-	//console.log(classes.container)
-	//const { toasts, pausedAt } = useToasterStore(); // A utiliser plus tards pour un système de queue!
+	const { state, queue, add, update } = useQueue({
+		limit: 1,
+	});
+	let key = isEnvBrowser() ? 0 : 0;
 
-	/*const onRemoveQueue = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 200));
-      fetchNui('supv:notification:removeQueue');
-  };*/
+	const updateStateAndQueue = () => {
+		const updatedState =
+			queue.length > 0 ? [...state.slice(1), queue[0]] : state.slice(1);
+		update(() => updatedState);
+	};
+
+	const handleSubmit = () => {
+		if (state[0]) {
+      // @ts-ignore
+			const { data, toastId, timerId } = state[0];
+			if (toastId) {
+				clearTimeout(timerId);
+				toast.dismiss(toastId);
+				updateStateAndQueue();
+				fetchNui("supv:notify:response", { response: true, id: data.key });
+			}
+		}
+	};
+
+	const handleRefuse = () => {
+		if (state[0]) {
+			// @ts-ignore
+			const { data, toastId, timerId } = state[0];
+			if (toastId) {
+				clearTimeout(timerId);
+				toast.dismiss(toastId);
+				updateStateAndQueue();
+				fetchNui("supv:notify:response", { response: false, id: data.key });
+			}
+		}
+	};
+
+  useHotkeys([
+    ['Y', () => handleSubmit()],
+    ['N', () => handleRefuse()]
+  ]);
 
 	useNuiEvent<NotificationProps>("supv:notification:send", async (data) => {
+		if (isEnvBrowser() && data.type === "action") {
+			key++;
+			data.key = key as number;
+		}
+
 		if (!data.title && !data.description) return;
 
-		/*if (toasts.length > 9) { // A utiliser plus tards pour un système de queue!
-      console.log('too many notifications');
-    }:*/
-
 		let position = !data.position ? "top-right" : data.position;
-		//position = 'bottom-right' //to test
 		if (!data.icon && data.type !== "loading" && data.type) {
 			data.icon =
 				data.type === "error"
@@ -99,20 +130,26 @@ const NotificationsWrapper: React.FC = () => {
 			"top",
 			undefined
 		);
-		await new Promise((resolve) => setTimeout(resolve, 50));
-		toast.custom(
+
+		await new Promise((resolve) => setTimeout(resolve, 150));
+		const toastId = toast.custom(
 			(t) => (
 				<Notification
 					withBorder={data.border}
-          w={300}
+					w={300}
 					loading={data.type === "loading"}
 					{...(data.icon
 						? {
 								icon: (
 									<FontAwesomeIcon
 										icon={data.icon}
-										beat={iconeAnimation(data.iconAnim)}
-										fade={iconeAnimation(data.iconAnim)}
+										beat={data.iconAnim === "beat"}
+										fade={data.iconAnim === "fade"}
+										// @ts-ignore
+										flip={data.iconAnim === "flip"}
+										spin={data.iconAnim === "spin"}
+										pulse={data.iconAnim === "pulse"}
+										shake={data.iconAnim === "shake"}
 									/>
 								),
 						  }
@@ -121,7 +158,7 @@ const NotificationsWrapper: React.FC = () => {
 					radius="md"
 					withCloseButton={data.closable || false}
 					onClose={() => {
-						data.closable && toast.dismiss(t.id); /*; onRemoveQueue()*/
+						data.closable && toast.dismiss(t.id);
 					}}
 					color={
 						!data.type && !data.color
@@ -145,21 +182,46 @@ const NotificationsWrapper: React.FC = () => {
 							? `${posEnter} 0.3s ease-out forwards`
 							: `${posExit} 0.5s ease-in forwards`,
 					}}
-          styles={{
-            title: {
-              fontFamily: 'Yellowtail',
-            },
-            description: {
-              color: 'white',
-            },
-          }}
+					styles={{
+						title: {
+							fontFamily: "Yellowtail",
+							paddingBottom: "0px",
+							fontSize: 20,
+						},
+						description: {
+							paddingTop: "0px",
+							color: "white",
+							wordWrap: "break-word",
+						},
+						icon: {
+							backgroundColor: "transparent",
+							color:
+								!data.type && !data.color
+									? "dark"
+									: data.color
+									? data.color
+									: data.type === "error"
+									? "red"
+									: data.type === "success"
+									? "teal"
+									: data.type === "warning"
+									? "orange"
+									: data.type === "loading"
+									? "white"
+									: "blue",
+						},
+					}}
 					className={`${classes.container}`}
-					style={data.style || classes.container as React.CSSProperties}
+					style={data.style || (classes.container as React.CSSProperties)}
 				>
-					{data.description && (
-						<ReactMarkdown className={classes.description}>
+					{data?.type !== "action" && data.description ? (
+						<>{description}</>
+					) : (
+						<>
 							{description}
-						</ReactMarkdown>
+							<br />
+							<Kbd>Y</Kbd> - Accepter | <Kbd>N</Kbd> - Refuser
+						</>
 					)}
 				</Notification>
 			),
@@ -169,6 +231,15 @@ const NotificationsWrapper: React.FC = () => {
 				position: position || "top-right",
 			}
 		);
+
+		if (data.type === "action") {
+			const timerId = setTimeout(() => {
+				toast.dismiss(toastId);
+				updateStateAndQueue();
+				fetchNui("supv:notify:response", { response: "null", id: data.key });
+			}, data.duration! - 1000 || 5000 - 1000);
+			add({ data, toastId, timerId });
+		}
 	});
 
 	return <Toaster />;

@@ -4,7 +4,7 @@ export interface NotificationConfigProviderProps {
         width: string | number;
         maxWidth: number;
         minWidth: number;
-        height: string | number;
+        //height: string | number;
         backgroundColor?: string;
         background: string;
         fontFamily: string;

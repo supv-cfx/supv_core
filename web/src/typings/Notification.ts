@@ -10,6 +10,7 @@ type Animation = {
 export interface NotificationProps {
   title?: string;
   id?: number | string;
+  key?: number | string;
   description?: string; 
   type?: string; 
   duration?: number; // default: 3000

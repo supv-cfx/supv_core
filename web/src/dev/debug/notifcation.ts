@@ -7,9 +7,57 @@ export const debugNotification = () => {
       action: 'supv:notification:send',
       data: {
         //id: '1',
+        title: 'Transaction',
+        description: 'On souhaite vous donnez 5 pains',
+        type: 'action',
+        position: 'top-right',
+        color: 'rgba(187, 155, 26, 0.74)',
+        iconAnim: 'flip',
+        icon: 'hand-holding-hand',
+      } as NotificationProps,
+    }
+  ]);
+
+  /*debugData([
+    {
+      action: 'supv:notification:send',
+      data: {
+        //id: '1',
+        title: 'Salaire',
+        description: 'Vous avez reçu 1000$',
+        //type: 'action',
+        position: 'top-right',
+        color: 'rgba(26, 187, 53, 0.74)',
+        iconAnim: 'shake',
+        icon: 'money-bill',
+      } as NotificationProps,
+    }
+  ]);
+
+  debugData([
+    {
+      action: 'supv:notification:send',
+      data: {
+        //id: '1',
+        title: 'Salaire',
+        description: 'VqSDqDqSDssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssw',
+        //type: 'action',
+        position: 'top-right',
+        color: 'rgba(26, 187, 53, 0.74)',
+        iconAnim: 'shake',
+        icon: 'money-bill',
+      } as NotificationProps,
+    }
+  ]);*/
+
+  debugData([
+    {
+      action: 'supv:notification:send',
+      data: {
+        //id: '1',
         //title: 'Whereas recognition of the inherent dignity',
-        description: 'Notif',
-        type: 'warning',
+        description: 'action 2',
+        type: 'action',
         position: 'top-right',
         //duration: 5000,
         //progress: true,
@@ -18,7 +66,7 @@ export const debugNotification = () => {
     }
   ]);
   
-  debugData([
+  /*debugData([
     {
       action: 'supv:notification:send',
       data: {
@@ -140,5 +188,5 @@ export const debugNotification = () => {
         closable: true,
       } as NotificationProps,
     }
-  ]);
+  ]);*/
 } // screwdriver-wrench

@@ -1,5 +1,31 @@
+/*import React from 'react';
+import { useNuiEvent } from '../../hooks/useNuiEvent';
+import { fetchNui } from '../../utils/fetchNui';
+import { Divider, Kbd, createStyles } from '@mantine/core';
+//import { useDisclosure } from '@mantine/hooks';
+import { useConfig } from "../../providers/ConfigProvider";
+import { toast, Toaster } from "react-hot-toast";
+
+const DialogComponent: React.FC = () => {
+  const { config } = useConfig();
+	const useStyles = createStyles((theme) => ({ ...config.notificationStyles }));
+	const { classes } = useStyles();
+  //N refuser / Y accepter
+
+  useNuiEvent('supv:dialog:show', (data) => {
+    //toggle();
+
+  });
 
 
+  return (
+    <>
+
+    </>
+  );
+}*/
+
+//export default DialogComponent;
 
 /**
  * @deprecated This component is deprecated and will be rewritten in the future.
