@@ -1834,7 +1834,7 @@
   dependencies:
     "@mantine/utils" "6.0.21"
 
-"@mantine/form@^7.1.0":
+"@mantine/form@^7.1.2":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@mantine/form/-/form-7.1.2.tgz#569d4778ffda7a0f71ffe9d9a93b81f9002038fb"
   integrity sha512-FnUu5XNmRM265G0wy19qSRiItG/2eQ0GQCctnokw6ws9ZnCU1NqvsmpuDE/UiV4YCAOhAVHfqnjG/8tsrlw7ug==
