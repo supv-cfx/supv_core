@@ -173,7 +173,7 @@ const NotificationsWrapper: React.FC = () => {
 							? "orange"
 							: data.type === "loading"
 							? "white"
-							: "blue"
+							: "white"
 					}
 					sx={{
 						background:
