@@ -8,7 +8,6 @@ import { themeOverride } from "./theme";
 
 //import {useConfig} from './providers/ConfigProvider'; // TODO: use config
 import { isEnvBrowser } from "./utils/misc";
-
 import ConvertUnixTime from "./features/tool/ConvertUnix";
 //import DialogComponent from './features/dialog/Dialog';
 import NotificationsWrapper from "./features/notify/SimpleNotifyWrapp";

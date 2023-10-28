@@ -29,7 +29,7 @@ import {
 	faSync,
 	faFloppyDisk,
 } from "@fortawesome/free-solid-svg-icons";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+//import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNuiEvent } from "../../hooks/useNuiEvent";
 import {
@@ -489,9 +489,9 @@ const ResourceManager: React.FC = () => {
 													</Group>
 													<Divider mt={10} mb={10} />
 													{getData[indexNav[0]].main.description && (
-														<ReactMarkdown>
+														<p>
 															{getData[indexNav[0]].main.description}
-														</ReactMarkdown>
+														</p>
 													)}
 												</>
 											)) ||
