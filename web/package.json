@@ -8,7 +8,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.0",
-    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.0",
     "@fortawesome/react-fontawesome": "fortawesome/react-fontawesome",
     "@mantine/core": "^6.0.9",
     "@mantine/dates": "^6.0.9",
