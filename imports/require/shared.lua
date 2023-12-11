@@ -5,9 +5,7 @@ local loaded = {}
 package = {
     loaded = setmetatable({}, {
         __index = loaded,
-        __newindex = function()
-            
-        end,
+        __newindex = function()  end,
         __metatable = false,
     }),
     path = './?.lua;'
@@ -28,31 +26,53 @@ local function LoadModule(modname)
             error(("^1circular-dependency occurred when loading module '%s'^0"):format(modname), 2)
         end
 
-        local success, result = pcall(_require, modname)
+        if not modname:find('^@') then
+            local success, result = pcall(_require, modname)
 
-        if success then
-            loaded[modname] = result
-            return result
-        end
+            if success then
+                loaded[modname] = result
+                return result
+            end
 
-        local modpath = modname:gsub('%.', '/')
+            local modpath = modname:gsub('%.', '/')
 
-        for path in package.path:gmatch('[^;]+') do
-            local scriptPath = path:gsub('?', modpath):gsub('%.+%/+', '')
-            local resourceFile = LoadResourceFile(supv.env, scriptPath)
+            for path in package.path:gmatch('[^;]+') do
+                local scriptPath = path:gsub('?', modpath):gsub('%.+%/+', '')
+                local resourceFile = LoadResourceFile(supv.env, scriptPath)
 
-            if resourceFile then
-                loaded[modname] = false
-                scriptPath = ('@@%s/%s'):format(supv.env, scriptPath)
+                if resourceFile then
+                    loaded[modname] = false
+                    scriptPath = ('@@%s/%s'):format(supv.env, scriptPath)
 
-                local chunk, err = load(resourceFile, scriptPath)
+                    local chunk, err = load(resourceFile, scriptPath)
 
-                if err or not chunk then
-                    loaded[modname] = nil
-                    return error(err or ("unable to load module '%s'"):format(modname), 3)
+                    if err or not chunk then
+                        loaded[modname] = nil
+                        return error(err or ("unable to load module '%s'"):format(modname), 3)
+                    end
+
+                    module = chunk(modname) or true
+                    loaded[modname] = module
+
+                    return module
+                end
+            end
+        else
+            local rss, dir = modname:gsub('%.', '/'):match('^(.-)/(.+)$')
+
+            if not rss or not dir then return error('Invalid path format: '..modname, 2) end
+            rss, dir = rss:gsub('^@', ''), dir..'.lua'
+            local chunk = LoadResourceFile(rss, dir)
+
+            if chunk then
+                local scriptPath = ('@@%s/%s'):format(rss, dir)
+                local func, err = load(chunk, scriptPath)
+
+                if err or not func then
+                    return error(err or ("unable to load module '%s'"):format(modname), 2)
                 end
 
-                module = chunk(modname) or true
+                module = func(modname) or true
                 loaded[modname] = module
 
                 return module
