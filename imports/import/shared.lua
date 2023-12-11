@@ -13,7 +13,7 @@ local function import(path)
     local chunk <const> = LoadResourceFile(rss, dir)
     if chunk then
         func, err = load(chunk, ('@@%s/%s'):format(rss, dir))
-        if err then error("Error to load skin module", 3) end
+        if err then error("Error to load module", 3) end
         local result <const> = func()
         imported[path] = result or true
         return imported[path]
