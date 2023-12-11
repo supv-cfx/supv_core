@@ -201,3 +201,4 @@ function ClearInterval(id)
 end
 
 require = supv.require
+import = supv.import
