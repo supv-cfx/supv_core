@@ -30,13 +30,11 @@ export const NumberField: React.FC<_NumberInputProps> = ({
                   /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
                   `${data?.format.separator || ' '}`
                 )
-              : `${data?.format.value || '$'}`
+              : ''
             : value
         }
-        onChange={(value: number) =>
-          onChanged(index, value, data?.required, data?.callback)
-        }
-        error={props.error || data.required ? "Ce champ est requis!" : false}
+        onChange={ (value: number) => onChanged(index, value, data?.required, data?.callback) }
+        /*error={props.error || data.required ? "Ce champ est requis!" : false}*/
       />
     </>
   );

@@ -40,8 +40,7 @@ const modalOptions = [
     type: 'number',
     label: 'Number Input Field',
     required: true,
-    min: 1,
-    max: 10,
+    format: {},
   }
 ];
 

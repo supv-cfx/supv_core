@@ -65,7 +65,7 @@ const ModalCustom: React.FC = () => {
   });
 
   const handleChange = (index: string, value: any, isRequired?: boolean, callback?: boolean) => {
-    form.setFieldValue(`${index}`, { value , required: isRequired, callback: callback});
+    form.setFieldValue(`${index}`, {value, required: isRequired, callback: callback});
     if (callback && getData.useCallback) {
       fetchNui('supv:modal:callback', {index: parseInt(index) + 1, value: value})
     }

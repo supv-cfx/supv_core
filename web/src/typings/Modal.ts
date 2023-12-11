@@ -140,7 +140,7 @@ export interface _NumberInputProps {
     index: string,
     value: number,
     isRequired?: boolean,
-    callback?: boolean
+    callback?: boolean,
   ) => void;
   props: any;
 }
