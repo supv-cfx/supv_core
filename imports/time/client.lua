@@ -109,7 +109,7 @@ local function RegexOnFormat(value, on)
     if not on or unitMap[on] then
         local divFactor = unitMap[on] or unitMap.semaine
         local v1, v2, v3, v4 = value:match(unitMap[on])
-        print(value, v1, v2, v3, v4)
+        --print(value, v1, v2, v3, v4)
         return v1, v2, v3, v4
     end
 end
