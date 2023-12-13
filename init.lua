@@ -4,11 +4,26 @@ local supv_core <const>, service <const> = 'supv_core', (IsDuplicityVersion() an
 local LoadResourceFile <const>, IsDuplicityVersion <const>, joaat <const>, await <const>, GetCurrentResourceName <const> = LoadResourceFile, IsDuplicityVersion, joaat, Citizen.Await, GetCurrentResourceName
 local GetGameName <const> = GetGameName
 
+---@param str string
+---@return string
+local function FormatByte(str)
+    local binaryString = ""
+    for i = 1, #str do
+        local byte <const> = str:byte(i)
+        local bits = {}
+        for j = 7, 0, -1 do
+            bits[#bits + 1] = (byte >> j) & 1
+        end
+        binaryString = binaryString .. table.concat(bits)
+    end
+    return binaryString
+end
+
 ---@param name string
----@param from? string<'client' | 'server'> default is sl.service
+---@param from? string<'client' | 'server'> default is supv.service
 ---@return string
 local function FormatEvent(self, name, from)
-    return ("__supv__:%s:%s"):format(from or self.service, joaat(name))
+    return FormatByte(("%s:%s"):format(from and joaat(from) or joaat(self.service), joaat(name)))
 end
 
 supv = setmetatable({
