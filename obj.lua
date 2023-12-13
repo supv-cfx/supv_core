@@ -17,12 +17,29 @@ if not GetResourceState(supv_core):find('start') then
 	error('^1supv_core doit être lancé avant cette ressource!^0', 2)
 end
 
+---@param str string
+---@return string
+local function FormatByte(str)
+    local binaryString = ""
+    for i = 1, #str do
+        local byte <const> = str:byte(i)
+        local bits = {}
+        for j = 7, 0, -1 do
+            bits[#bits + 1] = (byte >> j) & 1
+        end
+        binaryString = binaryString .. table.concat(bits)
+    end
+    return binaryString
+end
+
+---@param name string
+---@param from? string<'client' | 'server'> default is supv.service
+---@return string
 local function FormatEvent(self, name, from)
-    return ("__supv__:%s:%s"):format(from or service, joaat(name))
+    return FormatByte(("%s:%s"):format(from and joaat(from) or joaat(service), joaat(name)))
 end
 
 function void() end
-
 local function load_module(self, index)
     local func, err 
     local dir <const> = ('imports/%s'):format(index)
