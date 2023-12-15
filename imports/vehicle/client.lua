@@ -21,7 +21,7 @@ end
 ---@param cb fun(self: table)
 local function Edit(self, data, cb)
     if DoesEntityExist(self.vehicle) then
-        if data.plate then 
+        if data.plate and (self.data.plate and self.data.plate ~= data.plate) then 
             SetVehicleNumberPlateText(self.vehicle, data.plate)
             self.data.plate = data.plate
         end
@@ -44,6 +44,14 @@ local function Edit(self, data, cb)
             self.vec3 = data.vec3
             self.vec4 = vec4(data.vec3.x, data.vec3.y, data.vec3.z, data.vec4.w or data.vec3.h or 0.0)
         end
+        if data.freeze and (self.data.freeze and self.data.freeze ~= data.freeze) then
+            FreezeEntityPosition(self.vehicle, data.freeze)
+            self.data.freeze = data.freeze
+        end
+        if data.collision then 
+            SetEntityCollision(self.vehicle, data.collision)
+            self.data.collision = data.collision
+        end
         if cb then cb(self) end
     end
 end
@@ -64,6 +72,8 @@ local function SpawnVehicle(model, coords, data)
         ground = data.ground,
         network = data.network or true,
         mission = data.mission or false,
+        freeze = data.freeze,
+        collision = data.collision,
     }
 
     self.remove = RemoveVehicle
@@ -80,6 +90,9 @@ local function SpawnVehicle(model, coords, data)
             if self.data.plate then SetVehicleNumberPlateText(self.vehicle, self.data.plate) else self.data.plate = GetVehicleNumberPlateText(self.vehicle) end
             if self.data.alpha then SetEntityAlpha(self.vehicle, self.data.alpha[1], self.data.alpha[2]) end
             if self.data.ground then SetVehicleOnGroundProperly(self.vehicle) end
+            if self.data.freeze then FreezeEntityPosition(self.vehicle, self.data.freeze) end
+            if self.data.collision then SetEntityCollision(self.vehicle, self.data.collision[1], self.data.collision[2]) end
+
             p:resolve(self)
         else
             p:reject(('unable to spawn vehicle %s'):format(model))
