@@ -43,6 +43,8 @@ local supv = setmetatable({
     end
 })
 
+_ENV.supv = supv
+
 local loaded = {}
 package = {
     loaded = setmetatable({}, {
@@ -98,7 +100,7 @@ function require(modname)
     return module
 end
 
-local callback <const> = require(('imports.callback.%s'):format(service))
+local callback = require(('imports.callback.%s'):format(service))
 
 if service == 'server' then
     require('imports.version.server').check('github', nil, 500)
@@ -107,5 +109,4 @@ elseif service == 'client' then
     _ENV.cache = cache
 end
 
-_ENV.supv = supv
 _ENV.callback = callback
