@@ -23,10 +23,10 @@ end
 ---@param from? string<'client' | 'server'> default is supv.service
 ---@return string
 local function FormatEvent(self, name, from)
-    return FormatByte(("%s:%s"):format(from and joaat(from) or joaat(self.service), joaat(name)))
+    return FormatByte(("%s%s"):format(from and joaat(from) or joaat(self.service), joaat(name)))
 end
 
-supv = setmetatable({
+local supv = setmetatable({
     service = service, ---@type string<'client' | 'server'>
     name = supv_core, ---@type string<'supv_core'>
     env = supv_core, ---@type string<'resource_name?'>
@@ -98,10 +98,14 @@ function require(modname)
     return module
 end
 
-callback = require(('imports.callback.%s'):format(service))
+local callback <const> = require(('imports.callback.%s'):format(service))
 
 if service == 'server' then
     require('imports.version.server').check('github', nil, 500)
 elseif service == 'client' then
-    cache = {}
+    local cache = {}
+    _ENV.cache = cache
 end
+
+_ENV.supv = supv
+_ENV.callback = callback
