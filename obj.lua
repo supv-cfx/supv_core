@@ -104,6 +104,9 @@ local supv = setmetatable({
     __call = call_module 
 })
 
+_ENV.supv = supv
+_ENV.void = void
+
 if supv.service == 'client' then
     setmetatable(supv.cache, {
         __index = function(self, key)
@@ -174,8 +177,6 @@ if supv.useInventory then
 end
 
 _settings = nil
-_ENV.supv = supv
-_ENV.void = void
 if _ENV.lib then return end
 
 -- credit: ox_lib <https://github.com/overextended/ox_lib/blob/master/init.lua>
