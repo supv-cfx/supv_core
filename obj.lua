@@ -1,12 +1,12 @@
 local supv_core <const> = 'supv_core'
+local GetConvar <const> = GetConvar
 local IsDuplicityVersion <const> = IsDuplicityVersion
 local LoadResourceFile <const> = LoadResourceFile
 local GetResourceState <const> = GetResourceState
 local GetGameName <const> = GetGameName
 local GetCurrentResourceName <const> = GetCurrentResourceName
 local Await <const> = Citizen.Await
-local export = exports[supv_core]
-
+local export <const> = exports[supv_core]
 local service <const> = (IsDuplicityVersion() and 'server') or 'client'
 
 if not _VERSION:find('5.4') then
@@ -16,6 +16,12 @@ end
 if not GetResourceState(supv_core):find('start') then
 	error('^1supv_core doit être lancé avant cette ressource!^0', 2)
 end
+
+local _settings = {
+    framework = GetConvar('supv_core:auto_use:framework', 'true') == 'true',
+    inventory = GetConvar('supv_core:auto_use:inventory', 'true') == 'true',
+    mysql = GetConvar('supv_core:auto_use:mysql', 'true') == 'true',
+}
 
 ---@param str string
 ---@return string
@@ -36,10 +42,10 @@ end
 ---@param from? string<'client' | 'server'> default is supv.service
 ---@return string
 local function FormatEvent(self, name, from)
-    return FormatByte(("%s:%s"):format(from and joaat(from) or joaat(service), joaat(name)))
+    return FormatByte(("%s%s"):format(from and joaat(from) or joaat(service), joaat(name)))
 end
 
-function void() end
+local function void() end
 local function load_module(self, index)
     local func, err 
     local dir <const> = ('imports/%s'):format(index)
@@ -53,7 +59,7 @@ local function load_module(self, index)
             func, err = load(chunk, ('@@%s/%s/%s'):format(supv_core, index, service))
         end
         
-        if err then error(("Erreur pendant le chargement du module\n- Provenant de : %s\n- Modules : %s\n- Service : %s\n - Erreur : %s"):format(dir, index, service, err), 3) end
+        if err then error(("Error to loading modules :\n- From : %s\n - Modules : %s\n - Service : %s\n - Error : %s"):format(dir, index, service, err), 3) end
 
         local result = func()
         rawset(self, index, result or void)
@@ -81,7 +87,7 @@ local function call_module(self, index, ...)
     return module
 end
 
-supv = setmetatable({
+local supv = setmetatable({
     name = supv_core, 
     service = service,
     game = GetGameName(),
@@ -90,11 +96,9 @@ supv = setmetatable({
     cache = service == 'client' and {},
     await = Await,
     hashEvent = FormatEvent,
-    useFramework = (GetResourceState('es_extended') ~= 'missing' and 'esx') or (GetResourceState('qb-core') ~= 'missing' and 'qbcore'),
-    useInventory = (GetResourceState('ox_inventory') ~= 'missing' and 'ox') or (GetResourceState('qb-inventory') ~= 'missing' and 'qbcore') or (GetResourceState('es_extended') ~= 'missing' and 'esx'),
-    --onCache = service == 'client' and function(key, cb)
-    --    AddEventHandler(('cache:%s'):format(key), cb)
-    --end
+    useFramework = _settings.framework and ((GetResourceState('es_extended') ~= 'missing' and 'esx') or (GetResourceState('qb-core') ~= 'missing' and 'qbcore')),
+    useInventory = _settings.inventory and ((GetResourceState('ox_inventory') ~= 'missing' and 'ox') or (GetResourceState('qb-inventory') ~= 'missing' and 'qbcore') or (GetResourceState('es_extended') ~= 'missing' and 'esx')),
+    useMySQL = _settings.mysql and (GetResourceState('oxmysql') ~= 'missing' and true),
 }, { 
     __index = call_module, 
     __call = call_module 
@@ -124,21 +128,23 @@ if supv.service == 'client' then
         end
     })
 elseif supv.service == 'server' then
-
-    MySQL = setmetatable({}, {
-        __index = function(self, key)
-            local value = rawget(self, key)
-            if not value then
-                supv.mysql.init()
-                value = MySQL[key]
+    if supv.useMySQL then
+        local MySQL = setmetatable({}, {
+            __index = function(self, key)
+                local value = rawget(self, key)
+                if not value then
+                    supv.mysql.init()
+                    value = MySQL[key]
+                end
+                return value
             end
-            return value
-        end
-    })
+        })
+        _ENV.MySQL = MySQL
+    end
 end
 
 if supv.useFramework then
-    framework = setmetatable({}, {
+    local framework = setmetatable({}, {
         __index = function(self, key)
             local value = rawget(self, key)
             if not value then
@@ -148,10 +154,12 @@ if supv.useFramework then
             return value
         end
     })
+
+    _ENV.framework = framework
 end
 
 if supv.useInventory then
-    inventory = setmetatable({}, {
+    local inventory = setmetatable({}, {
         __index = function(self, key)
             local value = rawget(self, key)
             if not value then
@@ -161,16 +169,21 @@ if supv.useInventory then
             return value
         end
     })
+
+    _ENV.inventory = inventory
 end
 
-if lib then return end
+_settings = nil
+_ENV.supv = supv
+_ENV.void = void
+if _ENV.lib then return end
 
 -- credit: ox_lib <https://github.com/overextended/ox_lib/blob/master/init.lua>
 local intervals = {}
 ---@param callback function | number
 ---@param interval? number
 ---@param ... any
-function SetInterval(callback, interval, ...)
+local function SetInterval(callback, interval, ...)
 	interval = interval or 0
 
     if type(interval) ~= 'number' then
@@ -205,7 +218,7 @@ function SetInterval(callback, interval, ...)
 end
 
 ---@param id number
-function ClearInterval(id)
+local function ClearInterval(id)
     if type(id) ~= 'number' then
         return error(('Interval id must be a number. Received %s'):format(json.encode(id --[[@as unknown]])))
 	end
@@ -218,3 +231,6 @@ function ClearInterval(id)
 end
 
 require = supv.require
+
+_ENV.SetInterval = SetInterval
+_ENV.ClearInterval = ClearInterval
