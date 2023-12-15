@@ -15,10 +15,10 @@ local function Loadjson(filePath, resourceName)
     return str
 end
 
---- supv.json.write
+--- supv.json.save
 ---@param filePath string
 ---@param data table
----@param resourceName? string|nil
+---@param resourceName? string | nil
 ---@param dataLength? integer
 ---@return boolean
 local function Writejson(filePath, data, resourceName, dataLength)
