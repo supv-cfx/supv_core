@@ -11,11 +11,9 @@
 setr supv:locale fr
 
 ## config auto loader
-setr supv_core:auto_use {
-    "famework": true, ## supv_core will be search for framework module (ESX, QB-Core, etc.)
-    "inventory": true, ## supv_core will be search for inventory module (esx classic, qb-inventory, ox_inventory, etc.)
-    "mysql": true, ## supv_core will be search for mysql module (oxmysql)
-}
+setr supv_core:auto_use:framework true
+setr supv_core:auto_use:inventory true
+setr supv_core:auto_use:mysql true
 
 ## config interface
 setr supv_core:interface:notification:simple {
