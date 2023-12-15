@@ -13,6 +13,7 @@ local GiveWeaponToPed <const> = GiveWeaponToPed
 ---@field model string|number
 ---@field ammo? number-0
 ---@field visible? boolean-true
+---@field hand? boolean-false
 
 ---@class DataNpcProps
 ---@field network? boolean-true
@@ -85,7 +86,7 @@ local function New(model, coords, data)
             if self.variation then SetPedComponentVariation(self.ped, self.variation) else SetPedDefaultComponentVariation(self.ped) end
             if type(self.weapon) == 'table' and self.weapon.model then
                 local weapon <const> = type(self.weapon.model) == 'number' and self.weapon.model or joaat(self.weapon.model)
-                GiveWeaponToPed(self.ped, weapon, self.weapon.ammo or 0, self.weapon.visible or true, true)
+                GiveWeaponToPed(self.ped, weapon, self.weapon.ammo or 0, self.weapon.visible or true, self.weapon.hand or false)
             end
             p:resolve(self)
         else
