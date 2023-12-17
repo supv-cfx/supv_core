@@ -213,14 +213,16 @@ local function Create(coords, data, circle)
                 if type(circle) ~= 'table' then return end
                 if type(circle.radius) ~= 'number' or math.type(circle.radius) ~= 'float' then return end
                 self.circle = {}
+                self.circle.sprite = circle.sprite or 9
                 self.circle.radius = circle.radius
                 self.circle.color = circle.color or 1
                 self.circle.alpha = circle.alpha or circle.edge == true and 0 or 255
                 self.circle.edge = circle.edge or false
-
-                self.circle.id = AddBlipForRadius(self.coords, self.radius)
-                SetBlipColour(self.circle.id , self.circle.alpha)
-                SetBlipAlpha(self.circle.id , self.circle.color)
+                --self.circle.id = AddBlipForCoord(coords.x, coords.y, coords.z)
+                self.circle.id = AddBlipForRadius(coords.x, coords.y, coords.z, self.circle.radius)
+                SetBlipSprite(self.circle.id, self.circle.sprite)
+                SetBlipColour(self.circle.id, self.circle.color)
+                SetBlipAlpha(self.circle.id, self.circle.alpha)
                 SetRadiusBlipEdge(self.circle.id, self.circle.edge)
             end
 
