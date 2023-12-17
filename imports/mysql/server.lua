@@ -1,6 +1,6 @@
 local LoadResourceFile <const>, load <const> = LoadResourceFile, load
 
-local function Init()
+function supv.mysql()
     local file = 'lib/MySQL.lua'
 	local import = LoadResourceFile('oxmysql', file)
 	local func, err = load(import, ('@@%s/%s'):format('oxmysql', file))
@@ -11,6 +11,4 @@ local function Init()
 	func()
 end
 
-return {
-    init = Init
-}
+return supv.mysql

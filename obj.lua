@@ -136,7 +136,7 @@ elseif supv.service == 'server' then
             __index = function(self, key)
                 local value = rawget(self, key)
                 if not value then
-                    supv.mysql.init()
+                    supv.mysql()
                     value = MySQL[key]
                 end
                 return value
