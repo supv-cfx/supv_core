@@ -1,15 +1,16 @@
 import { debugData } from '../../../utils/debugData';
 import type { ModalPropsCustom/*, Option */} from '../../../typings';
 const modalOptions = [
-  /*{ type: 'input', label: 'Input Field', required: true, callback: true, error: 'Message perso' },
+  { type: 'input', label: 'Input Field', required: true, callback: true, error: 'Message perso', default: 'test' },
+  { type: 'number', label: 'Textarea Field', required: true, callback: true, default: 10 },
   { type: 'select', label: 'Select Field', options: 
   [
     { value: 'react', label: 'React' },
     { value: 'ng', label: 'Angular' },
     { value: 'svelte', label: 'Svelte' },
     { value: 'vue', label: 'Vue' }
-  ], required: true, error: 'Select an option', callback: true },
-  {
+  ], required: true, error: 'Select an option', callback: true, default: 'ng' },
+  /*{
     type: 'checkbox',
     label: 'Checkbox Field',
     callback: true,
@@ -19,7 +20,7 @@ const modalOptions = [
     label: 'Password Field',
     required: true,
   },
-  {
+  /*{
     type: 'slider',
     label: 'Slider Field',
     /*min: 120,
@@ -36,12 +37,7 @@ const modalOptions = [
     label: 'Date Input Field',
     required: true
   },*/
-  {
-    type: 'number',
-    label: 'Number Input Field',
-    required: true,
-    format: {},
-  }
+
 ];
 
 export const debugModalsCustom = () => {

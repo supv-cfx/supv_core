@@ -19,7 +19,7 @@ export const SliderField: React.FC<_SliderProps> = ({
       <Text size='sm'>{label}</Text>
       <Slider
         label={value}
-        defaultValue={defaultValue || 0}
+        defaultValue={value}
         min={min || 0}
         max={max || 100}
         step={step || 1}
@@ -27,10 +27,10 @@ export const SliderField: React.FC<_SliderProps> = ({
         labelTransition={transition?.name || 'fade'}
         labelTransitionDuration={transition?.duration || 100}
         labelTransitionTimingFunction={transition?.timingFunction || 'ease'}
-        onChangeEnd={(value) => {
+        onChangeEnd={(value: any) => {
           onChanged(index, value);
         }}
-        onChange={(value) => {
+        onChange={(value: any) => {
           setValue(value);
         }}
       />

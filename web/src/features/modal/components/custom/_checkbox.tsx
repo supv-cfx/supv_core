@@ -16,7 +16,7 @@ export const CheckboxField: React.FC<_CheckboxProps> = ({
         sx={{ display: 'flex', paddingTop: '10px' }}
         label={label}
         defaultChecked={defaultValue || false}
-        onChange={(event) => onChanged(index, event.target.checked, data?.required, data?.callback)}
+        onChange={(event: any) => onChanged(index, event.target.checked, data?.required, data?.callback)}
         error={!defaultValue && props.error}
       />
     </>
