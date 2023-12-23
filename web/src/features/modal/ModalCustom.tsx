@@ -25,9 +25,11 @@ const ModalCustom: React.FC = () => {
       return form.setFieldValue(`${index}`, 
         {
           value :
-            field.type === ('input' || 'select' || 'password' || 'date') ? field.default || '' 
+            field.type === ('input' || 'password' || 'date') ? field.default || '' 
             : field.type === 'checkbox' ? field.default || false
             : field.type === 'slider' ? field.default || 0
+            : field.type === 'number' ? field.default || 0
+            : field.type === 'select' ? field.default || null
             : null,
           required: field.required || false,
           callback: field.callback || false
@@ -40,6 +42,7 @@ const ModalCustom: React.FC = () => {
   const handleSubmit = form.onSubmit(async (data) => {
     let missing = false;
     const setArray: any[] = [];
+    //console.log(JSON.stringify(data));
     Object.values(data).forEach((field: any, index: number) => {
       if (field.required) {
         const val = !field.value ? null : field.value;
