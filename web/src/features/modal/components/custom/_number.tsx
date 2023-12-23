@@ -18,7 +18,7 @@ export const NumberField: React.FC<_NumberInputProps> = ({
         description={data?.description || ''}
         required={data?.required || false}
         withAsterisk={data?.required || false}
-        defaultValue={data?.default || null}
+        defaultValue={data?.default || 0}
         min={data?.min}
         max={data?.max}
         step={data?.step}
@@ -33,7 +33,7 @@ export const NumberField: React.FC<_NumberInputProps> = ({
               : ''
             : value
         }
-        onChange={ (value: number) => onChanged(index, value, data?.required, data?.callback) }
+        onChange={ (value: number) => onChanged(index, value, data?.required, data?.callback)}
         /*error={props.error || data.required ? "Ce champ est requis!" : false}*/
       />
     </>
