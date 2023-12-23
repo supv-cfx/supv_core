@@ -20,7 +20,7 @@ export const SelectField: React.FC<_SelectProps> = ({
         required={data?.required || false}
         withAsterisk={data?.required || false}
         defaultValue={data?.default || null}
-        onChange={(value) => onChanged(index, value as string, data?.required, data?.callback)}
+        onChange={ (value) => onChanged(index, value as string, data?.required, data?.callback) }
         error={props.error || false}
         styles={(theme) => ({
           item: {
