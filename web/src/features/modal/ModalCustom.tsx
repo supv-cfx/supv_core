@@ -26,7 +26,7 @@ const ModalCustom: React.FC = () => {
         {
           value :
             field.type === ('input' || 'password' || 'date') ? field.default || '' 
-            : field.type === 'checkbox' ? field.default || false
+            : field.type === 'checkbox' ? field.checked || false
             : field.type === 'slider' ? field.default || 0
             : field.type === 'number' ? field.default || 0
             : field.type === 'select' ? field.default || null
