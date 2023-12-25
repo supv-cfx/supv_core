@@ -28,7 +28,7 @@ end
 function supv.class(name, prototype, exportMethod)
     local self = {
         __name = name,
-        new = NewInstance
+        New = NewInstance
     }
 
     self.__index = self
