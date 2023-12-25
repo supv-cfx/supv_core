@@ -22,10 +22,10 @@ local function NewInstance(self, obj)
 end
 
 ---@param name string
----@param prototype? table
+---@param super? table
 ---@param exportMethod? boolean
 ---@return table
-function supv.class(name, prototype, exportMethod)
+function supv.class(name, super, exportMethod)
     local self = {
         __name = name,
         New = NewInstance
@@ -33,7 +33,7 @@ function supv.class(name, prototype, exportMethod)
 
     self.__index = self
 
-    if exportMethod and not prototype then
+    if exportMethod and not super then
         self.__exportMethod = {}
         self.__export = {}
 
@@ -54,8 +54,8 @@ function supv.class(name, prototype, exportMethod)
         end)
     end
     
-    return prototype and setmetatable(self, {
-        __index = prototype,
+    return super and setmetatable(self, {
+        __index = super,
         __newindex = function(_, key, value)
             rawset(_, key, value)
             if type(value) == 'function' then
