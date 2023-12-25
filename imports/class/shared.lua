@@ -33,7 +33,7 @@ function supv.class(name, prototype, exportMethod)
 
     self.__index = self
 
-    if exportMethod then
+    if exportMethod and not prototype then
         self.__exportMethod = {}
         self.__export = {}
 
@@ -53,8 +53,16 @@ function supv.class(name, prototype, exportMethod)
             return export[method](export, ...)
         end)
     end
-
-    return prototype and setmetatable(self, prototype) or self
+    
+    return prototype and setmetatable(self, {
+        __index = prototype,
+        __newindex = function(_, key, value)
+            rawset(_, key, value)
+            if type(value) == 'function' then
+                self.__exportMethod[key] = true
+            end
+        end
+    }) or self
 end
 
 return supv.class
