@@ -1,4 +1,5 @@
 local mt_pvt = {
+    __metatable = 'private',
     __ext = 0,
     __pack = function() return '' end,
 }
