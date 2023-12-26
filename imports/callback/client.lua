@@ -30,7 +30,7 @@ local function TriggerServerCallback(name, timer, cb, ...)
         k = ('%s:%s'):format(name, math.random(0, 999999))
     until not events[name]
 
-    TriggerServerEvent(nameEvent:format(name), supv.name, k, ...)
+    TriggerServerEvent(nameEvent:format(supv:hashEvent(name, 'cb')), supv.name, k, ...)
 
     local p = not cb and promise.new() or nil
 
@@ -65,7 +65,7 @@ local function CallackResponse(success, result, ...)
 end
 
 local function RegisterCallback(name, cb)
-    RegisterNetEvent(nameEvent:format(name), function(resource, k, ...)
+    RegisterNetEvent(nameEvent:format(supv:hashEvent(name, 'cb')), function(resource, k, ...)
         TriggerServerEvent(nameEvent:format(resource), k, CallackResponse(pcall(cb, ...)))
     end)
 end

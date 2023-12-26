@@ -14,7 +14,7 @@ local function TriggerClientCallback(name, source, cb, ...)
         k = ('%s:%s:%s'):format(name, math.random(0, 999999), source)
     until not events[k]
 
-    TriggerClientEvent(nameEvent:format(name), source, supv.name, k, ...)
+    TriggerClientEvent(nameEvent:format(supv:hashEvent(name, 'cb')), source, supv.name, k, ...)
 
     local p = not cb and promise.new() or nil
 
@@ -49,7 +49,7 @@ local function CallackResponse(success, result, ...)
 end
 
 local function RegisterCallback(name, cb, ...)
-    RegisterNetEvent(nameEvent:format(name), function(resource, k, ...)
+    RegisterNetEvent(nameEvent:format(supv:hashEvent(name, 'cb')), function(resource, k, ...)
         TriggerClientEvent(nameEvent:format(resource), source, k, CallackResponse(pcall(cb, source, ...)))
     end)
 end
