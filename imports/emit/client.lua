@@ -10,7 +10,7 @@ supv.emit = setmetatable({}, {
 })
 
 function supv.emit.net(name, ...)
-    if not token then token = supv.callback.sync(joaat('token')) end
+    if not token then token = supv.callback.sync(supv:hashEvent('token', 'server')) end
     TriggerServerEvent(supv:hashEvent(name, 'server'), token, ...)
 end
 

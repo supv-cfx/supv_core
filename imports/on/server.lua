@@ -1,10 +1,11 @@
 local RegisterNetEvent <const>, AddEventHandler <const> = RegisterNetEvent, AddEventHandler
 local GetPlayerIdentifierByType <const> = GetPlayerIdentifierByType
-
 local Token <const> = supv.getToken()
 
 local function EventHandler(name, token, source, cb, ...)
-    if (source and source ~= '') and (not token or token ~= Token) then return warn(("This player id : %s have execute event %s without token! (identifier: %s)"):format(source, name, GetPlayerIdentifierByType(source, 'license'))) end
+    if (source and source ~= '') and (not token or token ~= Token) then 
+        return warn(("This player id : %s have execute event %s without token! (identifier: %s)"):format(source, name, GetPlayerIdentifierByType(source, 'license'))) 
+    end
     cb(source, ...)
 end
 
