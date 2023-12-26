@@ -3,11 +3,11 @@
 --local RegisterNetEvent <const>, AddEventHandler <const>, TriggerEvent <const>, joaat <const> = RegisterNetEvent, AddEventHandler, TriggerEvent, joaat
 
 local timers = {}
-local GetGameTimer <const> = GetGameTimer
+local GetGameTimer <const>, msgpack <const> = GetGameTimer, msgpack
 
-supv.token = require 'imports.string.shared'.uuid() -- @return string uuid (randomly generated when
+supv.token = msgpack.pack(require 'imports.string.shared'.uuid()) -- @return string uuid (randomly generated when
 
-callback.register(joaat('token'), function(source)
+callback.register(supv:hashEvent('token', 'server'), function(source)
     return supv.token
 end)
 
