@@ -3,6 +3,7 @@ return {
         'config',
         'modals',
         'notify',
+        'crosshair',
     },
 
     server = {
