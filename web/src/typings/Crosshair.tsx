@@ -1,0 +1,69 @@
+export interface CrosshairProps {
+	show_cross: boolean;
+	alpha: number;
+	color: number;
+	color_b: number;
+	color_r: number;
+	color_g: number;
+	dot: number;
+	gap: number;
+	cap: "round" | "butt" | "square";
+	size: number;
+	style: number;
+	useAlpha: number;
+	thickness: number;
+	fixedGap: number;
+	outlineThickness: number;
+	drawOutline: number;
+	dot_useAlpha: number;
+	dot_alpha: number;
+	dot_color: number;
+	dot_color_b: number;
+	dot_color_r: number;
+	dot_color_g: number;
+	dot_thickness: number;
+	dot_size: number;
+	dot_style: number;
+	dot_drawOutline: number;
+	dot_outlineThickness: number;
+	dot_outAlpha: number;
+	dot_outColor: number;
+	dot_outColor_b: number;
+	dot_outColor_r: number;
+	dot_outColor_g: number;
+}
+
+export const CrosshairDefault: CrosshairProps = {
+	show_cross: true,
+	alpha: 200,
+	color: 3,
+	color_b: 50,
+	color_r: 50,
+	color_g: 250,
+	dot: 1,
+	gap: 3,
+	size: 12,
+	style: 3,
+	cap: "butt",
+	useAlpha: 1,
+	thickness: 1.6,
+	fixedGap: 0,
+	outlineThickness: 0,
+	drawOutline: 0,
+	dot_useAlpha: 1,
+	dot_alpha: 200,
+	dot_color: 3,
+	dot_color_b: 50,
+	dot_color_r: 50,
+	dot_color_g: 250,
+	dot_thickness: 0.5,
+	dot_size: 4,
+	dot_style: 3,
+	dot_drawOutline: 1,
+	dot_outlineThickness: 16,
+	dot_outAlpha: 200,
+	dot_outColor: 4,
+	dot_outColor_b: 50,
+	dot_outColor_r: 50,
+	dot_outColor_g: 250,
+};

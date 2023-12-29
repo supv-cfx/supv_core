@@ -19,6 +19,7 @@ import { debugNotification } from './debug/notifcation';
 import { debugModalsConfirm } from './debug/modals/confirm';
 import { debugModalsCustom } from './debug/modals/custom';
 import { debugResourceManager } from './debug/resource';
+import { debugCosshairTool } from './debug/crosshairTool';
 
 interface Props {
   text: string;
@@ -115,6 +116,14 @@ const DevTool: React.FC = () => {
             onClick={() => {debugResourceManager(); setOpened(false)}}
           >
             Resource Manager
+          </Button>
+          <Button
+            variant='outline'
+            color='teal'
+            fullWidth
+            onClick={() => {debugCosshairTool(); setOpened(false)}}
+          >
+            Crosshair Tool
           </Button>
         </Stack>
       </Drawer>
