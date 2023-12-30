@@ -27,7 +27,7 @@
 ---@return string | fun(name: data.name): void
 function supv.request(data, timeout)
     if type(data.type) ~= 'string' then
-        return error('data.type must be a string (typeof selector: %s)':format(type(data.type)), 2)
+        return error(('data.type must be a string (typeof selector: %s)'):format(type(data.type)), 2)
     end
 
     local funcRef, errmsg, flushRef
@@ -64,7 +64,7 @@ function supv.request(data, timeout)
         flushRef = SetModelAsNoLongerNeeded
         
         if funcRef(data.name) then return data.name end
-        if type(data.name) ~= 'number' then
+        if type(data.name) ~= 'number' and type(data.name) ~= 'string' then
             return error(('data.name must be a number (typeof name: %s)'):format(type(data.name)), 2)
         end
         if not IsModelInCdimage(data.name) then
