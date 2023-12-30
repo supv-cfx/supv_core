@@ -49,6 +49,14 @@ local function FormatTempsYears(days)
     return years, months, daysLeftAfterMonths
 end
 
+local function GetHeadingFromCoords(coord1, coord2)
+    if not coord1 or not coord2 then return end
+    if not coord1.x or not coord1.y or not coord2.x or not coord2.y then return end
+    local deltaX <const>, deltaY <const> = coord2.x - coord1.x, coord2.y - coord1.y
+    local heading <const> = (math.deg(math.atan(deltaY, deltaX)) - 90) % 360
+    return heading
+end
+
 --- supv.math.format_time(1560351654) -> 2581, 6, "06", "17", "54" ? (WEEKS, DAYS, HOURS, MINUTES, SECONDS) : 0, 0, "00", "00", "00"
 ---@param sec number
 ---@param value? string
@@ -104,9 +112,10 @@ return {
     chance = Chance,
     double_digits = deuxDigits,
     digits = Digits,
-    format_time = FormatTemps,
+    --format_time = FormatTemps,
     format_years = FormatTempsYears,
     divmod = DivMod,
+    headingFromCoords = GetHeadingFromCoords
 }
 
 --[[
