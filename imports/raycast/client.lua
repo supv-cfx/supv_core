@@ -32,8 +32,9 @@ local StartShapeTestLosProbe <const> = StartShapeTestLosProbe
 ---@param distance number-10? defaults to 10.
 ---@param flags number-511? defaults to 511 (https://docs.fivem.net/natives/?_0x377906D8A31E5586).
 ---@param ignore TestIgnore-4? TestIgnore.NO_COLLISION
+---@param h vector3? headingFromCoords
 ---@return table Raycast { hit: boolean, entityHit: number, endCoords: vector3, surfaceNormal: vector3, materialHash: number}
-return function(distance, flags, ignore)
+return function(distance, flags, ignore, h)
     local worldVector <const>, normalVector <const> = GetWorldCoordFromScreenCoord(.5, .5) -- Center of the screenX and screenY
     local destinationVector <const> = worldVector + normalVector * (distance or 10)
     local handle <const> = StartShapeTestLosProbe(worldVector.x, worldVector.y, worldVector.z, destinationVector.x, destinationVector.y, destinationVector.z, flags or 511, supv.cache.ped or 0, ignore or 4)
@@ -47,7 +48,8 @@ return function(distance, flags, ignore)
                 entityHit = entityHit,
                 endCoords = endCoords,
                 surfaceNormal = surfaceNormal,
-                materialHash = materialHash
+                materialHash = materialHash,
+                heading = h and supv.math.headingFromCoords(h, endCoords)
             }
         end
     end
