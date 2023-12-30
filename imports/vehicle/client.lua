@@ -7,6 +7,7 @@ local SetVehicleOnGroundProperly <const> = SetVehicleOnGroundProperly
 local SetEntityCoords <const> = SetEntityCoords
 local SetEntityHeading <const> = SetEntityHeading
 local GetVehicleNumberPlateText <const> = GetVehicleNumberPlateText
+local FreezeEntityPosition <const> = FreezeEntityPosition
 
 ---@todo documentation
 
@@ -56,32 +57,32 @@ local function Edit(self, data, cb)
     end
 end
 
----@param model any
----@param coords any
+---@param model string | number
+---@param coords vec4 | vec3
 ---@param data any ---@todo
 ---@return table
 local function SpawnVehicle(model, coords, data)
-    local self, p = {}, promise.new()
-
-    self.model = model
-    self.vec3 = vec3(coords.x, coords.y, coords.z)
-    self.vec4 = vec4(coords.x, coords.y, coords.z, coords.w or coords.h or 0.0)
-    self.data = {
-        plate = data.plate,
-        alpha = data.alpha,
-        ground = data.ground,
-        network = data.network or true,
-        mission = data.mission or false,
-        freeze = data.freeze,
-        collision = data.collision,
-    }
-
-    self.remove = RemoveVehicle
-    self.edit = Edit
+    local p = promise.new()
 
     CreateThread(function()
+        local self = {
+            data = {
+                plate = data.plate,
+                alpha = data.alpha,
+                ground = data.ground == true or false,
+                network = data.network == true or false,
+                mission = data.mission == true or false,
+                freeze = data.freeze,
+                collision = data.collision,
+            },
+            model = model,
+            vec3 = vec3(coords.x, coords.y, coords.z),
+            vec4 = vec4(coords.x, coords.y, coords.z, coords.w or coords.h or 0.0),
+            remove = RemoveVehicle,
+            edit = Edit,
+        }
+    
         local FlushModel <const> = supv.request({ type = 'model', name = self.model })
-
         self.vehicle = CreateVehicle(self.model, self.vec4.x, self.vec4.y, self.vec4.z, self.vec4.w, self.data.network, self.data.mission)
         FlushModel(self.model)
         ---@todo: add vehicle data setter
@@ -92,10 +93,8 @@ local function SpawnVehicle(model, coords, data)
             if self.data.ground then SetVehicleOnGroundProperly(self.vehicle) end
             if self.data.freeze then FreezeEntityPosition(self.vehicle, self.data.freeze) end
             if self.data.collision then SetEntityCollision(self.vehicle, self.data.collision[1], self.data.collision[2]) end
-
+            
             p:resolve(self)
-        else
-            p:reject(('unable to spawn vehicle %s'):format(model))
         end
     end)
 
