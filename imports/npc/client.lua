@@ -66,7 +66,7 @@ local function Edit(self, data)
         if data.coords then
             SetEntityCoordsNoOffset(self.ped, data.coords.x, data.coords.y, data.coords.z)
             self.vec3 = vec3(data.coords.x, data.coords.y, data.coords.z)
-            if self.coords.w or self.coords.h or self.coords.heading then
+            if data.coords.w or data.coords.h or data.coords.heading then
                 self.vec4 = vec4(data.coords.x, data.coords.y, data.coords.z, data.coords.w or data.coords.h or data.coords.heading or .0)
                 SetEntityHeading(self.ped, data.coords.w or data.coords.h or data.coords.heading or .0)
             end
@@ -101,7 +101,7 @@ local function New(model, coords, data)
         self.remove = Remove
         self.edit = Edit
 
-        local FlushModel <const> = supv.request({ type = 'model', name = self.model })
+        supv.request({ type = 'model', name = self.model })
 
         self.ped = CreatePed(_, self.model, self.vec4.x, self.vec4.y, self.vec4.z, self.vec4.w, self.network, false)
 
@@ -114,11 +114,8 @@ local function New(model, coords, data)
                 local weapon <const> = type(self.weapon.model) == 'number' and self.weapon.model or joaat(self.weapon.model)
                 GiveWeaponToPed(self.ped, weapon, self.weapon.ammo or 0, self.weapon.visible or true, self.weapon.hand or false)
             end
-            if FlushModel then
-                FlushModel(self.model)
-            else
-                SetModelAsNoLongerNeeded(self.model)
-            end
+
+            SetModelAsNoLongerNeeded(self.model)
             p:resolve(self)
         else
             p:reject(('Failed to create ped in %s'):format(supv.env))
