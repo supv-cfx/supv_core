@@ -51,29 +51,56 @@ local function Distance(self, targetCoords, useVec4)
     return coords and #(coords - targetCoords)
 end
 
+---@param data DataNpcProps
+local function Edit(self, data)
+    if DoesEntityExist(self.ped) then
+        if data.network then SetNetworkIdExistsOnAllMachines(NetworkGetNetworkIdFromEntity(self.ped), data.network) end
+        if data.blockevent then SetBlockingOfNonTemporaryEvents(self.ped, data.blockevent) end
+        if data.godmode then SetEntityInvincible(self.ped, data.godmode) end
+        if data.freeze then FreezeEntityPosition(self.ped, data.freeze) end
+        if data.variation then SetPedComponentVariation(self.ped, data.variation) else SetPedDefaultComponentVariation(self.ped) end
+        if type(data.weapon) == 'table' and data.weapon.model then
+            local weapon <const> = type(data.weapon.model) == 'number' and data.weapon.model or joaat(data.weapon.model)
+            GiveWeaponToPed(self.ped, weapon, data.weapon.ammo or 0, data.weapon.visible or true, data.weapon.hand or false)
+        end
+        if data.coords then
+            SetEntityCoordsNoOffset(self.ped, data.coords.x, data.coords.y, data.coords.z)
+            self.vec3 = vec3(data.coords.x, data.coords.y, data.coords.z)
+            if self.coords.w or self.coords.h or self.coords.heading then
+                self.vec4 = vec4(data.coords.x, data.coords.y, data.coords.z, data.coords.w or data.coords.h or data.coords.heading or .0)
+                SetEntityHeading(self.ped, data.coords.w or data.coords.h or data.coords.heading or .0)
+            end
+        end
+
+        return self
+    end 
+end
+
 ---@param model string|number
 ---@param coords vec4
 ---@param data? DataNpcProps
 ---@return table
 local function New(model, coords, data)
-    local self = {}
-
-    self.model = model
-    self.vec3 = vec3(coords.x, coords.y, coords.z)
-    self.vec4 = vec4(coords.x, coords.y, coords.z, coords.w or coords.h or 0.0)
-    self.network = data.network or true
-    self.blockevent = data.blockevent or true
-    self.godmode = data.godmode or true
-    self.freeze = data.freeze or true
-    self.variation = data.variation
-    self.weapon = data.weapon
-    self.distance = Distance
-    self.getCoords = GetCoords
-    self.remove = Remove
 
     local p = promise.new()
 
     CreateThread(function()
+        local self = {}
+
+        self.model = model
+        self.vec3 = vec3(coords.x, coords.y, coords.z)
+        self.vec4 = vec4(coords.x, coords.y, coords.z, coords.w or coords.h or 0.0)
+        self.network = data.network or true
+        self.blockevent = data.blockevent or true
+        self.godmode = data.godmode or true
+        self.freeze = data.freeze or true
+        self.variation = data.variation
+        self.weapon = data.weapon
+        self.distance = Distance
+        self.getCoords = GetCoords
+        self.remove = Remove
+        self.edit = Edit
+
         local FlushModel <const> = supv.request({ type = 'model', name = self.model })
 
         self.ped = CreatePed(_, self.model, self.vec4.x, self.vec4.y, self.vec4.z, self.vec4.w, self.network, false)
