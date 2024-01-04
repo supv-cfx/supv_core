@@ -104,7 +104,6 @@ local function New(model, coords, data)
         local FlushModel <const> = supv.request({ type = 'model', name = self.model })
 
         self.ped = CreatePed(_, self.model, self.vec4.x, self.vec4.y, self.vec4.z, self.vec4.w, self.network, false)
-        FlushModel(self.model)
 
         if DoesEntityExist(self.ped) then
             SetBlockingOfNonTemporaryEvents(self.ped, self.blockevent or true)
@@ -114,6 +113,11 @@ local function New(model, coords, data)
             if type(self.weapon) == 'table' and self.weapon.model then
                 local weapon <const> = type(self.weapon.model) == 'number' and self.weapon.model or joaat(self.weapon.model)
                 GiveWeaponToPed(self.ped, weapon, self.weapon.ammo or 0, self.weapon.visible or true, self.weapon.hand or false)
+            end
+            if FlushModel then
+                FlushModel(self.modal)
+            else
+                SetModelAsNoLongerNeeded(self.model)
             end
             p:resolve(self)
         else
