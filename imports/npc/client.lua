@@ -115,7 +115,7 @@ local function New(model, coords, data)
                 GiveWeaponToPed(self.ped, weapon, self.weapon.ammo or 0, self.weapon.visible or true, self.weapon.hand or false)
             end
             if FlushModel then
-                FlushModel(self.modal)
+                FlushModel(self.model)
             else
                 SetModelAsNoLongerNeeded(self.model)
             end
