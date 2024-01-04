@@ -79,6 +79,20 @@ export interface _SelectProps {
   props: any;
 }
 
+export interface _MultiSelectProps {
+  index: string;
+  label?: string;
+  data: any;
+  options: ItemSelectProps[],
+  onChanged: (
+    index: string,
+    value: string[],
+    isRequired?: boolean,
+    callback?: boolean
+  ) => void;
+  props: any;
+}
+
 export interface _PasswordProps {
   index: string;
   label?: string;

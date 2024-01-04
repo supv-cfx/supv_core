@@ -10,7 +10,7 @@ const Crosshair: React.FC = () => {
 	useNuiEvent("supv_core:crosshair:visible", async (data: boolean) => {
 		await new Promise((resolve) => setTimeout(resolve, 200));
 		setVisible(data);
-		console.log(`Crosshair visibility: ${data}`);
+		//console.log(`Crosshair visibility: ${data}`);
 	});
 
 	useNuiEvent("supv_core:crosshair:setter", async (data) => {
