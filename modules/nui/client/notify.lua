@@ -1,4 +1,3 @@
-local on <const> = require 'imports.on.client'
 local Promise, IsNuiFocused <const> = {}, IsNuiFocused
 
 ---@class DataPropsNotify
