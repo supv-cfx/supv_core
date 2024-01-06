@@ -1,6 +1,4 @@
 local opened = false
-local on <const> = require 'imports.on.client'
-local emit <const> = require 'imports.on.server'
 
 on.net('open:rm', function(menu)
     if opened then return end

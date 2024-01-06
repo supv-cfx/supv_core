@@ -4,9 +4,6 @@ local Manager = {
     path = {}
 }
 
-local on <const> = require 'imports.on.server'
-local emit <const> = require 'imports.on.client'
-
 function Manager:edit(resource, file, key, value)
     -- print(self.resources[resource][file][key], value)
     -- print(resource, file, key, value)
