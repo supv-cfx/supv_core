@@ -98,7 +98,7 @@ supv.webhook = SendWebhookDiscord
 if config.playing_from ~= 'shared' then return end
 
 ---@todo need more implementation about webhook send from client
-supv:onNet('webhook:received', function (source, types, ...)
+on.net('webhook:received', function (source, types, ...)
     warn(("%s trying to playing webhook from client"):format(source))
     supv.webhook(types, ...)
 end)
