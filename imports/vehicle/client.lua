@@ -82,10 +82,11 @@ local function SpawnVehicle(model, coords, data)
             edit = Edit,
         }
     
-        local FlushModel <const> = supv.request({ type = 'model', name = self.model })
+        supv.request({ type = 'model', name = self.model })
         self.vehicle = CreateVehicle(self.model, self.vec4.x, self.vec4.y, self.vec4.z, self.vec4.w, self.data.network, self.data.mission)
-        FlushModel(self.model)
         ---@todo: add vehicle data setter
+
+        SetModelAsNoLongerNeeded(self.model)
 
         if DoesEntityExist(self.vehicle) then
             if self.data.plate then SetVehicleNumberPlateText(self.vehicle, self.data.plate) else self.data.plate = GetVehicleNumberPlateText(self.vehicle) end
