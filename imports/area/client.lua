@@ -27,6 +27,17 @@ local function GetVehicleInArea(coords, maxDistance, inside)
     return #vehiclesFound > 0 and vehiclesFound or false
 end
 
+local function ZoneClear(coords, maxDistance, ignore)
+    local vehicles <const> = GetVehicleInArea(coords, maxDistance)
+    if vehicles and #vehicles == 1 and ignore then
+        return vehicles[1].vehicle == ignore
+    elseif vehicles and #vehicles > 0 then
+        return false
+    end
+    return true
+end
+
 return {
-    vehicles = GetVehicleInArea
+    vehicles = GetVehicleInArea,
+    isClear = ZoneClear
 }
