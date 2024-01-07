@@ -1,3 +1,5 @@
+local emit <const> = require 'imports.emit.server'
+
 ---@param source integer
 ---@param select 'simple'
 ---@param data data

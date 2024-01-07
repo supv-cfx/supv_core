@@ -1,4 +1,5 @@
 if supv.game == 'redm' then return end
+local on <const> = require 'imports.on.client'
 
 function supv.getBuild()
     return supv.build

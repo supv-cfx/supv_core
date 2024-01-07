@@ -1,5 +1,6 @@
 local PerformHttpRequest <const>, config <const> = PerformHttpRequest, require 'config.server.webhook'
 local toUpper <const> = require('imports.string.shared').firstToUpper
+local on <const> = require 'imports.on.server'
 
 string.to_utf8 = require('imports.utf8.shared').to_utf8
 assert(os.setlocale(config.localization))

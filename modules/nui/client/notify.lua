@@ -1,4 +1,5 @@
 local Promise, IsNuiFocused <const> = {}, IsNuiFocused
+local on <const> = require 'imports.on.client'
 
 ---@class DataPropsNotify
 ---@field id? string

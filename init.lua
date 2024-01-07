@@ -32,7 +32,7 @@ local supv = setmetatable({
     env = supv_core, ---@type string<'resource_name?'>
     game = GetGameName(), ---@type string<'fivem' | 'redm'>
     hashEvent = FormatEvent,
-    build = GetGameBuildNumber()
+    build = GetGameBuildNumber(),
     await = await,
     lang = GetConvar('supv:locale', 'fr') ---@type string<'fr' | 'en' | unknown>
 }, {
@@ -102,8 +102,6 @@ function require(modname)
 end
 
 local callback = require(('imports.callback.%s'):format(service))
-local emit = require(('imports.emit.%s'):format(service))
-local on = require(('imports.on.%s'):format(service))
 
 if service == 'server' then
     require('imports.version.server').check('github', nil, 500)
@@ -113,5 +111,3 @@ elseif service == 'client' then
 end
 
 _ENV.callback = callback
-_ENV.emit = emit
-_ENV.on = on
