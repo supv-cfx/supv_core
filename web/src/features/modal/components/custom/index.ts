@@ -6,3 +6,4 @@ export * from './_slider';
 export * from './_select';
 export * from './_number';
 export * from './_multiselect';
+export * from './_colorpicker';

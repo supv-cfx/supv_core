@@ -79,6 +79,26 @@ export interface _SelectProps {
   props: any;
 }
 
+interface _DataColorPickers {
+  format?: "hex" | "hexa" | "rgba" | "rgb" | "hsl" | "hsla";
+  default?: string;
+  required?: boolean;
+  callback?: boolean;
+}
+
+export interface _ColorPickerProps {
+  index: string;
+  label?: string;
+  data?: _DataColorPickers;
+  onChanged: (
+    index: string,
+    value: string,
+    isRequired?: boolean,
+    callback?: boolean
+  ) => void;
+  props: any;
+}
+
 export interface _MultiSelectProps {
   index: string;
   label?: string;

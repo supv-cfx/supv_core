@@ -8,6 +8,7 @@ const modalOptions = [
   { type: 'select', label: 'Ville', required: true, options: [{value: 'paris', label: 'Paris'}, {value: 'lyon', label: 'Lyon'}], default: 'lyon', callback: true },
   { type: 'number', label: 'Argent', required: true, default: 10000000, format: {}, callback: true},
   { type: 'multiselect', label: 'Multiselector', required: true, options: [{value: 'paris', label: 'Paris'}, {value: 'lyon', label: 'Lyon'}], default: ['lyon'], callback: true },
+  { type: 'colorpicker', label: 'Mon color picker', format: 'rgba', callback: true }
   
   /*{ type: 'input', label: 'Input Field', required: true, callback: true, error: 'Message perso', default: 'test' },
   { type: 'number', label: 'Textarea Field', required: true, callback: true, default: 10 },

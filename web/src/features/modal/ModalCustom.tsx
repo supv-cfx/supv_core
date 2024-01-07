@@ -7,7 +7,7 @@ import { Stack, Group, Modal, Divider } from '@mantine/core';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { fetchNui } from "../../utils/fetchNui";
 import AnimatedButton from './components/buttons';
-import { InputField, SelectField, CheckboxField, DateInputField, PasswordField, SliderField, NumberField, MutltiSlectField } from './components/custom';
+import { InputField, SelectField, CheckboxField, DateInputField, PasswordField, SliderField, NumberField, MutltiSlectField, ColorPickerField } from './components/custom';
 import type { ModalPropsCustom, Option, _SelectProps, _MultiSelectProps } from '../../typings';
 
 const ModalCustom: React.FC = () => {
@@ -29,7 +29,8 @@ const ModalCustom: React.FC = () => {
             : field.type === 'checkbox' ? field.checked || false
             : field.type === 'slider' ? field.default || 0
             : field.type === 'number' ? field.default || 0
-            : field.type === ('select' || 'multiselect')? field.default || null
+            : field.type === 'colorpicker' ? field.default || '#000000'
+            : field.type === ('select' || 'multiselect') ? field.default || null
             //: field.type === 'multiselect' ? field.default || null
             : null,
           required: field.required || false,
@@ -192,6 +193,17 @@ const ModalCustom: React.FC = () => {
                         index={`${index}`}
                         label={field.label}
                         options={field.options as _MultiSelectProps["options"]}
+                        data={field as any}
+                        onChanged={handleChange}
+                        props={form.getInputProps(`${index}`)}
+                      />
+                    )
+                  }
+                  {
+                    field.type === 'colorpicker' && (
+                      <ColorPickerField
+                        index={`${index}`}
+                        label={field.label}
                         data={field as any}
                         onChanged={handleChange}
                         props={form.getInputProps(`${index}`)}
