@@ -13,7 +13,7 @@
     "@mantine/core": "^6.0.9",
     "@mantine/dates": "^6.0.9",
     "@mantine/form": "^7.3.2",
-    "@mantine/hooks": "^7.3.2",
+    "@mantine/hooks": "^7.4.0",
     "@mantine/modals": "^6.0.9",
     "@mantine/notifications": "^6.0.9",
     "@testing-library/jest-dom": "^6.2.0",
