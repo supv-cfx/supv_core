@@ -383,7 +383,7 @@ local function GetVehicleProperties(vehicle, filter)
                 doors = damage.doors,
                 tyres = damage.tyres,
                 bulletProofTyres = GetVehicleTyresCanBurst(vehicle),
-                driftTyres = supv.build >= 2372 and GetDriftTyresEnabled(vehicle),
+                driftTyres = GetGameBuildNumber() >= 2372 and GetDriftTyresEnabled(vehicle),
                 -- no setters?
                 -- leftHeadlight = GetIsLeftVehicleHeadlightDamaged(vehicle),
                 -- rightHeadlight = GetIsRightVehicleHeadlightDamaged(vehicle),
