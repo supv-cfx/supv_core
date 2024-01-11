@@ -49,6 +49,9 @@ local function FormatTempsYears(days)
     return years, months, daysLeftAfterMonths
 end
 
+---@param coord1 vector2 | vector3 | vector4
+---@param coord2 vector2 | vector3 | vector4
+---@return number
 local function GetHeadingFromCoords(coord1, coord2)
     if not coord1 or not coord2 then return end
     if not coord1.x or not coord1.y or not coord2.x or not coord2.y then return end
