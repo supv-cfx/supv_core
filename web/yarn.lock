@@ -4506,10 +4506,10 @@ emittery@^0.8.1:
   resolved "https://registry.npmjs.org/emittery/-/emittery-0.8.1.tgz"
   integrity sha512-uDfvUjVrfGJJhymx/kz6prltenw1u7WrCg1oa94zYY8xxVpLLUu045LAT0dhDZdXG58/EpPL/5kA180fQ/qudg==
 
-emoji-picker-react@^4.6.15:
-  version "4.6.15"
-  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.6.15.tgz#c76492d4ef0d4cf43d90633449b1dbd7ff3c2103"
-  integrity sha512-dmj3qVQN8K5tLG1jmyv2SntzmJsv4vOB8eqqr9j8Fal6pTYkp5IoZP22K593HCDocyJBZEN/fOkvYoBt38AkfA==
+emoji-picker-react@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.7.0.tgz#69345402a5421db46506137a3598443c10826fc2"
+  integrity sha512-skjmaO4o4SHrQYVJm2D77mWBG2amudJl/RsKItSpwEQyN8va8xkm+Hij1I6aI9Bqt2KUAy4VMIVUB9mGCpYYGQ==
   dependencies:
     flairup "0.0.32"
 
