@@ -1834,10 +1834,10 @@
   dependencies:
     "@mantine/utils" "6.0.21"
 
-"@mantine/form@^7.4.2":
-  version "7.4.2"
-  resolved "https://registry.yarnpkg.com/@mantine/form/-/form-7.4.2.tgz#6806027e811c976ca5146df5e189d6a42cf1e716"
-  integrity sha512-zlacaHazqmB9NBOp3pHE8+nDlNKUnT02QbV6q4/CNitAlfqDwbB8u9tWKsSU3E0QF6s5oAzcTY+apyD/nWgfrA==
+"@mantine/form@^7.5.0":
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/@mantine/form/-/form-7.5.0.tgz#f197a8d1c9e1185361de6337b4c43f033fc0b3d0"
+  integrity sha512-Bp2ZYwt+oYXNUm7ySPwst5C9S44YvrdsiFXjUzjX1QaoznAWern1W0dtyF7vJ3KWOoY9+7XXx+Ou4pHTOIq/hQ==
   dependencies:
     fast-deep-equal "^3.1.3"
     klona "^2.0.6"
