@@ -7,19 +7,39 @@ type Animation = {
   exit: string;
 }
 
+type IconStyle = {
+  animation?: string;
+  color?: React.CSSProperties;
+}
+
 export interface NotificationProps {
+  image?: string;
   title?: string;
-  id?: number | string;
+  id?: string;
   key?: number | string;
-  description?: string; 
+  description?: string;
+  dur?: number | 3000; // default: 3000
   type?: string; 
-  duration?: number; // default: 3000
+  duration: number | 3000; // default: 3000
   icon?: IconProp; // default: check on type
   position?: ToastPosition; // default: top-right
   color?: string; // default: check on type
   closable?: boolean; // default: false (not semi-implementation)
   border?: boolean; // default: false (not semi-implementation)
-  iconAnim: string; // default: false
+  iconStyle?: IconStyle;
   style?: React.CSSProperties;
   animation?: Animation;
+}
+
+export interface Minimap {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  expanded: boolean;
+}
+
+export interface MinimapProps {
+  name: 'x' | 'y' | 'w' | 'h' | 'expanded';
+  value: number | boolean;
 }
