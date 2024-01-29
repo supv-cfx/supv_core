@@ -49,6 +49,9 @@ local function FormatTempsYears(days)
     return years, months, daysLeftAfterMonths
 end
 
+---@param coord1 vector2 | vector3 | vector4
+---@param coord2 vector2 | vector3 | vector4
+---@return number
 local function GetHeadingFromCoords(coord1, coord2)
     if not coord1 or not coord2 then return end
     if not coord1.x or not coord1.y or not coord2.x or not coord2.y then return end
@@ -107,6 +110,21 @@ local function Digits(value)
     return right ~= '' and ("%s%s"):format(formattedNumber, right) or formattedNumber
 end
 
+---@param currentPosition vector3 | vector4
+---@param heading number
+---@param distance? number
+---@return vector3
+local function GetCoordsInDirection(currentPosition, heading, distance)
+    if not currentPosition or not heading then return end
+    if not currentPosition.x or not currentPosition.y then return end
+
+    local headingRadians <const> = math.rad(heading)
+    local deltaX <const> = (distance or 10) * math.cos(headingRadians)
+    local deltaY <const> = (distance or 10) * math.sin(headingRadians)
+
+    return vec3(currentPosition.x + deltaX, currentPosition.y + deltaY, currentPosition.z)
+end
+
 return {
     round = Round,
     chance = Chance,
@@ -115,7 +133,8 @@ return {
     --format_time = FormatTemps,
     format_years = FormatTempsYears,
     divmod = DivMod,
-    headingFromCoords = GetHeadingFromCoords
+    headingFromCoords = GetHeadingFromCoords,
+    coordsInDirection = GetCoordsInDirection
 }
 
 --[[
