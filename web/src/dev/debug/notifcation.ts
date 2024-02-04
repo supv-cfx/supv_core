@@ -2,66 +2,65 @@ import { debugData } from "../../utils/debugData";
 import type { NotificationProps } from "../../typings/Notification";
 
 export const debugNotification = async () => {
-  debugData([
-    {
-      action: 'supv:notification:send',
-      data: {
-        id: '1',
-        title: 'Transaction',
-        description: 'On souhaite vous donnez 5 pains',
-        type: 'action',
-        duration: 3000,
-        icon: 'hand-holding-hand',
-        iconStyle: {
-          animation: 'shake',
-          color: 'rgba(187, 155, 26, 0.74)',
-        }
-      } as NotificationProps,
-    }
-  ]);
+	debugData([
+		{
+			action: "supv:notification:send",
+			data: {
+				//id: '1',
+				title: "Transaction",
+				description: "On souhaite vous donnez 5 pains",
+				type: "action",
+				icon: "handshake",
+				iconStyle: {
+					animation: "flip",
+					color: "rgba(187, 155, 26, 0.74)",
+				},
+			} as NotificationProps,
+		},
+	]);
 
-  debugData([
-    {
-      action: 'supv:notification:send',
-      data: {
-        title: 'Transaction',
-        description: 'On souhaite vous donnez 5 pains',
-        type: 'loading',
-        duration: 4500,
-      } as NotificationProps,
-    }
-  ]);
-  debugData([
-    {
-      action: 'supv:notification:send',
-      data: {
-        title: 'Transaction',
-        description: 'On souhaite vous donnez 5 pains',
-        type: 'loading',
-        iconStyle: {
-          animation: 'dots'
-        },
-        duration: 4500,
-      } as NotificationProps,
-    }
-  ]);
-  debugData([
-    {
-      action: 'supv:notification:send',
-      data: {
-        title: 'Transaction',
-        description: 'On souhaite vous donnez 5 pains',
-        type: 'loading',
-        iconStyle: {
-          animation: 'bars'
-        },
-        duration: 4500,
-      } as NotificationProps,
-    }
-  ]);
+	// debugData([
+	//   {
+	//     action: 'supv:notification:send',
+	//     data: {
+	//       title: 'Transaction',
+	//       description: 'On souhaite vous donnez 5 pains',
+	//       type: 'loading',
+	//       duration: 4500,
+	//     } as NotificationProps,
+	//   }
+	// ]);
+	// debugData([
+	//   {
+	//     action: 'supv:notification:send',
+	//     data: {
+	//       title: 'Transaction',
+	//       description: 'On souhaite vous donnez 5 pains',
+	//       type: 'loading',
+	//       iconStyle: {
+	//         animation: 'dots'
+	//       },
+	//       duration: 4500,
+	//     } as NotificationProps,
+	//   }
+	// ]);
+	debugData([
+		{
+			action: "supv:notification:send",
+			data: {
+				title: "Transaction",
+				description: "On souhaite vous donnez 5 pains",
+				type: "loading",
+				iconStyle: {
+					animation: "bars",
+				},
+				duration: 4500,
+			} as NotificationProps,
+		},
+	]);
 
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  /*debugData([
+	// await new Promise(resolve => setTimeout(resolve, 1000));
+	/*debugData([
     {
       action: 'supv:notification:send',
       data: {
@@ -93,96 +92,107 @@ export const debugNotification = async () => {
     }
   ]);*/
 
-  debugData([
-    {
-      action: 'supv:notification:send',
-      data: {
-        id: '1',
-        //title: 'Whereas recognition of the inherent dignity',
-        description: 'action 2',
-        type: 'action',
-        position: 'top-right',
-        //duration: 5000,
-        //progress: true,
-        //closable: true,
-      } as NotificationProps,
-    }
-  ]);
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  debugData([
-    {
-      action: 'supv:notification:send',
-      data: {
-        id: '2',
-        title: 'Whereas recognition of the inherent dignity',
-        description: '~r~Notification~r~ ~p~description~p~\nwith new line',
-        type: 'success',
-        position: 'top-right',
-        duration: 2000,
-        //progress: true,
-        //closable: true,
-      } as NotificationProps,
-    }
-  ]);
-  await new Promise(resolve => setTimeout(resolve, 100));
-  debugData([
-    {
-      action: 'supv:notification:send',
-      data: {
-        title: 'Title {badge:omagad x):?:?:?:?}',
-        description: '100000',
-        type: 'success',
-        //position: 'top-right',
-        duration: 10000,
-        image: 'https://avatars.githubusercontent.com/u/31973315?v=4',
-        //progress: true,
-        //closable: true,
-      } as NotificationProps,
-    }
-  ]);
-  await new Promise(resolve => setTimeout(resolve, 100));
-  debugData([
-    {
-      action: 'supv:notification:send',
-      data: {
-        title: 'Whereas recognition of {badge:phone 0666-2555)}',
-        description: '3000\nwith new line',
-        type: 'success',
-        //position: 'top-right',
-        duration: 3000,
-        //progress: true,
-        //closable: true,
-      } as NotificationProps,
-    }
-  ]);
-  await new Promise(resolve => setTimeout(resolve, 100));
-  debugData([
-    {
-      action: 'supv:notification:send',
-      data: {
-        title: 'Une erreur ma gueule',
-        description: '- je suis un bg\n- **wéwé ma gueule**',
-        type: 'error',
-        duration: 15000,
-      } as NotificationProps,
-    }
-  ]);
-  await new Promise(resolve => setTimeout(resolve, 100));
-  debugData([
-    {
-      action: 'supv:notification:send',
-      data: {
-        title: 'Whereas recognition of the inherent dignity',
-        description: '~r~Notification~r~ ~p~description~p~\nwith new line',
-        type: 'success',
-        //position: 'top-right',
-        duration: 5000,
-        //progress: true,
-        //closable: true,
-      } as NotificationProps,
-    }
-  ]);
-  /*
+	// debugData([
+	//   {
+	//     action: 'supv:notification:send',
+	//     data: {
+	//       id: '1',
+	//       //title: 'Whereas recognition of the inherent dignity',
+	//       description: 'action 2',
+	//       type: 'action',
+	//       position: 'top-right',
+	//       //duration: 5000,
+	//       //progress: true,
+	//       //closable: true,
+	//     } as NotificationProps,
+	//   }
+	// ]);
+	// await new Promise(resolve => setTimeout(resolve, 1000));
+	debugData([
+		{
+			action: "supv:notification:send",
+			data: {
+				title: "tete",
+				description: "~r~Notification~r~ ~p~description~p~\nwith new line",
+				duration: 5000,
+				badge: {
+					type: "avatar",
+					text: "tete",
+					position: "left",
+					//name: "x-ray",
+					//animation: "beat",
+					//color: "rgba(187, 155, 26, 0.74)",
+					//rightSection: {
+					src: "https://avatars.githubusercontent.com/u/31973315?v=4",
+					//animation: "beat",
+					variant: "gradient",
+					gradient: "blue",
+					//},
+				},
+				//progress: true,
+				//closable: true,
+			} as unknown as NotificationProps,
+		},
+	]);
+	// await new Promise(resolve => setTimeout(resolve, 100));
+	debugData([
+		{
+			action: "supv:notification:send",
+			data: {
+				title: "Title {badge:omagad x):?:?:?:?}",
+				description: "100000",
+				type: "success",
+				//position: 'top-right',
+				duration: 10000,
+				image: "https://avatars.githubusercontent.com/u/31973315?v=4",
+				//progress: true,
+				//closable: true,
+			} as NotificationProps,
+		},
+	]);
+	// await new Promise(resolve => setTimeout(resolve, 100));
+	// debugData([
+	//   {
+	//     action: 'supv:notification:send',
+	//     data: {
+	//       title: 'Whereas recognition of {badge:phone 0666-2555)}',
+	//       description: '3000\nwith new line',
+	//       type: 'success',
+	//       //position: 'top-right',
+	//       duration: 3000,
+	//       //progress: true,
+	//       //closable: true,
+	//     } as NotificationProps,
+	//   }
+	// ]);
+	// await new Promise(resolve => setTimeout(resolve, 100));
+	debugData([
+		{
+			action: "supv:notification:send",
+			data: {
+				title: "Une erreur ma gueule",
+				description: "- je suis un bg\n- **wéwé ma gueule**",
+				type: "error",
+				duration: 15000,
+			} as NotificationProps,
+		},
+	]);
+	// await new Promise(resolve => setTimeout(resolve, 100));
+	// debugData([
+	//   {
+	//     action: 'supv:notification:send',
+	//     data: {
+	//       title: 'Whereas recognition of the inherent dignity',
+	//       description: '~r~Notification~r~ ~p~description~p~\nwith new line',
+	//       type: 'success',
+	//       //position: 'top-right',
+	//       duration: 5000,
+	//       //progress: true,
+	//       //closable: true,
+	//     } as NotificationProps,
+	//   }
+	// ]);
+	/*
   debugData([
     {
       action: 'supv:notification:send',
@@ -291,4 +301,4 @@ export const debugNotification = async () => {
       } as NotificationProps,
     }
   ]);*/
-} // screwdriver-wrench
+}; // screwdriver-wrench

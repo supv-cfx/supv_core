@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
 	Box,
 	Slider,
@@ -56,7 +56,7 @@ const CrosshairTool: React.FC = () => {
 		if (opened) close();
 	};
 
-  const DrawCrosshairTool = () => {
+  const DrawCrosshairTool = useCallback(() => {
 		// Dessiner le crosshair sur le canvas lors de la première rendu et à chaque mise à jour de crosshairParams
 		const canvas = cRef.current;
 		if (!canvas) return;
@@ -293,11 +293,11 @@ const CrosshairTool: React.FC = () => {
 			ctxDot.fill();
 			// Changer couleur du point
 		}
-  }
+  }, [crosshairParams]);
 
 	useEffect(() => {
     DrawCrosshairTool();
-	}, [crosshairParams]);
+	}, [DrawCrosshairTool]);
 	// le container doit prendre la taille de l'ecran
 	return (
 		<>

@@ -68,6 +68,8 @@ local function RefreshGfxToNui(force)
     end
 end
 
+_ENV.RefreshGfxToNui = RefreshGfxToNui
+
 ---@class DataPropsNotify
 ---@field id? string
 ---@field title? string
