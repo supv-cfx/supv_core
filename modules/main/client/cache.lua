@@ -23,6 +23,7 @@ end
 CreateThread(function()
     cache:set('playerid', PlayerId())
     cache:set('serverid', GetPlayerServerId(cache.playerid))
+    local RefreshGfxToNui
     while true do
         cache:set('ped', PlayerPedId())
 
@@ -50,7 +51,13 @@ CreateThread(function()
 			cache:set('seat', false)
 		end
 
-        Wait(750)
+        if RefreshGfxToNui then
+            RefreshGfxToNui()
+        elseif not RefreshGfxToNui and _ENV.RefreshGfxToNui then
+            RefreshGfxToNui = _ENV.RefreshGfxToNui
+        end
+
+        Wait(500)
     end
 end)
 
