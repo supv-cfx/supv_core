@@ -2000,32 +2000,21 @@
   dependencies:
     "@mantine/utils" "6.0.21"
 
-<<<<<<< Updated upstream
+
 "@mantine/form@^7.5.0":
   version "7.5.0"
   resolved "https://registry.yarnpkg.com/@mantine/form/-/form-7.5.0.tgz#f197a8d1c9e1185361de6337b4c43f033fc0b3d0"
   integrity sha512-Bp2ZYwt+oYXNUm7ySPwst5C9S44YvrdsiFXjUzjX1QaoznAWern1W0dtyF7vJ3KWOoY9+7XXx+Ou4pHTOIq/hQ==
-=======
-"@mantine/form@^7.4.2":
-  version "7.4.2"
-  resolved "https://registry.npmjs.org/@mantine/form/-/form-7.4.2.tgz"
-  integrity sha512-zlacaHazqmB9NBOp3pHE8+nDlNKUnT02QbV6q4/CNitAlfqDwbB8u9tWKsSU3E0QF6s5oAzcTY+apyD/nWgfrA==
->>>>>>> Stashed changes
+
   dependencies:
     fast-deep-equal "^3.1.3"
     klona "^2.0.6"
 
-<<<<<<< Updated upstream
 "@mantine/hooks@^7.5.1":
   version "7.5.1"
   resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-7.5.1.tgz#c95855e9bfcffca26a22f21389ff6c3157113758"
   integrity sha512-LfrEOkX8U2KbkYAU5BMA7FPbMva/TSd65c45W35wHSx3iqYMsoPN9+Ll1zc/HT0XNFp73jGet9cU7VREbAl0/A==
-=======
-"@mantine/hooks@^7.4.2", "@mantine/hooks@6.0.21":
-  version "7.4.2"
-  resolved "https://registry.npmjs.org/@mantine/hooks/-/hooks-7.4.2.tgz"
-  integrity sha512-tNtn/SNOtSmjLQmIk4S5nsTJjV84Oj0AUYRrAN78HHw3bfWp6bdWbgYPtPEH9e6iFJfdxiX0hrLfWqROalAsbQ==
->>>>>>> Stashed changes
+
 
 "@mantine/modals@^6.0.9":
   version "6.0.21"
@@ -2400,17 +2389,11 @@
     lz-string "^1.5.0"
     pretty-format "^27.0.2"
 
-<<<<<<< Updated upstream
 "@testing-library/jest-dom@^6.4.1":
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-6.4.1.tgz#1b0cc222c3a59f9cba2cc7947dc5fadc01210a37"
   integrity sha512-Z7qMM3J2Zw5H/nC2/5CYx5YcuaD56JmDFKNIozZ89VIo6o6Y9FMhssics4e2madEKYDNEpZz3+glPGz0yWMOag==
-=======
-"@testing-library/jest-dom@^6.2.1":
-  version "6.2.1"
-  resolved "https://registry.npmjs.org/@testing-library/jest-dom/-/jest-dom-6.2.1.tgz"
-  integrity sha512-Nuy/uFFDe9h/2jwoUuMKgoxvgkUv4S9jI9bARj6dGUKJ3euRhg8JFi5sciYbrayoxkadEOZednRT9+vo6LvvxQ==
->>>>>>> Stashed changes
+
   dependencies:
     "@adobe/css-tools" "^4.3.2"
     "@babel/runtime" "^7.9.2"
@@ -2643,10 +2626,11 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@^29.5.11", "@types/jest@>= 28":
-  version "29.5.11"
-  resolved "https://registry.npmjs.org/@types/jest/-/jest-29.5.11.tgz"
-  integrity sha512-S2mHmYIVe13vrm6q4kN6fLYYAka15ALQki/vgDC3mIukEOx8WJlv0kQPM+d4w8Gp6u0uSdKND04IlTXBv0rwnQ==
+"@types/jest@^29.5.12":
+  version "29.5.12"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-29.5.12.tgz#7f7dc6eb4cf246d2474ed78744b05d06ce025544"
+  integrity sha512-eDC8bTvT/QhYdxJAulQikueigY5AsdBRH2yDKW3yveW7svY3+DzN84/2NUgkw10RTiJbWqZrTtoGVdYlvFJdLw==
+
   dependencies:
     expect "^29.0.0"
     pretty-format "^29.0.0"
@@ -2678,17 +2662,11 @@
   resolved "https://registry.npmjs.org/@types/ms/-/ms-0.7.32.tgz"
   integrity sha512-xPSg0jm4mqgEkNhowKgZFBNtwoEwF6gJ4Dhww+GFpm3IgtNseHQZ5IqdNwnquZEoANxyDAKDRAdVo4Z72VvD/g==
 
-<<<<<<< Updated upstream
 "@types/node@*", "@types/node@^20.11.16":
   version "20.11.16"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.16.tgz#4411f79411514eb8e2926f036c86c9f0e4ec6708"
   integrity sha512-gKb0enTmRCzXSSUJDq6/sPcqrfCv2mkkG6Jt/clpn5eiCbKTY+SgZUxo+p8ZKMof5dCp9vHQUAB7wOUTod22wQ==
-=======
-"@types/node@*", "@types/node@^20.11.5":
-  version "20.11.5"
-  resolved "https://registry.npmjs.org/@types/node/-/node-20.11.5.tgz"
-  integrity sha512-g557vgQjUUfN76MZAN/dt1z3dzcUsimuysco0KeluHgrPdJXkP/XdAURgyO2W9fZWHRtRBiVKzKn8vyOAwlG+w==
->>>>>>> Stashed changes
+
   dependencies:
     undici-types "~5.26.4"
 
@@ -4828,18 +4806,12 @@ emittery@^0.8.1:
   resolved "https://registry.npmjs.org/emittery/-/emittery-0.8.1.tgz"
   integrity sha512-uDfvUjVrfGJJhymx/kz6prltenw1u7WrCg1oa94zYY8xxVpLLUu045LAT0dhDZdXG58/EpPL/5kA180fQ/qudg==
 
-<<<<<<< Updated upstream
 emoji-picker-react@^4.7.10:
   version "4.7.10"
   resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.7.10.tgz#14b262b2b555d6cad4710d810780cb88daf27156"
   integrity sha512-vsrEmiwfz+h3zYN3ZR4sZ/ExRWooE3AAMBbgIGgSq5HbCNZoG4ri//WlhxoMhp8QI7X56d8Xyqo7vGGf5cy1Pw==
-=======
-emoji-picker-react@^4.6.15:
-  version "4.6.15"
-  resolved "https://registry.npmjs.org/emoji-picker-react/-/emoji-picker-react-4.6.15.tgz"
-  integrity sha512-dmj3qVQN8K5tLG1jmyv2SntzmJsv4vOB8eqqr9j8Fal6pTYkp5IoZP22K593HCDocyJBZEN/fOkvYoBt38AkfA==
->>>>>>> Stashed changes
-  dependencies:
+
+ dependencies:
     flairup "0.0.35"
 
 emoji-regex@^8.0.0:
@@ -5577,17 +5549,10 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
-<<<<<<< Updated upstream
 flairup@0.0.35:
   version "0.0.35"
   resolved "https://registry.yarnpkg.com/flairup/-/flairup-0.0.35.tgz#d14abb36e823e8e5091574049417d8ea758a7c4e"
   integrity sha512-nXDgTr2WT7UT7HJnNRHRnbo93xs5B3ar5lRWqIbJ6hiwWTSIex5xp56uhEzow6+S5hySoX0mEhzYbLtU3K3A+A==
-=======
-flairup@0.0.32:
-  version "0.0.32"
-  resolved "https://registry.npmjs.org/flairup/-/flairup-0.0.32.tgz"
-  integrity sha512-kqFDVgPXq714gyUtKp/nEkCg4vWpRni8pSWoPMU54pQNGqVEOfT+bBYgCyWFb5MygSh2q0wCWvcX6kyAus9C7g==
->>>>>>> Stashed changes
 
 flat-cache@^3.0.4:
   version "3.1.0"
@@ -11511,17 +11476,11 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-<<<<<<< Updated upstream
 web-vitals@^3.5.2:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-3.5.2.tgz#5bb58461bbc173c3f00c2ddff8bfe6e680999ca9"
   integrity sha512-c0rhqNcHXRkY/ogGDJQxZ9Im9D19hDihbzSQJrsioex+KnFgmMzBiy57Z1EjkhX/+OjyBpclDCzz2ITtjokFmg==
-=======
-web-vitals@^3.5.1:
-  version "3.5.1"
-  resolved "https://registry.npmjs.org/web-vitals/-/web-vitals-3.5.1.tgz"
-  integrity sha512-xQ9lvIpfLxUj0eSmT79ZjRoU5wIRfIr7pNukL7ZE4EcWZSmfZQqOlhuAGfkVa3EFmzPHZhWhXfm2i5ys+THVPg==
->>>>>>> Stashed changes
+
 
 webidl-conversions@^4.0.2:
   version "4.0.2"
