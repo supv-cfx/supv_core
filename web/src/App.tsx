@@ -4,7 +4,9 @@ import {
 	ColorSchemeProvider,
 	ColorScheme,
 } from "@mantine/core";
+import { useClipboard } from '@mantine/hooks';
 import { themeOverride } from "./theme";
+import { useNuiEvent } from "./hooks/useNuiEvent";
 
 import CrosshairTool from "./features/tool/Crosshair";
 import Crosshair from "./features/crosshair/Crosshair";
@@ -19,23 +21,18 @@ import ModalCustom from "./features/modal/ModalCustom";
 //import ChatText from './features/chat/Chat';
 
 import DevTool from "./dev/DevEnv";
-import { useNuiEvent } from "./hooks/useNuiEvent";
+
 
 const App: React.FC = () => {
 	//const { config } = useConfig(); // TODO: use config
 	const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
 	const toggleColorScheme = (value?: ColorScheme) =>
 		setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+	const clipboard = useClipboard({ timeout: 500 });
 
-  useNuiEvent("supv_core:copy", async (data) => {
-    try {
-      const clipboard = navigator.clipboard;
-      await clipboard.writeText(data);
-      console.log(`copied to clipboard\n ${data}`);
-    } catch (err) {
-      console.error('Erreur lors de la tentative de copie', err);
-    }
-  });
+	useNuiEvent("supv_core:copy", (data) => {
+	  clipboard.copy(data);
+	});
 
 	return (
 		<>
