@@ -20,6 +20,7 @@ import { debugModalsConfirm } from './debug/modals/confirm';
 import { debugModalsCustom } from './debug/modals/custom';
 import { debugResourceManager } from './debug/resource';
 import { debugCosshairTool } from './debug/crosshairTool';
+import { debugCopy } from './debug/copy';
 
 interface Props {
   text: string;
@@ -124,6 +125,14 @@ const DevTool: React.FC = () => {
             onClick={() => {debugCosshairTool(); setOpened(false)}}
           >
             Crosshair Tool
+          </Button>
+          <Button
+            variant='outline'
+            color='blue'
+            fullWidth
+            onClick={() => {debugCopy(); setOpened(false)}}
+          >
+            Copy
           </Button>
         </Stack>
       </Drawer>
