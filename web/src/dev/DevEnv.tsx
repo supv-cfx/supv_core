@@ -21,6 +21,7 @@ import { debugModalsCustom } from './debug/modals/custom';
 import { debugResourceManager } from './debug/resource';
 import { debugCosshairTool } from './debug/crosshairTool';
 import { debugCopy } from './debug/copy';
+import { debugAction } from './debug/action';
 
 interface Props {
   text: string;
@@ -54,6 +55,7 @@ const AnimatedButtons: React.FC<Props> = ({
 const DevTool: React.FC = () => {
   const [opened, setOpened] = useState<boolean>(false);
   const [side, setSide] = useState<'left' | 'right'>('right');
+  const [action, setAction] = useState<boolean>(false);
 
   return (
     <>
@@ -133,6 +135,18 @@ const DevTool: React.FC = () => {
             onClick={() => {debugCopy(); setOpened(false)}}
           >
             Copy
+          </Button>
+          <Button
+            variant='outline'
+            color='green'
+            fullWidth
+            onClick={() => {
+              setAction(!action);
+              debugAction(action); 
+              setOpened(false)
+            }}
+          >
+            Action
           </Button>
         </Stack>
       </Drawer>

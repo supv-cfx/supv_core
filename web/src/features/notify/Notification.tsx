@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React/*, { useState, useEffect } */from "react";
 import type { NotificationItemsProps, BadgeProps } from "../../typings";
 import {
 	FontAwesomeIconProps,
@@ -8,29 +8,29 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { Avatar, Badge, Loader, Progress, Title } from "@mantine/core";
 import { ActionItem, DescriptionItem } from "./components";
 
-const MathRandom = (min: number, max: number, current: number) => {
-	let r = Math.floor(Math.random() * (max - min + 1) + min);
-	while (r === current) {
-		r = MathRandom(min, max, current);
-	}
-	return r;
-};
+// const MathRandom = (min: number, max: number, current: number) => {
+// 	let r = Math.floor(Math.random() * (max - min + 1) + min);
+// 	while (r === current) {
+// 		r = MathRandom(min, max, current);
+// 	}
+// 	return r;
+// };
 
 // Faire plusieurs couleurs différentes
-const Rainbow = [
-	"red",
-	"orange",
-	"yellow",
-	"green",
-	"blue",
-	"indigo",
-	"violet",
-];
+// const Rainbow = [
+// 	"red",
+// 	"orange",
+// 	"yellow",
+// 	"green",
+// 	"blue",
+// 	"indigo",
+// 	"violet",
+// ];
 
-interface RainbowProps {
-	rainbow: number;
-	color: string;
-}
+// interface RainbowProps {
+// 	rainbow: number;
+// 	color: string;
+// }
 
 const NotificationItem: React.FC<{
 	notification: NotificationItemsProps;
@@ -38,21 +38,21 @@ const NotificationItem: React.FC<{
 	zi: number;
 }> = ({ notification, duration, zi }) => {
 	const { id, data, visible } = notification;
-	const [rainbow, setRainbow] = useState<RainbowProps>({
-		rainbow: 0,
-		color: Rainbow[0],
-	});
+	// const [rainbow, setRainbow] = useState<RainbowProps>({
+	// 	rainbow: 0,
+	// 	color: Rainbow[0],
+	// });
 
 	// Changement de couleur toutes les 1.5 secondes
-	useEffect(() => {
-		const interval = setInterval(() => {
-			setRainbow((prevRainbow) => ({
-				rainbow: MathRandom(0, Rainbow.length - 1, prevRainbow.rainbow),
-				color: Rainbow[MathRandom(0, Rainbow.length - 1, prevRainbow.rainbow)],
-			}));
-		}, 1500);
-		return () => clearInterval(interval);
-	}, [rainbow]);
+	// useEffect(() => {
+	// 	const interval = setInterval(() => {
+	// 		setRainbow((prevRainbow) => ({
+	// 			rainbow: MathRandom(0, Rainbow.length - 1, prevRainbow.rainbow),
+	// 			color: Rainbow[MathRandom(0, Rainbow.length - 1, prevRainbow.rainbow)],
+	// 		}));
+	// 	}, 1500);
+	// 	return () => clearInterval(interval);
+	// }, [rainbow]);
 
 	let BadgeAddon =
 		data?.badge && data.badge?.type === "icon" ? (
@@ -122,7 +122,7 @@ const NotificationItem: React.FC<{
 				height: "auto",
 				marginBottom: "1px",
 				padding: "5px",
-				background: "rgba(26, 27, 30, 0.90)",
+				background: "rgba(0, 0, 0, 0.6)",
 				color: "#fff",
 				//transition: "height 0.3s ease-in-out, opacity 0.3s ease-in-out",
 				animation: visible
@@ -130,7 +130,7 @@ const NotificationItem: React.FC<{
 					: "NotifyScaleOut 0.5s ease-in forwards",
 				zIndex: zi,
         border: "2px solid",
-        borderColor: rainbow.color,
+        borderColor: 'rgba(14, 44, 100, 0.86)',
         //borderRadius: "10px",
         transition: "all 2s",
 			}}
