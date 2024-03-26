@@ -129,6 +129,8 @@ function supv.notifyQueue()
     return next(Promise) and true or false
 end
 
+require 'modules.nui.client.action'
+
 on.net('notify', notify) -- Register notify event for server
 --[[]
 
