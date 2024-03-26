@@ -17,6 +17,7 @@ import ConvertUnixTime from "./features/tool/ConvertUnix";
 import NotificationsWrapper from "./features/notify/SimpleNotifyWrapp";
 import ModalConfirm from "./features/modal/ModalConfirm";
 import ModalCustom from "./features/modal/ModalCustom";
+import ActionWrapper from "./features/action/ActionWrapper";
 //import ResourceManager from "./features/resource/main";
 //import ChatText from './features/chat/Chat';
 
@@ -51,6 +52,7 @@ const App: React.FC = () => {
 					<NotificationsWrapper />
           <CrosshairTool />
           <Crosshair />
+		  <ActionWrapper />
 					{/*<ChatText />
 					<ResourceManager />*/}
 				{isEnvBrowser() && <DevTool />}
