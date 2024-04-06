@@ -8,6 +8,9 @@ export const debugAction = async (value: boolean) => {
 			data: value === true ? {
         title: "Appuyez pour intéragir!",
         description: "Ouvrir vestiaire",
+        title2: 'Ouvrir',
+        description2: 'la porte',
+        keybind2: 'H',
 			} : null,
 		},
 	]);
