@@ -115,6 +115,8 @@ local function New(model, coords, data)
                 GiveWeaponToPed(self.ped, weapon, self.weapon.ammo or 0, self.weapon.visible or true, self.weapon.hand or false)
             end
 
+            SetEntityCoordsNoOffset(self.ped, self.vec4.x, self.vec4.y, self.vec4.z)
+            SetEntityHeading(self.ped, self.vec4.w)
             SetModelAsNoLongerNeeded(self.model)
             p:resolve(self)
         else
