@@ -89,11 +89,11 @@ local function New(model, coords, data)
 
         self.model = model
         self.vec3 = vec3(coords.x, coords.y, coords.z)
-        self.vec4 = vec4(coords.x, coords.y, coords.z, coords.w or coords.h or 0.0)
-        self.network = data.network or true
-        self.blockevent = data.blockevent or true
-        self.godmode = data.godmode or true
-        self.freeze = data.freeze or true
+        self.vec4 = vec4(coords.x, coords.y, coords.z, coords.w or coords.h or .0)
+        self.network = data.network == nil and true or data.network
+        self.blockevent = data.blockevent == nil and true or data.blockevent
+        self.godmode = data.godmode == nil and true or data.godmode
+        self.freeze = data.freeze == nil and true or data.freeze
         self.variation = data.variation
         self.weapon = data.weapon
         self.distance = Distance
