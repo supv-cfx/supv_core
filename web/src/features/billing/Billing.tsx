@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { fetchNui, useNuiEvent } from "../../utils";
 import {
