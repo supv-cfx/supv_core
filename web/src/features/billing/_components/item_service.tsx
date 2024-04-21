@@ -59,7 +59,7 @@ export const Articles: React.FC<ArticlesProps> = ({
 				setData({ ...data, price: totalAmount });
 			}
 		}
-	}, [articlesOptions, data]);
+	}, [articlesOptions, data, setData]);
 
 	const onMetadata = (value: string[]) => {
 		if (value.length === 0) {
@@ -87,7 +87,7 @@ export const Articles: React.FC<ArticlesProps> = ({
 						price: articlesOptions[item as any].amount,
 					};
 				} else {
-					newArticles[item].quantity = newArticles[item].quantity;
+					//newArticles[item].quantity = newArticles[item].quantity;
 					newArticles[item].price = MathRound(
 						newArticles[item].quantity * articlesOptions[item as any].amount,
 						0
@@ -256,8 +256,8 @@ export const Articles: React.FC<ArticlesProps> = ({
 				onChange={(e) => {
 					const value = e.currentTarget.checked;
 					if (!value && data.service_amount > 0) {
-						let totalAmount = data.price;
-						totalAmount -= data.service_amount;
+						//let totalAmount = data.price;
+						//totalAmount -= data.service_amount;
 						setData({
 							...data,
 							service: value,
