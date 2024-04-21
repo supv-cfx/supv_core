@@ -22,6 +22,7 @@ import { debugResourceManager } from './debug/resource';
 import { debugCosshairTool } from './debug/crosshairTool';
 import { debugCopy } from './debug/copy';
 import { debugAction } from './debug/action';
+import { debugBilling } from './debug/billing';
 
 interface Props {
   text: string;
@@ -148,6 +149,21 @@ const DevTool: React.FC = () => {
           >
             Action
           </Button>
+          <Flex
+            bg='dark.3'
+            gap='xs'
+            style={{ borderRadius: 4}}
+            justify='center'
+            align='center'
+            direction='row'
+            wrap='wrap'
+          >
+            <Text>Billing: </Text>
+            <AnimatedButtons text='Amendes' Clicked={() => {debugBilling('amende'); setOpened(false)}} color='dark.9'/>
+            <AnimatedButtons text='Service' Clicked={() => {debugBilling('item_service'); setOpened(false)}} color='dark.9'/>
+            <AnimatedButtons text='Normal' Clicked={() => {debugBilling('normal'); setOpened(false)}} color='dark.9'/>
+            <AnimatedButtons text='Custom' Clicked={() => {debugBilling('custom'); setOpened(false)}} color='dark.9'/>
+          </Flex>
         </Stack>
       </Drawer>
     </>
