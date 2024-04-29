@@ -25,6 +25,9 @@ function supv.openBilling(data)
     supv.sendReactMessage(true, {
         action = 'supv_core:billing:open',
         data = data
+    }, {        
+        focus = true,
+        locations = 'center'
     })
 
     p = promise.new()
