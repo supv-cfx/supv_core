@@ -74,6 +74,13 @@ const BillingComponent: React.FC = () => {
     setBillingData({});
 	};
 
+  const handleClosed = () => {
+    fetchNui("supv_core:billing:send", null, null);
+    close();
+    setData({});
+    setBillingData({});
+  }
+
 	useNuiEvent<BillingDataProps>("supv_core:billing:open", (d) => {
 		// if (!data) return console.error("No data received");
 		// if (!data.type) return console.error("No type received");
@@ -350,7 +357,7 @@ const BillingComponent: React.FC = () => {
 							<AnimatedButton
 								iconAwesome={faXmark}
 								text="Annuler"
-								onClick={close}
+								onClick={handleClosed}
 								color="red.6"
 								args={false}
 								isDisabled={false /*getData?.canCancel === false || undefined*/}
