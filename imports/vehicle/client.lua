@@ -831,7 +831,7 @@ local function SpawnVehicle(model, coords, data)
             if self.data.ground then SetVehicleOnGroundProperly(self.vehicle) end
             if self.data.freeze then FreezeEntityPosition(self.vehicle, self.data.freeze) end
             if self.data.collision then SetEntityCollision(self.vehicle, self.data.collision[1], self.data.collision[2]) end
-            if next(self.data.properties) then 
+            if self.data.properties and next(self.data.properties) then 
                 SetVehicleProperties(self.vehicle, self.data.properties, data.fixed or false)
             else
                 self.data.properties = GetVehicleProperties(self.vehicle)

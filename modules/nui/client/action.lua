@@ -10,12 +10,12 @@ local visible, currentTitle, currentDescription, currentTitle2 = false
 
 ---@param data Text2dProps
 function supv.showText2D(data)
-    if currentDescription and currentTitle == data.title then
-        if data.description and currentDescription == data.description then
-            return
-        elseif not data.description and not currentDescription then
-            return
-        end
+    if data.description and currentDescription == data.description then
+        return
+    end
+
+    if not data.description and data.title == currentTitle then
+        return
     end
 
     if not data.title2 then

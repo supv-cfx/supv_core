@@ -4,6 +4,8 @@ return {
         'modals',
         'notify',
         'crosshair',
+        'billing',
+        'action',
     },
 
     server = {
