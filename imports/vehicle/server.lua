@@ -70,6 +70,7 @@ local function SpawnVehicle(model, _type, coords, data, properties)
                 --    end
                 --end
                 
+                self.plate = (self.plate):gsub('%s+', ''):upper()
                 local id = #Vehicles + 1
                 self.id = id
                 Vehicles[self.id] = self
