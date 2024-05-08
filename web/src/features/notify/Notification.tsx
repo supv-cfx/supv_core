@@ -58,8 +58,8 @@ const NotificationItem: React.FC<{
 		data?.badge && data.badge?.type === "icon" ? (
 			<FontAwesomeIcon
 				icon={data.badge?.name as IconProp}
-				color={data.badge.color}
-				size={(data.badge?.size as FontAwesomeIconProps["size"]) || "xs"}
+				color={data.badge?.colorIcon}
+				size={(data.badge?.size as FontAwesomeIconProps["size"]) || 'lg'}
 				style={data.badge.style}
 				beat={data.badge.animation === "beat"}
 				fade={data.badge.animation === "fade"}
@@ -67,7 +67,7 @@ const NotificationItem: React.FC<{
 				pulse={data.badge.animation === "pulse"}
 				shake={data.badge.animation === "shake"}
 				//@ts-ignore
-				//flip={data.badge.animation === "flip" && "horizontal"}
+				//flip={data.badge.animation === "flip" && "flip-horizontal"}
 			/>
 		) : data?.badge && data.badge?.type === "avatar" ? (
 			<Avatar

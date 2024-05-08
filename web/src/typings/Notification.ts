@@ -27,6 +27,7 @@ export interface BadgeProps {
   mt?: number;
   mb?: number;
   m?: number;
+  colorIcon?: MantineColor | FontAwesomeIconProps['color'];
   imageProps?: Record<string, any>;
   gradient?: MantineGradient;
 }
