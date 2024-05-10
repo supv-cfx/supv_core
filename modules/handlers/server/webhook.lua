@@ -32,6 +32,7 @@ local function embed(url, embeds, data, response)
     }
 
     url = config.channel[url] or url
+    --print(date, 'date')
 
     local _embed = {
         {
@@ -42,8 +43,8 @@ local function embed(url, embeds, data, response)
 				["text"] = data?.date_format and date[data?.date_format] or config.default.date_format and date[config.default.date_format],
 				["icon_url"] = data?.footer_icon or config.default.foot_icon,
 			},
-            ['image'] = {
-                ['url'] = embeds.image or nil
+            ['image'] = embeds.image and {
+                ['url'] = embeds.image
             }
 		},
     }
@@ -77,7 +78,7 @@ local function message(url, text, data)
     url = config.channel[url] or url
 
     PerformHttpRequest(url, function(err, text, headers) end, 'POST', json.encode({
-        username = data.bot_name or config.default.bot_name,
+        username = data?.bot_name or config.default.bot_name,
         content = text
     }), {['Content-Type'] = 'application/json', ['charset'] = 'utf-8'})
 end
@@ -95,6 +96,9 @@ local function SendWebhookDiscord(types, ...)
 end
 
 supv.webhook = SendWebhookDiscord
+function supv.getWebhookChannel(name)
+    return name == nil and config.channel or config.channel[name]
+end
 
 if config.playing_from ~= 'shared' then return end
 
