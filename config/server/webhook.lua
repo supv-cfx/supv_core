@@ -1,7 +1,10 @@
 local active <const> = true
-local loadjson <const> = active and require 'imports.json.server'.load
+if not active then return false end
 
-return active and loadjson('data/server/webhook')
+local loadjson <const> = active and require 'imports.json.server'.load
+local data <const> = loadjson('data.server.webhook')
+--print(json.encode(data, { indent = true, sort_keys = true }))
+return active and data
 
 --[[
 return active and {
