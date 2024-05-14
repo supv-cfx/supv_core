@@ -3,7 +3,7 @@
 local supv_core <const>, service <const> = 'supv_core', (IsDuplicityVersion() and 'server') or 'client'
 local LoadResourceFile <const>, IsDuplicityVersion <const>, joaat <const>, await <const>, GetCurrentResourceName <const> = LoadResourceFile, IsDuplicityVersion, joaat, Citizen.Await, GetCurrentResourceName
 local GetGameName <const> = GetGameName
-local eventCaches = {}
+-- local eventCaches = {}
 
 ---@param str string
 ---@return string
@@ -24,9 +24,10 @@ end
 ---@param from? string<'client' | 'server'> default is supv.service
 ---@return string
 local function FormatEvent(self, name, from)
-    if eventCaches[name] then return eventCaches[name] end
-    eventCaches[name] = FormatByte(("%s%s"):format(from and joaat(from) or joaat(service), joaat(name)))
-    return eventCaches[name]
+    --if eventCaches[name] then return eventCaches[name] end
+    --eventCaches[name] = FormatByte(("%s%s"):format(from and joaat(from) or joaat(service), joaat(name)))
+    --return eventCaches[name]
+    return FormatByte(("%s%s"):format(from and joaat(from) or joaat(service), joaat(name)))
 end
 
 local supv = setmetatable({
