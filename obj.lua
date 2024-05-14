@@ -8,6 +8,7 @@ local GetCurrentResourceName <const> = GetCurrentResourceName
 local Await <const> = Citizen.Await
 local export <const> = exports[supv_core]
 local service <const> = (IsDuplicityVersion() and 'server') or 'client'
+local eventCaches = {}
 
 if not _VERSION:find('5.4') then
     error("^1 Vous devez activer Lua 5.4 dans la resources où vous utilisez l'import, (lua54 'yes') dans votre fxmanifest!^0", 2)
@@ -42,7 +43,9 @@ end
 ---@param from? string<'client' | 'server'> default is supv.service
 ---@return string
 local function FormatEvent(self, name, from)
-    return FormatByte(("%s%s"):format(from and joaat(from) or joaat(service), joaat(name)))
+    if eventCaches[name] then return eventCaches[name] end
+    eventCaches[name] = FormatByte(("%s%s"):format(from and joaat(from) or joaat(service), joaat(name)))
+    return eventCaches[name]
 end
 
 local function void() end
