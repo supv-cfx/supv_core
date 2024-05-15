@@ -1,3 +1,5 @@
+---@credit overextended
+
 ---@alias WeaponResourceFlags
 ---| 1 WRF_REQUEST_BASE_ANIMS
 ---| 2 WRF_REQUEST_COVER_ANIMS
@@ -15,126 +17,94 @@
 ---| 8 WEAPON_COMPONENT_SCLIP2
 ---| 16 WEAPON_COMPONENT_GRIP
 
----@class DataProps
----@field type 'animdict' | 'model' | 'animset' | 'ptfx' | 'weaponasset' | 'scalformmovie' | 'texturedict'
----@field name string
----@field weaponFlags? WeaponResourceFlags
----@field extraFlags? ExtraWeaponComponentFlags
-
-
----@param data DataProps
+-- Définit la fonction de requête générique
+---@param _type string<'animDict' | 'model' | 'animSet' | 'ptfx' | 'weaponAsset' | 'scalformMovie' | 'textureDict'>
+---@param request function
+---@param hasLoaded function
+---@param name string
 ---@param timeout? number
----@return string | fun(name: data.name): void
-function supv.request(data, timeout)
-    if type(data.type) ~= 'string' then
-        return error(('data.type must be a string (typeof selector: %s)'):format(type(data.type)), 2)
-    end
+---@param ... unknown
+---@return any
+function supv.request(_type, request, hasLoaded, name, timeout, ...)
+    if hasLoaded(name) then return name end
 
-    local funcRef, errmsg, flushRef
-    data.type = data.type:lower()
+    request(name, ...)
 
-    if data.type == 'animdict' then
-        funcRef = HasAnimDictLoaded
-        flushRef = RemoveAnimDict
-
-        if funcRef(data.name) then return data.name end
-        if type(data.name) ~= 'string' then
-            return error(('data.name must be a string (typeof name: %s)'):format(type(data.name)), 2)
-        end
-        if not DoesAnimDictExist(data.name) then
-            return error(('anim dict does not exist: %s'):format(data.name), 2)
-        end
-
-        errmsg = 'Failed to load anim dict : %s'
-        RequestAnimDict(data.name)
-    elseif data.type == 'animset' then
-        funcRef = HasAnimSetLoaded
-        flushRef = RemoveAnimSet
-
-        
-        if funcRef(data.name) then return data.name end
-        if type(data.name) ~= 'string' then
-            return error(('data.name must be a string (typeof name: %s)'):format(type(data.name)), 2)
-        end
-        
-        errmsg = 'Failed to load anim set : %s'
-        RequestAnimSet(data.name)
-    elseif data.type == 'model' then
-        funcRef = HasModelLoaded
-        flushRef = SetModelAsNoLongerNeeded
-        
-        if funcRef(data.name) then return data.name end
-        if type(data.name) ~= 'number' and type(data.name) ~= 'string' then
-            return error(('data.name must be a number (typeof name: %s)'):format(type(data.name)), 2)
-        end
-        if not IsModelInCdimage(data.name) then
-            return error(('model does not exist: %s'):format(data.name), 2)
-        end
-
-        errmsg = 'Failed to load model : %s'
-        RequestModel(data.name)
-    elseif data.type == 'ptfx' then
-        funcRef = HasNamedPtfxAssetLoaded
-        flushRef = RemoveNamedPtfxAsset
-
-        if funcRef(data.name) then return data.name end
-        if type(data.name) ~= 'string' then
-            return error(('data.name must be a string (typeof name: %s)'):format(type(data.name)), 2)
-        end
-
-        errmsg = 'Failed to load ptfx : %s'
-        RequestNamedPtfxAsset(data.name)
-    elseif data.type == 'weaponasset' then
-        funcRef = HasWeaponAssetLoaded
-        flushRef = RemoveWeaponAsset
-
-        if funcRef(data.name) then return flushRef end
-
-        if type(data.name) ~= 'number' and type(data.name) ~= 'string' then
-            return error(('data.name must be a number (typeof name: %s)'):format(type(data.name)), 2)
-        end
-
-        if data.weaponFlags and type(data.weaponFlags) ~= 'number' then
-            return error(('data.weaponFlags must be a number (typeof weaponFlags: %s)'):format(type(data.weaponFlags)), 2)
-        end
-
-        if data.extraFlags and type(data.extraFlags) ~= 'number' then
-            return error(('data.extraFlags must be a number (typeof extraFlags: %s)'):format(type(data.extraFlags)), 2)
-        end
-
-        errmsg = 'Failed to load weaponAsset : %s'
-        RequestWeaponAsset(data.name, data.weaponFlags or 31, data.extraFlags or 0)
-    elseif data.type == 'scalformmovie' then
-        funcRef = HasScaleformMovieLoaded
-        flushRef = SetScaleformMovieAsNoLongerNeeded
-
-        if funcRef(data.name) then return data.name end
-        if type(data.name) ~= 'string' then
-            return error(('data.name must be a string (typeof name: %s)'):format(type(data.name)), 2)
-        end
-
-        errmsg = 'Failed to load scaleformMovie : %s'
-        RequestScaleformMovie(data.name)
-    elseif data.type == 'texturedict' then
-        funcRef = HasStreamedTextureDictLoaded
-        flushRef = SetStreamedTextureDictAsNoLongerNeeded
-
-        if funcRef(data.name) then return data.name end
-        if type(data.name) ~= 'string' then
-            return error(('data.name must be a string (typeof name: %s)'):format(type(data.name)), 2)
-        end
-
-        errmsg = 'Failed to load streamedTextureDict : %s'
-        RequestStreamedTextureDict(data.name)
-    else
-        return error(('data.type must be a valid type (type: %s)'):format(data.type), 2)
-    end
-
-    if not coroutine.isyieldable() then return data.name end
-    
     return supv.waitFor(function()
-        if funcRef(data.name) then return flushRef or data.name end
-    end, timeout or 500, (errmsg):format(data.name))
+        if hasLoaded(name) then return name end
+    end, timeout or 10000, ('Failed to load %s : %s'):format(_type, name))
 end
+
+supv.request = setmetatable({}, {
+    __index = function(_, key)
+        local requestFunc, hasLoadedFunc, errorMsg
+        if key == "model" then
+            requestFunc = RequestModel
+            hasLoadedFunc = HasModelLoaded
+            errorMsg = function(model) return ("attempted to load invalid model '%s'"):format(model) end
+        elseif key == "animDict" then
+            requestFunc = RequestAnimDict
+            hasLoadedFunc = HasAnimDictLoaded
+            errorMsg = function(animDict) return ("attempted to load invalid animDict '%s'"):format(animDict) end
+        elseif key == "animSet" then
+            requestFunc = RequestAnimSet
+            hasLoadedFunc = HasAnimSetLoaded
+            errorMsg = function(animSet) return ("attempted to load invalid animSet '%s'"):format(animSet) end
+        elseif key == "ptfx" then
+            requestFunc = RequestNamedPtfxAsset
+            hasLoadedFunc = HasNamedPtfxAssetLoaded
+            errorMsg = function(ptfx) return ("attempted to load invalid ptfx '%s'"):format(ptfx) end
+        elseif key == "weaponAsset" then
+            return function(_type, weaponFlags, extraFlags, timeout)
+                if HasWeaponAssetLoaded(_type) then return _type end
+
+                local weaponType = type(_type)
+
+                if weaponType ~= 'string' and weaponType ~= 'number' then
+                    error(("expected weaponType to have type 'string' or 'number' (received %s)"):format(weaponType),  2)
+                end
+
+                if weaponFlags and type(weaponFlags) ~= 'number' then
+                    error(("expected weaponResourceFlags to have type 'number' (received %s)"):format(type(weaponFlags)))
+                end
+
+                if extraFlags and type(extraFlags) ~= 'number' then
+                    error(("expected extraWeaponComponentFlags to have type 'number' (received %s)"):format(type(extraFlags)))
+                end
+
+                return supv.request("weaponAsset", RequestWeaponAsset, HasWeaponAssetLoaded, weaponType, timeout, weaponFlags, extraFlags)
+            end
+        elseif key == "scalformMovie" then
+            return function(scaleformName, timeout)
+                if HasScaleformMovieLoaded(scaleformName) then return scaleformName end
+
+                local scalform = RequestScaleformMovie(scaleformName)
+
+                return supv.waitFor(function()
+                    if HasScaleformMovieLoaded(scalform) then return scalform end
+                end, timeout or 10000, ('Failed to load scaleformMovie : %s'):format(scaleformName))
+            end
+        elseif key == "textureDict" then
+            requestFunc = RequestStreamedTextureDict
+            hasLoadedFunc = HasStreamedTextureDictLoaded
+        else
+            error("Unsupported request type: " .. tostring(key))
+        end
+        
+        return function(name, timeout, ...)
+            if key == "model" and not IsModelValid(name) then
+                error(errorMsg(name), 2)
+            elseif key == "animDict" and not DoesAnimDictExist(name) then
+                error(errorMsg(name), 2)
+            elseif key == "animSet" and type(name) ~= 'string' then
+                error(errorMsg(name), 2)
+            elseif key == 'texturedict' and type(name) ~= 'string' then
+                error(("expected textureDict to have type 'string' (received %s)"):format(type(name)), 2)
+            end
+
+            return supv.request(key, requestFunc, hasLoadedFunc, name, timeout, ...)
+        end
+    end
+})
 
 return supv.request
