@@ -20,15 +20,29 @@ local function Clone(t)
 	return target
 end
 
---- supv.table.contains - Check if a table contains a value
+--- supv.table.contains - Check if a table contains a value(s)
 ---@param t table
 ---@param value any
 ---@return boolean
-local function Contains(t, value)
-	for _, v in pairs(t)do
-		if v == value then return true end
-	end
-	return false
+local function Contains(tbl, value)
+    if type(value) ~= 'table' then
+        for _, v in pairs(tbl) do
+            if v == value then return true end
+        end
+    else
+        local matched_values = 0
+        local values = 0
+        for _, v1 in pairs(value) do
+            values += 1
+
+            for _, v2 in pairs(tbl) do
+                if v1 == v2 then matched_values += 1 end
+            end
+        end
+        if matched_values == values then return true end
+    end
+
+    return false
 end
 
 local function toVec3(coords)
