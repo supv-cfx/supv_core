@@ -1,5 +1,0 @@
-{
-    "init": "supv_core init with success!",
-    "need_update": "^3Update this resource %s\n^3your version : ^1%s ^7->^4 new version : ^2%s\n^3link : ^4%s",
-    "error_update": "^1Impossible to check version of script"
-}

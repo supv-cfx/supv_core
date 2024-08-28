@@ -2,7 +2,7 @@
 
 ---------
 
-<h1 align="center"><u><b>supv_core v1.0 (work in progress!)</b></u></h1>
+<h1 align="center"><u><b>supv_core vé.0 (work in progress!)</b></u></h1>
 
 :fr:
 - Ajouté ceci dans votre fichier `server.cfg` (Chaque paramètre est optionnel):

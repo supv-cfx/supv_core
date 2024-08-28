@@ -1,14 +1,14 @@
 fx_version 'cerulean'
-games {'gta5', 'rdr3'}
+games { 'gta5', 'rdr3' }
 lua54 'yes'
 use_experimental_fxv2_oal 'yes'
 
-version '0.0.0'
-author 'SUP2Ak#3755'
+version '2.0.0'
+author 'SUP2Ak'
 link 'https://github.com/SUP2Ak/supv_core'
 github 'https://github.com/SUP2Ak'
 
-ui_page 'web/build/index.html'
+--ui_page 'web/build/index.html'
 
 shared_script 'init.lua'
 server_script 'modules/init.lua'
